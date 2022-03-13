@@ -16,6 +16,7 @@ namespace EDTree2
         public int Order { get; set; }
         public double Percentage { get; set; }
         public double Zstep { get; set; }
+        public RectStyle RectStyle { get; set; }
         
         // Functions.
         public double[] F { get; set; }
@@ -37,14 +38,20 @@ namespace EDTree2
         {
             Focus = null;
             Intensity = null;
-            Order = 2;
-            Percentage = 0.1;
-            Zstep = 10;
+            ResetValues();
 
             PointBase = new List<double>();
             PointUpper = new List<double>();
             PointLower = new List<double>();
             PointX = new List<double>();
+        }
+
+        private void ResetValues()
+        {
+            Order = 2;
+            Percentage = 0.1;
+            Zstep = 10;
+            RectStyle = RectStyle.BaseLine;
         }
 
         public void Calculate()

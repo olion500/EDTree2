@@ -41,7 +41,7 @@ namespace EDTree2
 
         private void textZStep_TextChanged(object sender, EventArgs e)
         {
-            disableApply();
+            DisableApply();
             
             var isDouble = Double.TryParse(textZStep.Text, out var zstep);
             if (!isDouble)
@@ -53,14 +53,14 @@ namespace EDTree2
             else
             {
                 edt.Zstep = zstep;
-                enableApply();
+                EnableApply();
             }
             
         }
 
         private void textPercent_TextChanged(object sender, EventArgs e)
         {
-            disableApply();
+            DisableApply();
             
             var isDouble = Double.TryParse(textPercent.Text, out var p);
             if (!isDouble)
@@ -68,20 +68,38 @@ namespace EDTree2
             else
             {
                 edt.Percentage = p / 100;
-                enableApply();
+                EnableApply();
             }
         }
 
-        private void disableApply()
+        private void DisableApply()
         {
             buttonApply.Enabled = false;
             buttonOk.Enabled = false;
         }
 
-        private void enableApply()
+        private void EnableApply()
         {
             buttonApply.Enabled = true;
             buttonOk.Enabled = true;
+        }
+
+        private void radioRectStyleBase_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioRectStyleBase.Checked)
+                edt.RectStyle = RectStyle.BaseLine;
+        }
+
+        private void radioRectStyleAverage_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioRectStyleAverage.Checked)
+                edt.RectStyle = RectStyle.Average;
+        }
+
+        private void radioRectStyleMax_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioRectStyleMax.Checked)
+                edt.RectStyle = RectStyle.Maximum;
         }
     }
 }

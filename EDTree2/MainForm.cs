@@ -51,10 +51,17 @@ namespace EDTree2
             item.SubItems.Add($"{edt.RectRight.Size}(가로:{edt.RectRight.Width}, 세로:{edt.RectRight.Height})");
             listView1.Items.Add(item);
 
-            item = new ListViewItem("Red(Average)");
-            item.ForeColor = colorRed;
-            item.SubItems.Add($"{edt.RectAverage.Size}(가로:{edt.RectAverage.Width}, 세로:{edt.RectAverage.Height})");
-            listView1.Items.Add(item);
+            if (edt.RectStyle == RectStyle.Average)
+            {
+                item = new ListViewItem("Red(Average)");
+                item.ForeColor = colorRed;
+                item.SubItems.Add($"{edt.RectAverage.Size}(가로:{edt.RectAverage.Width}, 세로:{edt.RectAverage.Height})");
+                listView1.Items.Add(item);
+            }
+            else if (edt.RectStyle == RectStyle.Maximum)
+            {
+                
+            }
 
             listView1.Columns.Add("Rect", 210);
             listView1.Columns.Add("Size", 210);
@@ -129,7 +136,19 @@ namespace EDTree2
         {
             DrawRect(e, edt.RectLeft, colorBlue);
             DrawRect(e, edt.RectRight, colorGreen);
-            DrawRect(e, edt.RectAverage, colorRed);
+            if (edt.RectStyle == RectStyle.BaseLine)
+            {
+                // do nothing.
+            } 
+            else if (edt.RectStyle == RectStyle.Average)
+            {
+                DrawRect(e, edt.RectAverage, colorRed);
+            } 
+            else if (edt.RectStyle == RectStyle.Maximum)
+            {
+                
+            }
+            
         }
 
         private void DrawRect(ChartPaintEventArgs e, RectanglePoint rp, Color color)
@@ -152,8 +171,6 @@ namespace EDTree2
         private void ApplyChange(EDTree changed)
         {
             edt = changed;
-            Console.WriteLine($"zstep: {edt.Zstep}");
-            Console.WriteLine($"percent: {edt.Percentage}");
             edt.Calculate();
             
             // Create Chart.

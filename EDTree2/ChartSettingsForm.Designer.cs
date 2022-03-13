@@ -36,13 +36,13 @@ namespace EDTree2
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.textZStep = new System.Windows.Forms.TextBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupValueType = new System.Windows.Forms.GroupBox();
             this.radioButton5 = new System.Windows.Forms.RadioButton();
             this.radioButton4 = new System.Windows.Forms.RadioButton();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.groupRectStyle = new System.Windows.Forms.GroupBox();
+            this.radioRectStyleMax = new System.Windows.Forms.RadioButton();
+            this.radioRectStyleAverage = new System.Windows.Forms.RadioButton();
+            this.radioRectStyleBase = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.buttonReset = new System.Windows.Forms.Button();
@@ -50,8 +50,8 @@ namespace EDTree2
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonOk = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.groupValueType.SuspendLayout();
+            this.groupRectStyle.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -62,8 +62,8 @@ namespace EDTree2
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.textZStep);
-            this.groupBox1.Controls.Add(this.groupBox3);
-            this.groupBox1.Controls.Add(this.groupBox2);
+            this.groupBox1.Controls.Add(this.groupValueType);
+            this.groupBox1.Controls.Add(this.groupRectStyle);
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(330, 205);
@@ -105,16 +105,16 @@ namespace EDTree2
             this.textZStep.TabIndex = 2;
             this.textZStep.TextChanged += new System.EventHandler(this.textZStep_TextChanged);
             // 
-            // groupBox3
+            // groupValueType
             // 
-            this.groupBox3.Controls.Add(this.radioButton5);
-            this.groupBox3.Controls.Add(this.radioButton4);
-            this.groupBox3.Location = new System.Drawing.Point(6, 145);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(318, 54);
-            this.groupBox3.TabIndex = 1;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Y Value Type";
+            this.groupValueType.Controls.Add(this.radioButton5);
+            this.groupValueType.Controls.Add(this.radioButton4);
+            this.groupValueType.Location = new System.Drawing.Point(6, 145);
+            this.groupValueType.Name = "groupValueType";
+            this.groupValueType.Size = new System.Drawing.Size(318, 54);
+            this.groupValueType.TabIndex = 1;
+            this.groupValueType.TabStop = false;
+            this.groupValueType.Text = "Y Value Type";
             // 
             // radioButton5
             // 
@@ -138,50 +138,53 @@ namespace EDTree2
             this.radioButton4.Text = "Intensity";
             this.radioButton4.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
+            // groupRectStyle
             // 
-            this.groupBox2.Controls.Add(this.radioButton3);
-            this.groupBox2.Controls.Add(this.radioButton2);
-            this.groupBox2.Controls.Add(this.radioButton1);
-            this.groupBox2.Location = new System.Drawing.Point(6, 9);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(318, 59);
-            this.groupBox2.TabIndex = 0;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Rect Style";
+            this.groupRectStyle.Controls.Add(this.radioRectStyleMax);
+            this.groupRectStyle.Controls.Add(this.radioRectStyleAverage);
+            this.groupRectStyle.Controls.Add(this.radioRectStyleBase);
+            this.groupRectStyle.Location = new System.Drawing.Point(6, 9);
+            this.groupRectStyle.Name = "groupRectStyle";
+            this.groupRectStyle.Size = new System.Drawing.Size(318, 59);
+            this.groupRectStyle.TabIndex = 0;
+            this.groupRectStyle.TabStop = false;
+            this.groupRectStyle.Text = "Rect Style";
             // 
-            // radioButton3
+            // radioRectStyleMax
             // 
-            this.radioButton3.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioButton3.Location = new System.Drawing.Point(208, 19);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(104, 24);
-            this.radioButton3.TabIndex = 2;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Maximum";
-            this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioRectStyleMax.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.radioRectStyleMax.Location = new System.Drawing.Point(208, 19);
+            this.radioRectStyleMax.Name = "radioRectStyleMax";
+            this.radioRectStyleMax.Size = new System.Drawing.Size(104, 24);
+            this.radioRectStyleMax.TabIndex = 2;
+            this.radioRectStyleMax.TabStop = true;
+            this.radioRectStyleMax.Text = "Maximum";
+            this.radioRectStyleMax.UseVisualStyleBackColor = true;
+            this.radioRectStyleMax.CheckedChanged += new System.EventHandler(this.radioRectStyleMax_CheckedChanged);
             // 
-            // radioButton2
+            // radioRectStyleAverage
             // 
-            this.radioButton2.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioButton2.Location = new System.Drawing.Point(116, 19);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(104, 24);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Average";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioRectStyleAverage.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.radioRectStyleAverage.Location = new System.Drawing.Point(116, 19);
+            this.radioRectStyleAverage.Name = "radioRectStyleAverage";
+            this.radioRectStyleAverage.Size = new System.Drawing.Size(104, 24);
+            this.radioRectStyleAverage.TabIndex = 1;
+            this.radioRectStyleAverage.TabStop = true;
+            this.radioRectStyleAverage.Text = "Average";
+            this.radioRectStyleAverage.UseVisualStyleBackColor = true;
+            this.radioRectStyleAverage.CheckedChanged += new System.EventHandler(this.radioRectStyleAverage_CheckedChanged);
             // 
-            // radioButton1
+            // radioRectStyleBase
             // 
-            this.radioButton1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioButton1.Location = new System.Drawing.Point(6, 19);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(104, 24);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "BaseLine";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioRectStyleBase.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.radioRectStyleBase.Location = new System.Drawing.Point(6, 19);
+            this.radioRectStyleBase.Name = "radioRectStyleBase";
+            this.radioRectStyleBase.Size = new System.Drawing.Size(104, 24);
+            this.radioRectStyleBase.TabIndex = 0;
+            this.radioRectStyleBase.TabStop = true;
+            this.radioRectStyleBase.Text = "BaseLine";
+            this.radioRectStyleBase.UseVisualStyleBackColor = true;
+            this.radioRectStyleBase.CheckedChanged += new System.EventHandler(this.radioRectStyleBase_CheckedChanged);
             // 
             // tableLayoutPanel1
             // 
@@ -262,8 +265,8 @@ namespace EDTree2
             this.Text = "FmAnalysis_EDTreeData";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
+            this.groupValueType.ResumeLayout(false);
+            this.groupRectStyle.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -285,14 +288,14 @@ namespace EDTree2
 
         private System.Windows.Forms.TextBox textZStep;
 
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.RadioButton radioRectStyleAverage;
+        private System.Windows.Forms.RadioButton radioRectStyleMax;
+        private System.Windows.Forms.GroupBox groupValueType;
         private System.Windows.Forms.RadioButton radioButton4;
         private System.Windows.Forms.RadioButton radioButton5;
 
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.GroupBox groupRectStyle;
+        private System.Windows.Forms.RadioButton radioRectStyleBase;
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
