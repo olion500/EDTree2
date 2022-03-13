@@ -123,6 +123,16 @@ namespace EDTree2
                 edt.RectStyle = RectStyle.Maximum;
         }
 
-        
+        private void radioFunQuadratic_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioFunQuadratic.Checked)
+                edt.Order = 2;
+        }
+
+        private void radioFunCubic_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioFunCubic.Checked)
+                edt.Order = 3;
+        }
     }
 }
