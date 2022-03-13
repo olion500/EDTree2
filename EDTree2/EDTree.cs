@@ -47,7 +47,7 @@ namespace EDTree2
             PointX = new List<double>();
         }
 
-        private void ResetValues()
+        public void ResetValues()
         {
             Order = 2;
             Percentage = 0.1;

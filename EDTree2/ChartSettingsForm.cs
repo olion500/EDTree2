@@ -21,6 +21,7 @@ namespace EDTree2
         {
             textZStep.Text = edt.Zstep.ToString();
             textPercent.Text = (edt.Percentage * 100).ToString();
+            ChooseRadioRectStyle(edt.RectStyle);
         }
 
         private void buttonOk_Click(object sender, EventArgs e)
@@ -32,6 +33,13 @@ namespace EDTree2
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             Close();
+        }
+        
+        private void buttonReset_Click(object sender, EventArgs e)
+        {
+            edt.ResetValues();
+            InitializeValues();
+            ApplyChange(edt);
         }
 
         private void buttonApply_Click(object sender, EventArgs e)
@@ -84,6 +92,19 @@ namespace EDTree2
             buttonOk.Enabled = true;
         }
 
+        private void ChooseRadioRectStyle(RectStyle rs)
+        {
+            if (rs == RectStyle.BaseLine)
+            {
+                radioRectStyleBase.Checked = true;
+            } else if (rs == RectStyle.Average)
+            {
+                radioRectStyleAverage.Checked = true;
+            } else if (rs == RectStyle.Maximum)
+            {
+                radioRectStyleMax.Checked = true;
+            }
+        }
         private void radioRectStyleBase_CheckedChanged(object sender, EventArgs e)
         {
             if (radioRectStyleBase.Checked)
@@ -101,5 +122,7 @@ namespace EDTree2
             if (radioRectStyleMax.Checked)
                 edt.RectStyle = RectStyle.Maximum;
         }
+
+        
     }
 }

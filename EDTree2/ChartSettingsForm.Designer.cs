@@ -221,6 +221,7 @@ namespace EDTree2
             this.buttonReset.TabIndex = 3;
             this.buttonReset.Text = "as Default";
             this.buttonReset.UseVisualStyleBackColor = true;
+            this.buttonReset.Click += new System.EventHandler(this.buttonReset_Click);
             // 
             // buttonApply
             // 
