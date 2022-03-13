@@ -60,7 +60,10 @@ namespace EDTree2
             }
             else if (edt.RectStyle == RectStyle.Maximum)
             {
-                
+                item = new ListViewItem("Red(Maximum)");
+                item.ForeColor = colorRed;
+                item.SubItems.Add($"{edt.RectMaximum.Size}(가로:{edt.RectMaximum.Width}, 세로:{edt.RectMaximum.Height})");
+                listView1.Items.Add(item);
             }
 
             listView1.Columns.Add("Rect", 210);
@@ -146,7 +149,7 @@ namespace EDTree2
             } 
             else if (edt.RectStyle == RectStyle.Maximum)
             {
-                
+                DrawRect(e, edt.RectMaximum, colorRed);
             }
             
         }

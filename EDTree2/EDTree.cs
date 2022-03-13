@@ -33,6 +33,7 @@ namespace EDTree2
         public RectanglePoint RectLeft { get; set; }
         public RectanglePoint RectRight { get; set; }
         public RectanglePoint RectAverage { get; set; }
+        public RectanglePoint RectMaximum { get; set; }
 
         public EDTree()
         {
@@ -56,24 +57,12 @@ namespace EDTree2
 
         public void Calculate()
         {
-            // calculate lines.
-            F = Fit.Polynomial(Focus, Intensity, Order);
-            Fu = Utils.MultiplyArray(F, (1 + Percentage));
-            Fl = Utils.MultiplyArray(F, (1 - Percentage));
+            CalculateLines();
+            CalculateRectangles();
+        }
 
-            PointX.Clear();
-            PointBase.Clear();
-            PointLower.Clear();
-            PointUpper.Clear();
-            for (double k = Focus.First(); k <= Focus.Last(); k += Step)
-            {
-                PointX.Add(k);
-                PointBase.Add(Utils.LinearF(F, k));
-                PointLower.Add(Utils.LinearF(Fl, k));
-                PointUpper.Add(Utils.LinearF(Fu, k));
-            }
-            
-            // calculate rectangles.
+        private void CalculateRectangles()
+        {
             double l = -Zstep;
             double t = Utils.LinearF(Fu, l);
             double r = PointX[Utils.FindXIndex(PointUpper, t).Last()];
@@ -93,6 +82,35 @@ namespace EDTree2
                 (RectLeft.B + RectRight.B) / 2
             );
 
+            RectMaximum = new RectanglePoint(0, 0, 0, 0);
+            for (double v = -Zstep; v <= Zstep; v += 0.1)
+            {
+                l = v;
+                t = Utils.LinearF(Fu, l);
+                r = PointX[Utils.FindXIndex(PointUpper, t).Last()];
+                b = PointLower.Max();
+                var tmpRect = new RectanglePoint(l, t, r, b);
+                if (tmpRect.Size > RectMaximum.Size) RectMaximum = tmpRect;
+            }
+        }
+
+        private void CalculateLines()
+        {
+            F = Fit.Polynomial(Focus, Intensity, Order);
+            Fu = Utils.MultiplyArray(F, (1 + Percentage));
+            Fl = Utils.MultiplyArray(F, (1 - Percentage));
+
+            PointX.Clear();
+            PointBase.Clear();
+            PointLower.Clear();
+            PointUpper.Clear();
+            for (double k = Focus.First(); k <= Focus.Last(); k += Step)
+            {
+                PointX.Add(k);
+                PointBase.Add(Utils.LinearF(F, k));
+                PointLower.Add(Utils.LinearF(Fl, k));
+                PointUpper.Add(Utils.LinearF(Fu, k));
+            }
         }
     }
 }
