@@ -20,7 +20,6 @@ namespace EDTree2
         private void InitializeValues()
         {
             textZStep.Text = edt.Zstep.ToString();
-            textPercent.Text = (edt.Percentage * 100).ToString();
             ChooseRadioRectStyle(edt.RectStyle);
         }
 
@@ -64,20 +63,6 @@ namespace EDTree2
                 EnableApply();
             }
             
-        }
-
-        private void textPercent_TextChanged(object sender, EventArgs e)
-        {
-            DisableApply();
-            
-            var isDouble = Double.TryParse(textPercent.Text, out var p);
-            if (!isDouble)
-                MessageBox.Show("숫자만 입력 가능합니다.");
-            else
-            {
-                edt.Percentage = p / 100;
-                EnableApply();
-            }
         }
 
         private void DisableApply()

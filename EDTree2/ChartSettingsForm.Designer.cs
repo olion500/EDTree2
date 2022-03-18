@@ -35,8 +35,6 @@ namespace EDTree2
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.radioFunCubic = new System.Windows.Forms.RadioButton();
             this.radioFunQuadratic = new System.Windows.Forms.RadioButton();
-            this.textPercent = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.textZStep = new System.Windows.Forms.TextBox();
             this.groupValueType = new System.Windows.Forms.GroupBox();
@@ -63,15 +61,13 @@ namespace EDTree2
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.groupBox2);
-            this.groupBox1.Controls.Add(this.textPercent);
-            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.textZStep);
             this.groupBox1.Controls.Add(this.groupValueType);
             this.groupBox1.Controls.Add(this.groupRectStyle);
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(330, 265);
+            this.groupBox1.Size = new System.Drawing.Size(330, 222);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             // 
@@ -108,24 +104,6 @@ namespace EDTree2
             this.radioFunQuadratic.UseVisualStyleBackColor = true;
             this.radioFunQuadratic.CheckedChanged += new System.EventHandler(this.radioFunQuadratic_CheckedChanged);
             // 
-            // textPercent
-            // 
-            this.textPercent.Location = new System.Drawing.Point(122, 163);
-            this.textPercent.Name = "textPercent";
-            this.textPercent.Size = new System.Drawing.Size(100, 20);
-            this.textPercent.TabIndex = 5;
-            this.textPercent.TextChanged += new System.EventHandler(this.textPercent_TextChanged);
-            // 
-            // label2
-            // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
-            this.label2.Location = new System.Drawing.Point(18, 166);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(79, 18);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Percentage(%)";
-            // 
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
@@ -147,7 +125,7 @@ namespace EDTree2
             // 
             this.groupValueType.Controls.Add(this.radioButton5);
             this.groupValueType.Controls.Add(this.radioButton4);
-            this.groupValueType.Location = new System.Drawing.Point(6, 202);
+            this.groupValueType.Location = new System.Drawing.Point(6, 163);
             this.groupValueType.Name = "groupValueType";
             this.groupValueType.Size = new System.Drawing.Size(318, 54);
             this.groupValueType.TabIndex = 1;
@@ -236,7 +214,7 @@ namespace EDTree2
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(424, 271);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(424, 229);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // panel1
@@ -248,12 +226,12 @@ namespace EDTree2
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(339, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(82, 265);
+            this.panel1.Size = new System.Drawing.Size(82, 223);
             this.panel1.TabIndex = 3;
             // 
             // buttonReset
             // 
-            this.buttonReset.Location = new System.Drawing.Point(4, 208);
+            this.buttonReset.Location = new System.Drawing.Point(4, 163);
             this.buttonReset.Name = "buttonReset";
             this.buttonReset.Size = new System.Drawing.Size(75, 25);
             this.buttonReset.TabIndex = 3;
@@ -263,7 +241,7 @@ namespace EDTree2
             // 
             // buttonApply
             // 
-            this.buttonApply.Location = new System.Drawing.Point(4, 239);
+            this.buttonApply.Location = new System.Drawing.Point(4, 194);
             this.buttonApply.Name = "buttonApply";
             this.buttonApply.Size = new System.Drawing.Size(75, 23);
             this.buttonApply.TabIndex = 2;
@@ -295,7 +273,7 @@ namespace EDTree2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(424, 271);
+            this.ClientSize = new System.Drawing.Size(424, 229);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -324,10 +302,6 @@ namespace EDTree2
         private System.Windows.Forms.Button buttonOk;
 
         private System.Windows.Forms.Panel panel1;
-
-        private System.Windows.Forms.TextBox textPercent;
-
-        private System.Windows.Forms.Label label2;
 
         private System.Windows.Forms.Label label1;
 
