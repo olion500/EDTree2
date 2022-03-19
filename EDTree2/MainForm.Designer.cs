@@ -35,9 +35,16 @@
             this.listView1 = new System.Windows.Forms.ListView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.listView2 = new System.Windows.Forms.ListView();
-            this.button1 = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonHome = new System.Windows.Forms.Button();
+            this.buttonSetting = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.buttonThreshold = new System.Windows.Forms.Button();
+            this.buttonDefocus = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize) (this.mainChart)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainChart
@@ -70,7 +77,8 @@
             this.tableLayoutPanel1.Controls.Add(this.mainChart, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.listView1, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.listView2, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.button1, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel2, 2, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -92,16 +100,67 @@
             this.listView2.UseCompatibleStateImageBehavior = false;
             this.listView2.View = System.Windows.Forms.View.Details;
             // 
-            // button1
+            // panel1
             // 
-            this.button1.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("button1.BackgroundImage")));
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button1.Location = new System.Drawing.Point(1123, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(58, 58);
-            this.button1.TabIndex = 3;
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.panel1.Controls.Add(this.buttonHome);
+            this.panel1.Controls.Add(this.buttonSetting);
+            this.panel1.Location = new System.Drawing.Point(1123, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(58, 163);
+            this.panel1.TabIndex = 4;
+            // 
+            // buttonHome
+            // 
+            this.buttonHome.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonHome.BackgroundImage")));
+            this.buttonHome.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonHome.Location = new System.Drawing.Point(0, 3);
+            this.buttonHome.Name = "buttonHome";
+            this.buttonHome.Size = new System.Drawing.Size(58, 58);
+            this.buttonHome.TabIndex = 4;
+            this.buttonHome.UseVisualStyleBackColor = true;
+            this.buttonHome.Click += new System.EventHandler(this.buttonHome_Click);
+            // 
+            // buttonSetting
+            // 
+            this.buttonSetting.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonSetting.BackgroundImage")));
+            this.buttonSetting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonSetting.Location = new System.Drawing.Point(0, 67);
+            this.buttonSetting.Name = "buttonSetting";
+            this.buttonSetting.Size = new System.Drawing.Size(58, 58);
+            this.buttonSetting.TabIndex = 3;
+            this.buttonSetting.UseVisualStyleBackColor = true;
+            this.buttonSetting.Click += new System.EventHandler(this.buttonSetting_Click);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.buttonThreshold);
+            this.panel2.Controls.Add(this.buttonDefocus);
+            this.panel2.Location = new System.Drawing.Point(1123, 172);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(58, 332);
+            this.panel2.TabIndex = 5;
+            // 
+            // buttonThreshold
+            // 
+            this.buttonThreshold.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonThreshold.BackgroundImage")));
+            this.buttonThreshold.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonThreshold.Location = new System.Drawing.Point(0, 67);
+            this.buttonThreshold.Name = "buttonThreshold";
+            this.buttonThreshold.Size = new System.Drawing.Size(58, 58);
+            this.buttonThreshold.TabIndex = 6;
+            this.buttonThreshold.UseVisualStyleBackColor = true;
+            this.buttonThreshold.Click += new System.EventHandler(this.buttonThreshold_Click);
+            // 
+            // buttonDefocus
+            // 
+            this.buttonDefocus.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonDefocus.BackgroundImage")));
+            this.buttonDefocus.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonDefocus.Location = new System.Drawing.Point(0, 3);
+            this.buttonDefocus.Name = "buttonDefocus";
+            this.buttonDefocus.Size = new System.Drawing.Size(58, 58);
+            this.buttonDefocus.TabIndex = 5;
+            this.buttonDefocus.UseVisualStyleBackColor = true;
+            this.buttonDefocus.Click += new System.EventHandler(this.buttonDefocus_Click);
             // 
             // Form1
             // 
@@ -116,10 +175,21 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize) (this.mainChart)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
         }
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonDefocus;
+
+        private System.Windows.Forms.Panel panel2;
+
+        private System.Windows.Forms.Button buttonThreshold;
+
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button buttonHome;
+
+        private System.Windows.Forms.Button buttonSetting;
 
         private System.Windows.Forms.ListView listView2;
 

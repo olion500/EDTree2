@@ -53,6 +53,7 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="AerialCD.cs" />
         <Compile Include="ChartSettingsForm.cs">
           <SubType>Form</SubType>
         </Compile>
@@ -101,11 +102,6 @@
     </ItemGroup>
     <ItemGroup>
         <None Include="App.config" />
-    </ItemGroup>
-    <ItemGroup>
-      <Content Include="input_defocus.txt" />
-      <Content Include="input_intensity.txt" />
-      <Content Include="input_threshold.txt" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
