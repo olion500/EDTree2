@@ -167,7 +167,7 @@ namespace EDTree2
             e.ChartGraphics.Graphics.DrawRectangle(new Pen(color), rect.X, rect.Y, rect.Width, rect.Height);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonSetting_Click(object sender, EventArgs e)
         {
             var chartSettingsForm = new ChartSettingsForm(edt);
             chartSettingsForm.Show();
@@ -184,6 +184,21 @@ namespace EDTree2
 
             // Create Data grid.
             CreateListView();
+        }
+
+        private void buttonHome_Click(object sender, EventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void buttonDefocus_Click(object sender, EventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void buttonThreshold_Click(object sender, EventArgs e)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
