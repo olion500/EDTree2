@@ -25,8 +25,11 @@ namespace EDTree2
         private void Form1_Load(object sender, EventArgs e)
         {
             // Fetch data.
-            edt.Focus = new double[] {-15, -10, -5, 0, 5, 10, 15};
-            edt.Intensity = new double[] {0.338, 0.366, 0.388, 0.392, 0.383, 0.361, 0.329};
+            var intensityInput = InputParser.Parse("input_intensity.txt");
+            edt.Focus = intensityInput.Data[0].ToArray();
+            edt.IntensityLower = intensityInput.Data[1].ToArray();
+            edt.Intensity = intensityInput.Data[2].ToArray();
+            edt.IntensityUpper = intensityInput.Data[3].ToArray();
             edt.Calculate();
             
             // Create Chart.
@@ -160,7 +163,7 @@ namespace EDTree2
             var t = (float) mainChart.ChartAreas[0].AxisY.ValueToPixelPosition(rp.T);
             var r = (float) mainChart.ChartAreas[0].AxisX.ValueToPixelPosition(rp.R);
             var b = (float) mainChart.ChartAreas[0].AxisY.ValueToPixelPosition(rp.B);
-            var rect = RectangleF.FromLTRB(l, t, r, b);
+            var rect = RectangleF.FromLTRB(Math.Min(l, r), Math.Min(t, b), Math.Max(l, r),Math.Max(t, b));
             e.ChartGraphics.Graphics.DrawRectangle(new Pen(color), rect.X, rect.Y, rect.Width, rect.Height);
         }
 

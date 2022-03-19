@@ -13,6 +13,8 @@ namespace EDTree2
         
         public double[] Focus { get; set; }
         public double[] Intensity { get; set; }
+        public double[] IntensityUpper { get; set; }
+        public double[] IntensityLower { get; set; }
         public int Order { get; set; }
         public double Percentage { get; set; }
         public double Zstep { get; set; }
@@ -97,8 +99,10 @@ namespace EDTree2
         private void CalculateLines()
         {
             F = Fit.Polynomial(Focus, Intensity, Order);
-            Fu = Utils.MultiplyArray(F, (1 + Percentage));
-            Fl = Utils.MultiplyArray(F, (1 - Percentage));
+            Fu = Fit.Polynomial(Focus, IntensityUpper, Order);
+            Fl = Fit.Polynomial(Focus, IntensityLower, Order);
+            // Fu = Utils.MultiplyArray(F, (1 + Percentage));
+            // Fl = Utils.MultiplyArray(F, (1 - Percentage));
 
             PointX.Clear();
             PointBase.Clear();

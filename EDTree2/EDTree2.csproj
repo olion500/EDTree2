@@ -61,6 +61,7 @@
         </Compile>
         <Compile Include="Delegates.cs" />
         <Compile Include="EDTree.cs" />
+        <Compile Include="InputParser.cs" />
         <Compile Include="MainForm.cs">
             <SubType>Form</SubType>
         </Compile>
@@ -100,6 +101,11 @@
     </ItemGroup>
     <ItemGroup>
         <None Include="App.config" />
+    </ItemGroup>
+    <ItemGroup>
+      <Content Include="input_defocus.txt" />
+      <Content Include="input_intensity.txt" />
+      <Content Include="input_threshold.txt" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
