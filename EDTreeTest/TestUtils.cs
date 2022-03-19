@@ -61,5 +61,18 @@ namespace EDTreeTest
             cc = Utils.FindCircumcenter(new PointF(1, 1), new PointF(0, 0), new PointF(2, 2));
             // cannot be calculated.
         }
+        
+        [Test]
+        public void TestPointDistance()
+        {
+            var dist = Utils.PointDistance(new PointF(12f, 11f), new PointF(13f, 10f));
+            Assert.AreEqual(1.414, dist, 0.001);
+            
+            dist = Utils.PointDistance(new PointF(0f, 1f), new PointF(0f, 0f));
+            Assert.AreEqual(1, dist);
+            
+            dist = Utils.PointDistance(new PointF(0f, 0f), new PointF(0f, 0f));
+            Assert.AreEqual(0, dist);
+        }
     }
 }

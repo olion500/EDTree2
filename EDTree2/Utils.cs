@@ -51,5 +51,10 @@ namespace EDTree2
                       (c.X * c.X + c.Y * c.Y) * (b.X - a.X)) / d;
             return new PointF(ux, uy);
         }
+
+        public static double PointDistance(PointF a, PointF b)
+        {
+            return Math.Sqrt(Math.Pow(a.X - b.X, 2) + Math.Pow(a.Y - b.Y, 2));
+        }
     }
 }
