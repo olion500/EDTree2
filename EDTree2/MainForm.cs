@@ -124,8 +124,8 @@ namespace EDTree2
             upperChart.ChartType = SeriesChartType.Line;
             lowerChart.ChartType = SeriesChartType.Line;
             baseChart.Color = colorRed;
-            upperChart.Color = colorBlue;
-            lowerChart.Color = colorGreen;
+            upperChart.Color = colorGreen;
+            lowerChart.Color = colorBlue;
 
             foreach (var x in edt.PointX.Select((value, index) => (value, index)))
             {

@@ -66,15 +66,15 @@ namespace EDTree2
         private void CalculateRectangles()
         {
             double l = -Zstep;
-            double t = Utils.LinearF(Fu, l);
-            double r = PointX[Utils.FindXIndex(PointUpper, t).Last()];
-            double b = PointLower.Max();
+            double t = Utils.LinearF(Fl, l);
+            double r = PointX[Utils.FindXIndex(PointLower, t).Last()];
+            double b = PointUpper.Max();
             RectLeft = new RectanglePoint(l, t, r, b);
 
             r = Zstep;
-            t = Utils.LinearF(Fu, r);
-            l = PointX[Utils.FindXIndex(PointUpper, t).First()];
-            b = PointLower.Max();
+            t = Utils.LinearF(Fl, r);
+            l = PointX[Utils.FindXIndex(PointLower, t).First()];
+            b = PointUpper.Max();
             RectRight = new RectanglePoint(l, t, r, b);
 
             RectAverage = new RectanglePoint(
@@ -88,9 +88,9 @@ namespace EDTree2
             for (double v = -Zstep; v <= Zstep; v += 0.1)
             {
                 l = v;
-                t = Utils.LinearF(Fu, l);
-                r = PointX[Utils.FindXIndex(PointUpper, t).Last()];
-                b = PointLower.Max();
+                t = Utils.LinearF(Fl, l);
+                r = PointX[Utils.FindXIndex(PointLower, t).Last()];
+                b = PointUpper.Max();
                 var tmpRect = new RectanglePoint(l, t, r, b);
                 if (tmpRect.Size > RectMaximum.Size) RectMaximum = tmpRect;
             }
