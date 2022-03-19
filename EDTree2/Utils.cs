@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using MathNet.Numerics;
 
@@ -39,6 +40,16 @@ namespace EDTree2
             }
 
             return result;
+        }
+
+        public static PointF FindCircumcenter(PointF a, PointF b, PointF c)
+        {
+            var d = 2 * (a.X * (b.Y - c.Y) + b.X * (c.Y - a.Y) + c.X * (a.Y - b.Y));
+            var ux = ((a.X * a.X + a.Y * a.Y) * (b.Y - c.Y) + (b.X * b.X + b.Y * b.Y) * (c.Y - a.Y) +
+                      (c.X * c.X + c.Y * c.Y) * (a.Y - b.Y)) / d;
+            var uy = ((a.X * a.X + a.Y * a.Y) * (c.X - b.X) + (b.X * b.X + b.Y * b.Y) * (a.X - c.X) +
+                      (c.X * c.X + c.Y * c.Y) * (b.X - a.X)) / d;
+            return new PointF(ux, uy);
         }
     }
 }

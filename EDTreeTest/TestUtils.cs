@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using EDTree2;
 using NUnit.Framework;
@@ -49,6 +50,16 @@ namespace EDTreeTest
             x = new List<double>() {-4.0, -3, -2, -1, 0, 1, 2, 3, 4};
             y = x.Select(t => t * t).ToList();
             CollectionAssert.AreEqual(new List<double>() {2, 6}, Utils.FindXIndex(y, 4));
+        }
+
+        [Test]
+        public void TestFindCircumcenter()
+        {
+            var cc = Utils.FindCircumcenter(new PointF(6f, 0f), new PointF(0f, 0f), new PointF(0f, 8f));
+            Assert.AreEqual(new PointF(3f, 4f), cc);
+
+            cc = Utils.FindCircumcenter(new PointF(1, 1), new PointF(0, 0), new PointF(2, 2));
+            // cannot be calculated.
         }
     }
 }
