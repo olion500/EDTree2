@@ -21,6 +21,7 @@ namespace EDTree2
         {
             textZStep.Text = edt.Zstep.ToString();
             ChooseRadioRectStyle(edt.RectStyle);
+            ChooseFunctionRank(edt.Order);
         }
 
         private void buttonOk_Click(object sender, EventArgs e)
@@ -106,6 +107,14 @@ namespace EDTree2
         {
             if (radioRectStyleMax.Checked)
                 edt.RectStyle = RectStyle.Maximum;
+        }
+
+        private void ChooseFunctionRank(int order)
+        {
+            if (order == 2)
+                radioFunQuadratic.Checked = true;
+            else if (order == 3)
+                radioFunCubic.Checked = true;
         }
 
         private void radioFunQuadratic_CheckedChanged(object sender, EventArgs e)

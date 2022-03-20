@@ -112,13 +112,13 @@ namespace EDTree2
 
             if (CurrentScreen == ChartScreen.Intensity)
             {
-                foreach (var x in edt.Focus)
+                for (int i=0; i<edt.Focus.Length; i++)
                 {
-                    ListViewItem row = new ListViewItem($"{x}");
+                    ListViewItem row = new ListViewItem($"{edt.Focus[i]}");
                     row.UseItemStyleForSubItems = false;
-                    row.SubItems.Add($"{Math.Round(Utils.LinearF(edt.Fl, x), 3)}").ForeColor = colorBlue;
-                    row.SubItems.Add($"{Math.Round(Utils.LinearF(edt.F, x), 3)}").ForeColor = colorRed;
-                    row.SubItems.Add($"{Math.Round(Utils.LinearF(edt.Fu, x), 3)}").ForeColor = colorGreen;
+                    row.SubItems.Add($"{edt.IntensityLower[i]}").ForeColor = colorBlue;
+                    row.SubItems.Add($"{edt.Intensity[i]}").ForeColor = colorRed;
+                    row.SubItems.Add($"{edt.IntensityUpper[i]}").ForeColor = colorGreen;
                     listView2.Items.Add(row);
                 }
             
