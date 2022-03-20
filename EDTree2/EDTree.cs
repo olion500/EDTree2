@@ -19,6 +19,7 @@ namespace EDTree2
         public double Percentage { get; set; }
         public double Zstep { get; set; }
         public RectStyle RectStyle { get; set; }
+        public CircleStyle CircleStyle { get; set; }
         
         // Functions.
         public double[] F { get; set; }
@@ -37,9 +38,6 @@ namespace EDTree2
         public RectanglePoint RectAverage { get; set; }
         public RectanglePoint RectMaximum { get; set; }
         
-        // Circle.
-        public RectanglePoint CircleLeft { get; set; }
-
         public EDTree()
         {
             Focus = null;
@@ -58,6 +56,7 @@ namespace EDTree2
             Percentage = 0.1;
             Zstep = 10;
             RectStyle = RectStyle.BaseLine;
+            CircleStyle = CircleStyle.None;
         }
 
         public void Calculate()

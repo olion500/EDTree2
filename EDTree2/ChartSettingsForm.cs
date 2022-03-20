@@ -22,6 +22,7 @@ namespace EDTree2
             textZStep.Text = edt.Zstep.ToString();
             ChooseRadioRectStyle(edt.RectStyle);
             ChooseFunctionRank(edt.Order);
+            ChooseRadioCircleStyle(edt.CircleStyle);
         }
 
         private void buttonOk_Click(object sender, EventArgs e)
@@ -127,6 +128,62 @@ namespace EDTree2
         {
             if (radioFunCubic.Checked)
                 edt.Order = 3;
+        }
+
+        private void ChooseRadioCircleStyle(CircleStyle style)
+        {
+            switch (style)
+            {
+                case CircleStyle.None:
+                    radioCircleNone.Checked = true;
+                    break;
+                case CircleStyle.Left:
+                    radioCircleLeft.Checked = true;
+                    break;
+                case CircleStyle.Right:
+                    radioCircleRight.Checked = true;
+                    break;
+                case CircleStyle.Average:
+                    radioCircleAverage.Checked = true;
+                    break;
+                case CircleStyle.Max:
+                    radioCircleMax.Checked = true;
+                    break;
+            }
+        }
+        
+        private void radioCircleNone_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioCircleNone.Checked)
+                edt.CircleStyle = CircleStyle.None;
+        }
+
+        private void radioCircleLeft_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioCircleLeft.Checked)
+                edt.CircleStyle = CircleStyle.Left;
+            
+        }
+
+        private void radioCircleRight_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioCircleRight.Checked)
+                edt.CircleStyle = CircleStyle.Right;
+            
+        }
+
+        private void radioCircleAverage_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioCircleAverage.Checked)
+                edt.CircleStyle = CircleStyle.Average;
+            
+        }
+
+        private void radioCircleMax_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioCircleMax.Checked)
+                edt.CircleStyle = CircleStyle.Max;
+            
         }
     }
 }

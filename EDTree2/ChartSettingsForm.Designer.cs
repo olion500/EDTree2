@@ -32,6 +32,12 @@ namespace EDTree2
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.radioCircleMax = new System.Windows.Forms.RadioButton();
+            this.radioCircleAverage = new System.Windows.Forms.RadioButton();
+            this.radioCircleRight = new System.Windows.Forms.RadioButton();
+            this.radioCircleLeft = new System.Windows.Forms.RadioButton();
+            this.radioCircleNone = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.radioFunCubic = new System.Windows.Forms.RadioButton();
             this.radioFunQuadratic = new System.Windows.Forms.RadioButton();
@@ -51,6 +57,7 @@ namespace EDTree2
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonOk = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupValueType.SuspendLayout();
             this.groupRectStyle.SuspendLayout();
@@ -60,6 +67,7 @@ namespace EDTree2
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.groupBox3);
             this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.textZStep);
@@ -67,15 +75,89 @@ namespace EDTree2
             this.groupBox1.Controls.Add(this.groupRectStyle);
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(330, 222);
+            this.groupBox1.Size = new System.Drawing.Size(330, 287);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.radioCircleMax);
+            this.groupBox3.Controls.Add(this.radioCircleAverage);
+            this.groupBox3.Controls.Add(this.radioCircleRight);
+            this.groupBox3.Controls.Add(this.radioCircleLeft);
+            this.groupBox3.Controls.Add(this.radioCircleNone);
+            this.groupBox3.Location = new System.Drawing.Point(6, 61);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(318, 46);
+            this.groupBox3.TabIndex = 3;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Circle Style";
+            // 
+            // radioCircleMax
+            // 
+            this.radioCircleMax.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.radioCircleMax.Location = new System.Drawing.Point(256, 16);
+            this.radioCircleMax.Name = "radioCircleMax";
+            this.radioCircleMax.Size = new System.Drawing.Size(56, 24);
+            this.radioCircleMax.TabIndex = 4;
+            this.radioCircleMax.TabStop = true;
+            this.radioCircleMax.Text = "Max";
+            this.radioCircleMax.UseVisualStyleBackColor = true;
+            this.radioCircleMax.CheckedChanged += new System.EventHandler(this.radioCircleMax_CheckedChanged);
+            // 
+            // radioCircleAverage
+            // 
+            this.radioCircleAverage.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.radioCircleAverage.Location = new System.Drawing.Point(178, 16);
+            this.radioCircleAverage.Name = "radioCircleAverage";
+            this.radioCircleAverage.Size = new System.Drawing.Size(72, 24);
+            this.radioCircleAverage.TabIndex = 3;
+            this.radioCircleAverage.TabStop = true;
+            this.radioCircleAverage.Text = "Average";
+            this.radioCircleAverage.UseVisualStyleBackColor = true;
+            this.radioCircleAverage.CheckedChanged += new System.EventHandler(this.radioCircleAverage_CheckedChanged);
+            // 
+            // radioCircleRight
+            // 
+            this.radioCircleRight.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.radioCircleRight.Location = new System.Drawing.Point(116, 16);
+            this.radioCircleRight.Name = "radioCircleRight";
+            this.radioCircleRight.Size = new System.Drawing.Size(56, 24);
+            this.radioCircleRight.TabIndex = 2;
+            this.radioCircleRight.TabStop = true;
+            this.radioCircleRight.Text = "Right";
+            this.radioCircleRight.UseVisualStyleBackColor = true;
+            this.radioCircleRight.CheckedChanged += new System.EventHandler(this.radioCircleRight_CheckedChanged);
+            // 
+            // radioCircleLeft
+            // 
+            this.radioCircleLeft.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.radioCircleLeft.Location = new System.Drawing.Point(69, 16);
+            this.radioCircleLeft.Name = "radioCircleLeft";
+            this.radioCircleLeft.Size = new System.Drawing.Size(60, 24);
+            this.radioCircleLeft.TabIndex = 1;
+            this.radioCircleLeft.TabStop = true;
+            this.radioCircleLeft.Text = "Left";
+            this.radioCircleLeft.UseVisualStyleBackColor = true;
+            this.radioCircleLeft.CheckedChanged += new System.EventHandler(this.radioCircleLeft_CheckedChanged);
+            // 
+            // radioCircleNone
+            // 
+            this.radioCircleNone.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.radioCircleNone.Location = new System.Drawing.Point(6, 16);
+            this.radioCircleNone.Name = "radioCircleNone";
+            this.radioCircleNone.Size = new System.Drawing.Size(66, 24);
+            this.radioCircleNone.TabIndex = 0;
+            this.radioCircleNone.TabStop = true;
+            this.radioCircleNone.Text = "None";
+            this.radioCircleNone.UseVisualStyleBackColor = true;
+            this.radioCircleNone.CheckedChanged += new System.EventHandler(this.radioCircleNone_CheckedChanged);
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.radioFunCubic);
             this.groupBox2.Controls.Add(this.radioFunQuadratic);
-            this.groupBox2.Location = new System.Drawing.Point(6, 61);
+            this.groupBox2.Location = new System.Drawing.Point(6, 122);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(318, 43);
             this.groupBox2.TabIndex = 6;
@@ -107,7 +189,7 @@ namespace EDTree2
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
-            this.label1.Location = new System.Drawing.Point(18, 126);
+            this.label1.Location = new System.Drawing.Point(15, 185);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(79, 18);
             this.label1.TabIndex = 3;
@@ -115,7 +197,7 @@ namespace EDTree2
             // 
             // textZStep
             // 
-            this.textZStep.Location = new System.Drawing.Point(122, 123);
+            this.textZStep.Location = new System.Drawing.Point(122, 182);
             this.textZStep.Name = "textZStep";
             this.textZStep.Size = new System.Drawing.Size(100, 20);
             this.textZStep.TabIndex = 2;
@@ -125,7 +207,7 @@ namespace EDTree2
             // 
             this.groupValueType.Controls.Add(this.radioButton5);
             this.groupValueType.Controls.Add(this.radioButton4);
-            this.groupValueType.Location = new System.Drawing.Point(6, 163);
+            this.groupValueType.Location = new System.Drawing.Point(6, 227);
             this.groupValueType.Name = "groupValueType";
             this.groupValueType.Size = new System.Drawing.Size(318, 54);
             this.groupValueType.TabIndex = 1;
@@ -214,7 +296,7 @@ namespace EDTree2
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(424, 229);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(424, 293);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // panel1
@@ -226,12 +308,12 @@ namespace EDTree2
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(339, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(82, 223);
+            this.panel1.Size = new System.Drawing.Size(82, 287);
             this.panel1.TabIndex = 3;
             // 
             // buttonReset
             // 
-            this.buttonReset.Location = new System.Drawing.Point(4, 163);
+            this.buttonReset.Location = new System.Drawing.Point(3, 224);
             this.buttonReset.Name = "buttonReset";
             this.buttonReset.Size = new System.Drawing.Size(75, 25);
             this.buttonReset.TabIndex = 3;
@@ -241,7 +323,7 @@ namespace EDTree2
             // 
             // buttonApply
             // 
-            this.buttonApply.Location = new System.Drawing.Point(4, 194);
+            this.buttonApply.Location = new System.Drawing.Point(3, 255);
             this.buttonApply.Name = "buttonApply";
             this.buttonApply.Size = new System.Drawing.Size(75, 23);
             this.buttonApply.TabIndex = 2;
@@ -273,7 +355,7 @@ namespace EDTree2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(424, 229);
+            this.ClientSize = new System.Drawing.Size(424, 293);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -282,6 +364,7 @@ namespace EDTree2
             this.Text = "FmAnalysis_EDTreeData";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupValueType.ResumeLayout(false);
             this.groupRectStyle.ResumeLayout(false);
@@ -289,6 +372,13 @@ namespace EDTree2
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.RadioButton radioCircleRight;
+        private System.Windows.Forms.RadioButton radioCircleLeft;
+        private System.Windows.Forms.RadioButton radioCircleNone;
+        private System.Windows.Forms.RadioButton radioCircleAverage;
+        private System.Windows.Forms.RadioButton radioCircleMax;
 
         private System.Windows.Forms.RadioButton radioFunQuadratic;
         private System.Windows.Forms.RadioButton radioFunCubic;

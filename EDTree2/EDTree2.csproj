@@ -60,6 +60,7 @@
         <Compile Include="ChartSettingsForm.Designer.cs">
           <DependentUpon>ChartSettingsForm.cs</DependentUpon>
         </Compile>
+        <Compile Include="CircleStyle.cs" />
         <Compile Include="Delegates.cs" />
         <Compile Include="EDTree.cs" />
         <Compile Include="InputParser.cs" />

@@ -231,8 +231,24 @@ namespace EDTree2
                 {
                     DrawRect(e, edt.RectMaximum, colorRed);
                 }
+
+                var circleColor = Color.Black;
+                switch (edt.CircleStyle)
+                {
+                    case CircleStyle.Left:
+                        DrawCircle(e, edt.RectLeft, circleColor);
+                        break;
+                    case CircleStyle.Right:
+                        DrawCircle(e, edt.RectRight, circleColor);
+                        break;
+                    case CircleStyle.Average:
+                        DrawCircle(e, edt.RectAverage, circleColor);
+                        break;
+                    case CircleStyle.Max:
+                        DrawCircle(e, edt.RectMaximum, circleColor);
+                        break;
+                }
                 
-                DrawCircle(e, edt.RectLeft, Color.Black);
             }
         }
 
