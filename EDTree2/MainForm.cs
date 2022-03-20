@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using MathNet.Numerics;
 
 namespace EDTree2
 {
@@ -233,6 +231,8 @@ namespace EDTree2
                 {
                     DrawRect(e, edt.RectMaximum, colorRed);
                 }
+                
+                DrawCircle(e, edt.RectLeft, Color.Black);
             }
         }
 
@@ -244,6 +244,22 @@ namespace EDTree2
             var b = (float) mainChart.ChartAreas[0].AxisY.ValueToPixelPosition(rp.B);
             var rect = RectangleF.FromLTRB(Math.Min(l, r), Math.Min(t, b), Math.Max(l, r),Math.Max(t, b));
             e.ChartGraphics.Graphics.DrawRectangle(new Pen(color), rect.X, rect.Y, rect.Width, rect.Height);
+        }
+
+        private void DrawCircle(ChartPaintEventArgs e, RectanglePoint rp, Color color)
+        {
+            var l = (float) mainChart.ChartAreas[0].AxisX.ValueToPixelPosition(rp.L);
+            var t = (float) mainChart.ChartAreas[0].AxisY.ValueToPixelPosition(rp.T);
+            var r = (float) mainChart.ChartAreas[0].AxisX.ValueToPixelPosition(rp.R);
+            var b = (float) mainChart.ChartAreas[0].AxisY.ValueToPixelPosition(rp.B);
+            var rect = RectangleF.FromLTRB(Math.Min(l, r), Math.Min(t, b), Math.Max(l, r),Math.Max(t, b));
+            
+            PointF pl = new PointF(rect.X, rect.Y);
+            PointF pr = new PointF(rect.X + rect.Width, rect.Y);
+            PointF pb = new PointF(rect.X + rect.Width / 2, rect.Y + rect.Height);
+            var pc = Utils.FindCircumcenter(pl, pr, pb);
+            var radius = Utils.PointDistance(pc, pl);
+            e.ChartGraphics.Graphics.DrawEllipse(new Pen(color), (float) (pc.X - radius), (float) (pc.Y - radius), (float) radius * 2, (float)radius * 2);
         }
 
         private void buttonSetting_Click(object sender, EventArgs e)

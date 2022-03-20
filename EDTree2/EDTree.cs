@@ -36,6 +36,9 @@ namespace EDTree2
         public RectanglePoint RectRight { get; set; }
         public RectanglePoint RectAverage { get; set; }
         public RectanglePoint RectMaximum { get; set; }
+        
+        // Circle.
+        public RectanglePoint CircleLeft { get; set; }
 
         public EDTree()
         {
@@ -60,10 +63,10 @@ namespace EDTree2
         public void Calculate()
         {
             CalculateLines();
-            CalculateRectangles();
+            CalculateShapes();
         }
 
-        private void CalculateRectangles()
+        private void CalculateShapes()
         {
             double l = -Zstep;
             double t = Utils.LinearF(Fl, l);
