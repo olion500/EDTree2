@@ -28,6 +28,7 @@ namespace EDTree2
         private Color colorBlue = Color.MediumBlue;
         private Color colorRed = Color.OrangeRed;
         private Color colorCircle = Color.Chocolate;
+        private Color colorBlack = Color.Black;
         private Color colorEmpty = Color.Empty;
         
         public Form1()
@@ -237,12 +238,9 @@ namespace EDTree2
                 }
                 
                 // Add label on the each line.
-                
                 PutChartNameOnPoint(baseChart.Points.Last(), edt.Header[2], colorRed);
                 PutChartNameOnPoint(upperChart.Points.Last(), edt.Header[3], colorGreen);
                 PutChartNameOnPoint(lowerChart.Points.Last(), edt.Header[1], colorBlue);
-
-
 
             }
             else if (CurrentScreen == ChartScreen.Defocus || CurrentScreen == ChartScreen.Threshold)
@@ -310,6 +308,16 @@ namespace EDTree2
                     case CircleStyle.Max:
                         DrawCircle(e, edt.EllipseMaximum, colorCircle);
                         break;
+                }
+                
+            } 
+            else if (CurrentScreen == ChartScreen.Defocus || CurrentScreen == ChartScreen.Threshold)
+            {
+                var acd = (CurrentScreen == ChartScreen.Defocus) ? acdDefocus : acdThreshold;
+
+                foreach (var (f, i) in acd.Fs.Select((item, index) => (item, index)))
+                {
+                    DrawText(e, Utils.PolynomialString(f) + ",  R² : " + acd.Rs[i].ToString("0.###") , colorBlack, i+1);
                 }
                 
             }

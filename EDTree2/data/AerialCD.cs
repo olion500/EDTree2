@@ -17,6 +17,7 @@ namespace EDTree2
         
         public List<double> X { get; set; }
         public List<double[]> Fs { get; set; }
+        public List<double> Rs { get; set; }
 
         public AerialCD()
         {
@@ -24,6 +25,7 @@ namespace EDTree2
 
             X = new List<double>();
             Fs = new List<double[]>();
+            Rs = new List<double>();
         }
 
         public void Calculate()
@@ -40,6 +42,14 @@ namespace EDTree2
                 var y = Input.Data[i].ToArray();
                 var f = Fit.Polynomial(Input.Data[0].ToArray(), y, Order);
                 Fs.Add(f);
+                
+                
+            }
+            
+            for (int i=0; i<Fs.Count; i++)
+            {
+                var r = GoodnessOfFit.RSquared(Input.Data[0].Select(x => Utils.LinearF(Fs[i], x)), Input.Data[i+1]);
+                Rs.Add(r);
             }
         }
     }
