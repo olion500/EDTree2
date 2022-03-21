@@ -44,8 +44,8 @@ namespace EDTree2
             this.label1 = new System.Windows.Forms.Label();
             this.textZStep = new System.Windows.Forms.TextBox();
             this.groupValueType = new System.Windows.Forms.GroupBox();
-            this.radioButton5 = new System.Windows.Forms.RadioButton();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
+            this.radioLog = new System.Windows.Forms.RadioButton();
+            this.radioIntensity = new System.Windows.Forms.RadioButton();
             this.groupRectStyle = new System.Windows.Forms.GroupBox();
             this.radioRectStyleMax = new System.Windows.Forms.RadioButton();
             this.radioRectStyleAverage = new System.Windows.Forms.RadioButton();
@@ -205,8 +205,8 @@ namespace EDTree2
             // 
             // groupValueType
             // 
-            this.groupValueType.Controls.Add(this.radioButton5);
-            this.groupValueType.Controls.Add(this.radioButton4);
+            this.groupValueType.Controls.Add(this.radioLog);
+            this.groupValueType.Controls.Add(this.radioIntensity);
             this.groupValueType.Location = new System.Drawing.Point(6, 227);
             this.groupValueType.Name = "groupValueType";
             this.groupValueType.Size = new System.Drawing.Size(318, 54);
@@ -214,27 +214,29 @@ namespace EDTree2
             this.groupValueType.TabStop = false;
             this.groupValueType.Text = "Y Value Type";
             // 
-            // radioButton5
+            // radioLog
             // 
-            this.radioButton5.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioButton5.Location = new System.Drawing.Point(195, 19);
-            this.radioButton5.Name = "radioButton5";
-            this.radioButton5.Size = new System.Drawing.Size(104, 24);
-            this.radioButton5.TabIndex = 4;
-            this.radioButton5.TabStop = true;
-            this.radioButton5.Text = "Log(1/Intensity)";
-            this.radioButton5.UseVisualStyleBackColor = true;
+            this.radioLog.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.radioLog.Location = new System.Drawing.Point(195, 19);
+            this.radioLog.Name = "radioLog";
+            this.radioLog.Size = new System.Drawing.Size(104, 24);
+            this.radioLog.TabIndex = 4;
+            this.radioLog.TabStop = true;
+            this.radioLog.Text = "Log(1/Intensity)";
+            this.radioLog.UseVisualStyleBackColor = true;
+            this.radioLog.CheckedChanged += new System.EventHandler(this.radioLog_CheckedChanged);
             // 
-            // radioButton4
+            // radioIntensity
             // 
-            this.radioButton4.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioButton4.Location = new System.Drawing.Point(6, 19);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(104, 24);
-            this.radioButton4.TabIndex = 3;
-            this.radioButton4.TabStop = true;
-            this.radioButton4.Text = "Intensity";
-            this.radioButton4.UseVisualStyleBackColor = true;
+            this.radioIntensity.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.radioIntensity.Location = new System.Drawing.Point(6, 19);
+            this.radioIntensity.Name = "radioIntensity";
+            this.radioIntensity.Size = new System.Drawing.Size(104, 24);
+            this.radioIntensity.TabIndex = 3;
+            this.radioIntensity.TabStop = true;
+            this.radioIntensity.Text = "Intensity";
+            this.radioIntensity.UseVisualStyleBackColor = true;
+            this.radioIntensity.CheckedChanged += new System.EventHandler(this.radioIntensity_CheckedChanged);
             // 
             // groupRectStyle
             // 
@@ -400,8 +402,8 @@ namespace EDTree2
         private System.Windows.Forms.RadioButton radioRectStyleAverage;
         private System.Windows.Forms.RadioButton radioRectStyleMax;
         private System.Windows.Forms.GroupBox groupValueType;
-        private System.Windows.Forms.RadioButton radioButton4;
-        private System.Windows.Forms.RadioButton radioButton5;
+        private System.Windows.Forms.RadioButton radioIntensity;
+        private System.Windows.Forms.RadioButton radioLog;
 
         private System.Windows.Forms.GroupBox groupRectStyle;
         private System.Windows.Forms.RadioButton radioRectStyleBase;

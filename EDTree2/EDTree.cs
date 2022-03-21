@@ -11,6 +11,8 @@ namespace EDTree2
 
         private double Step = 0.001;
         
+        public bool IsLogY { get; set; }
+        public string[] Header { get; set; }
         public double[] Focus { get; set; }
         public double[] Intensity { get; set; }
         public double[] IntensityUpper { get; set; }
@@ -37,7 +39,7 @@ namespace EDTree2
         public RectanglePoint RectRight { get; set; }
         public RectanglePoint RectAverage { get; set; }
         public RectanglePoint RectMaximum { get; set; }
-        
+
         public EDTree()
         {
             Focus = null;
@@ -57,6 +59,7 @@ namespace EDTree2
             Zstep = 10;
             RectStyle = RectStyle.BaseLine;
             CircleStyle = CircleStyle.None;
+            IsLogY = false;
         }
 
         public void Calculate()
@@ -103,8 +106,6 @@ namespace EDTree2
             F = Fit.Polynomial(Focus, Intensity, Order);
             Fu = Fit.Polynomial(Focus, IntensityUpper, Order);
             Fl = Fit.Polynomial(Focus, IntensityLower, Order);
-            // Fu = Utils.MultiplyArray(F, (1 + Percentage));
-            // Fl = Utils.MultiplyArray(F, (1 - Percentage));
 
             PointX.Clear();
             PointBase.Clear();

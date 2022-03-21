@@ -42,6 +42,7 @@ namespace EDTree2
         {
             // Fetch data.
             var intensityInput = InputParser.Parse(filename_intensity);
+            edt.Header = intensityInput.Header;
             edt.Focus = intensityInput.Data[0].ToArray();
             edt.IntensityLower = intensityInput.Data[1].ToArray();
             edt.Intensity = intensityInput.Data[2].ToArray();
@@ -121,11 +122,11 @@ namespace EDTree2
                     row.SubItems.Add($"{edt.IntensityUpper[i]}").ForeColor = colorGreen;
                     listView2.Items.Add(row);
                 }
-            
-                listView2.Columns.Add("Focus", 60);
-                listView2.Columns.Add($"-{edt.Percentage*100}%", 120);
-                listView2.Columns.Add("0%", 120);
-                listView2.Columns.Add($"+{edt.Percentage*100}%", 120);
+
+                foreach (var head in edt.Header)
+                {
+                    listView2.Columns.Add(head, 100);
+                }
             } 
             else if (CurrentScreen == ChartScreen.Defocus || CurrentScreen == ChartScreen.Threshold)
             {
@@ -159,17 +160,19 @@ namespace EDTree2
             mainChart.Series.Clear();
             
             // chart setting.
-            // mainChart.ChartAreas[0].AxisX.Interval = 5;
             mainChart.ChartAreas[0].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
             mainChart.ChartAreas[0].AxisY.IsStartedFromZero = false;
             mainChart.ChartAreas[0].AxisY.IntervalAutoMode = IntervalAutoMode.VariableCount;
             mainChart.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
             mainChart.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
 
+            mainChart.ChartAreas[0].AxisY.LogarithmBase = 2.0;
+            mainChart.ChartAreas[0].AxisY.IsLogarithmic = false;
+
             if (CurrentScreen == ChartScreen.Intensity)
             {
                 // chart setting
-                
+                mainChart.ChartAreas[0].AxisY.IsLogarithmic = edt.IsLogY;           
                 mainChart.ChartAreas[0].AxisX.Title = "Z step(um)";
                 mainChart.ChartAreas[0].AxisX.Minimum = edt.Focus.Min();
                 mainChart.ChartAreas[0].AxisY.Title = "Intensity";

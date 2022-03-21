@@ -23,6 +23,7 @@ namespace EDTree2
             ChooseRadioRectStyle(edt.RectStyle);
             ChooseFunctionRank(edt.Order);
             ChooseRadioCircleStyle(edt.CircleStyle);
+            ChooseRadioLog(edt.IsLogY);
         }
 
         private void buttonOk_Click(object sender, EventArgs e)
@@ -184,6 +185,27 @@ namespace EDTree2
             if (radioCircleMax.Checked)
                 edt.CircleStyle = CircleStyle.Max;
             
+        }
+
+        private void ChooseRadioLog(bool isLog)
+        {
+            if (edt.IsLogY)
+                radioLog.Checked = true;
+            else
+            {
+                radioIntensity.Checked = true;
+            }
+        }
+        private void radioIntensity_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioIntensity.Checked)
+                edt.IsLogY = false;
+        }
+
+        private void radioLog_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioLog.Checked)
+                edt.IsLogY = true;
         }
     }
 }
