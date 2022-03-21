@@ -28,6 +28,11 @@ namespace EDTree2
         public double[] Fu { get; set; }
         public double[] Fl { get; set; }
         
+        // R Squares.
+        public double Rs { get; set; }
+        public double Rsu { get; set; }
+        public double Rsl { get; set; }
+        
         // Points.
         public List<double> PointBase { get; set; }
         public List<double> PointUpper { get; set; }
@@ -129,6 +134,10 @@ namespace EDTree2
             F = Fit.Polynomial(Focus, Intensity, Order);
             Fu = Fit.Polynomial(Focus, IntensityUpper, Order);
             Fl = Fit.Polynomial(Focus, IntensityLower, Order);
+
+            Rs = GoodnessOfFit.RSquared(Focus.Select(x => Utils.LinearF(F, x)), Intensity);
+            Rsu = GoodnessOfFit.RSquared(Focus.Select(x => Utils.LinearF(Fu, x)), IntensityUpper);
+            Rsl = GoodnessOfFit.RSquared(Focus.Select(x => Utils.LinearF(Fl, x)), IntensityLower);
 
             PointX.Clear();
             PointBase.Clear();
