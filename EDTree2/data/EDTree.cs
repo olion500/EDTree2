@@ -13,6 +13,8 @@ namespace EDTree2
         
         public bool IsLogY { get; set; }
         public string[] Header { get; set; }
+        public string LabelX { get; set; }
+        public string LabelY { get; set; }
         public double[] Focus { get; set; }
         public double[] Intensity { get; set; }
         public double[] IntensityUpper { get; set; }

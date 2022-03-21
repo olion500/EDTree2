@@ -43,6 +43,8 @@ namespace EDTree2
         {
             // Fetch data.
             var intensityInput = InputParser.Parse(filename_intensity);
+            edt.LabelX = intensityInput.LabelX;
+            edt.LabelY = intensityInput.LabelY;
             edt.Header = intensityInput.Header;
             edt.Focus = intensityInput.Data[0].ToArray();
             edt.IntensityLower = intensityInput.Data[1].ToArray();
@@ -201,9 +203,9 @@ namespace EDTree2
             {
                 // chart setting
                 mainChart.ChartAreas[0].AxisY.IsLogarithmic = edt.IsLogY;           
-                mainChart.ChartAreas[0].AxisX.Title = "Z step(um)";
+                mainChart.ChartAreas[0].AxisX.Title = edt.LabelX;
                 mainChart.ChartAreas[0].AxisX.Minimum = edt.Focus.Min();
-                mainChart.ChartAreas[0].AxisY.Title = "Intensity";
+                mainChart.ChartAreas[0].AxisY.Title = edt.LabelY;
                 
                 // draw lines.
                 Series baseChart = mainChart.Series.Add("Base");
@@ -222,6 +224,15 @@ namespace EDTree2
                     upperChart.Points.AddXY(x.value, edt.PointUpper[x.index]);
                     lowerChart.Points.AddXY(x.value, edt.PointLower[x.index]);
                 }
+                
+                // Add label on the each line.
+                
+                PutChartNameOnPoint(baseChart.Points.Last(), edt.Header[2], colorRed);
+                PutChartNameOnPoint(upperChart.Points.Last(), edt.Header[3], colorGreen);
+                PutChartNameOnPoint(lowerChart.Points.Last(), edt.Header[1], colorBlue);
+
+
+
             }
             else if (CurrentScreen == ChartScreen.Defocus || CurrentScreen == ChartScreen.Threshold)
             {
@@ -242,6 +253,13 @@ namespace EDTree2
                     }
                 }
             }
+        }
+
+        private void PutChartNameOnPoint(DataPoint p, string label, Color color)
+        {
+            p.Label = label;
+            p.LabelForeColor = color;
+            p.Font = new Font(p.Font.FontFamily, 16);
         }
 
         private void MainChartOnPostPaint(object sender, ChartPaintEventArgs e)
