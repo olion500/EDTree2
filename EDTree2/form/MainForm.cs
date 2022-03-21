@@ -266,6 +266,10 @@ namespace EDTree2
         {
             if (CurrentScreen == ChartScreen.Intensity)
             {
+                DrawText(e, Utils.PolynomialString(edt.Fl) + ",  R² : " + edt.Rsl.ToString("0.###") , colorBlue, 1);
+                DrawText(e, Utils.PolynomialString(edt.F) + ",  R² : " + edt.Rs.ToString("0.###"), colorRed, 2);
+                DrawText(e, Utils.PolynomialString(edt.Fu) + ",  R² : " + edt.Rsu.ToString("0.###"), colorGreen, 3);
+                
                 DrawRect(e, edt.RectLeft, colorBlue);
                 DrawRect(e, edt.RectRight, colorGreen);
                 if (edt.RectStyle == RectStyle.BaseLine)
@@ -298,6 +302,11 @@ namespace EDTree2
                 }
                 
             }
+        }
+
+        private void DrawText(ChartPaintEventArgs e, string text, Color color, int n)
+        {
+            e.ChartGraphics.Graphics.DrawString(text, new Font("Arial", 8), new SolidBrush(color), 100, 20 * n);
         }
 
         private void DrawRect(ChartPaintEventArgs e, RectanglePoint rp, Color color)

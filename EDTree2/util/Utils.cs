@@ -42,6 +42,21 @@ namespace EDTree2
             return result;
         }
 
+        public static string PolynomialString(IEnumerable<double> f)
+        {
+            var postfix = new [] {"", "x", "x²", "x³"};
+            var pi = 0;
+            
+            string res = "";
+            foreach (var v in f)
+            {
+                var op = (v < 0) ? "-" : "+";
+                res = op + v.ToString("0.######") + postfix[pi] + res;
+                pi++;
+            }
+            return res.TrimStart('+');
+        }
+
         public static PointF FindCircumcenter(PointF a, PointF b, PointF c)
         {
             var d = 2 * (a.X * (b.Y - c.Y) + b.X * (c.Y - a.Y) + c.X * (a.Y - b.Y));
