@@ -36,11 +36,12 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.listView2 = new System.Windows.Forms.ListView();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.buttonHome = new System.Windows.Forms.Button();
-            this.buttonSetting = new System.Windows.Forms.Button();
-            this.buttonThreshold = new System.Windows.Forms.Button();
-            this.buttonDefocus = new System.Windows.Forms.Button();
             this.buttonExport = new System.Windows.Forms.Button();
+            this.buttonThreshold = new System.Windows.Forms.Button();
+            this.buttonHome = new System.Windows.Forms.Button();
+            this.buttonDefocus = new System.Windows.Forms.Button();
+            this.buttonSetting = new System.Windows.Forms.Button();
+            this.buttonImport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize) (this.mainChart)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -100,6 +101,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.buttonImport);
             this.panel1.Controls.Add(this.buttonExport);
             this.panel1.Controls.Add(this.buttonThreshold);
             this.panel1.Controls.Add(this.buttonHome);
@@ -111,27 +113,16 @@
             this.panel1.Size = new System.Drawing.Size(58, 755);
             this.panel1.TabIndex = 4;
             // 
-            // buttonHome
+            // buttonExport
             // 
-            this.buttonHome.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonHome.BackgroundImage")));
-            this.buttonHome.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonHome.Location = new System.Drawing.Point(0, 3);
-            this.buttonHome.Name = "buttonHome";
-            this.buttonHome.Size = new System.Drawing.Size(58, 58);
-            this.buttonHome.TabIndex = 4;
-            this.buttonHome.UseVisualStyleBackColor = true;
-            this.buttonHome.Click += new System.EventHandler(this.buttonHome_Click);
-            // 
-            // buttonSetting
-            // 
-            this.buttonSetting.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonSetting.BackgroundImage")));
-            this.buttonSetting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonSetting.Location = new System.Drawing.Point(0, 67);
-            this.buttonSetting.Name = "buttonSetting";
-            this.buttonSetting.Size = new System.Drawing.Size(58, 58);
-            this.buttonSetting.TabIndex = 3;
-            this.buttonSetting.UseVisualStyleBackColor = true;
-            this.buttonSetting.Click += new System.EventHandler(this.buttonSetting_Click);
+            this.buttonExport.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonExport.BackgroundImage")));
+            this.buttonExport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonExport.Location = new System.Drawing.Point(0, 323);
+            this.buttonExport.Name = "buttonExport";
+            this.buttonExport.Size = new System.Drawing.Size(58, 58);
+            this.buttonExport.TabIndex = 7;
+            this.buttonExport.UseVisualStyleBackColor = true;
+            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
             // 
             // buttonThreshold
             // 
@@ -144,6 +135,17 @@
             this.buttonThreshold.UseVisualStyleBackColor = true;
             this.buttonThreshold.Click += new System.EventHandler(this.buttonThreshold_Click);
             // 
+            // buttonHome
+            // 
+            this.buttonHome.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonHome.BackgroundImage")));
+            this.buttonHome.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonHome.Location = new System.Drawing.Point(0, 3);
+            this.buttonHome.Name = "buttonHome";
+            this.buttonHome.Size = new System.Drawing.Size(58, 58);
+            this.buttonHome.TabIndex = 4;
+            this.buttonHome.UseVisualStyleBackColor = true;
+            this.buttonHome.Click += new System.EventHandler(this.buttonHome_Click);
+            // 
             // buttonDefocus
             // 
             this.buttonDefocus.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonDefocus.BackgroundImage")));
@@ -155,16 +157,27 @@
             this.buttonDefocus.UseVisualStyleBackColor = true;
             this.buttonDefocus.Click += new System.EventHandler(this.buttonDefocus_Click);
             // 
-            // buttonExport
+            // buttonSetting
             // 
-            this.buttonExport.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonExport.BackgroundImage")));
-            this.buttonExport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonExport.Location = new System.Drawing.Point(0, 259);
-            this.buttonExport.Name = "buttonExport";
-            this.buttonExport.Size = new System.Drawing.Size(58, 58);
-            this.buttonExport.TabIndex = 7;
-            this.buttonExport.UseVisualStyleBackColor = true;
-            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
+            this.buttonSetting.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonSetting.BackgroundImage")));
+            this.buttonSetting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonSetting.Location = new System.Drawing.Point(0, 67);
+            this.buttonSetting.Name = "buttonSetting";
+            this.buttonSetting.Size = new System.Drawing.Size(58, 58);
+            this.buttonSetting.TabIndex = 3;
+            this.buttonSetting.UseVisualStyleBackColor = true;
+            this.buttonSetting.Click += new System.EventHandler(this.buttonSetting_Click);
+            // 
+            // buttonImport
+            // 
+            this.buttonImport.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonImport.BackgroundImage")));
+            this.buttonImport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonImport.Location = new System.Drawing.Point(0, 259);
+            this.buttonImport.Name = "buttonImport";
+            this.buttonImport.Size = new System.Drawing.Size(58, 58);
+            this.buttonImport.TabIndex = 8;
+            this.buttonImport.UseVisualStyleBackColor = true;
+            this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
             // 
             // Form1
             // 
@@ -182,6 +195,8 @@
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.Button buttonImport;
 
         private System.Windows.Forms.Button buttonExport;
 

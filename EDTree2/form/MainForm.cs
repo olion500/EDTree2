@@ -14,9 +14,9 @@ namespace EDTree2
     }
     public partial class Form1 : Form
     {
-        private const string filename_intensity = "input_intensity.txt";
-        private const string filename_defocus = "input_defocus.txt";
-        private const string filename_threshold = "input_threshold.txt";
+        private string filename_intensity = "input_intensity.txt";
+        private string filename_defocus = "input_defocus.txt";
+        private string filename_threshold = "input_threshold.txt";
         
         private EDTree edt;
         private AerialCD acdDefocus;
@@ -32,10 +32,6 @@ namespace EDTree2
         
         public Form1()
         {
-            edt = new EDTree();
-            acdDefocus = new AerialCD();
-            acdThreshold = new AerialCD();
-            
             // init screen.
             CurrentScreen = ChartScreen.Intensity;
             InitializeComponent();
@@ -43,24 +39,37 @@ namespace EDTree2
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Fetch data.
-            var intensityInput = InputParser.Parse(filename_intensity);
-            edt.LabelX = intensityInput.LabelX;
-            edt.LabelY = intensityInput.LabelY;
-            edt.Header = intensityInput.Header;
-            edt.Focus = intensityInput.Data[0].ToArray();
-            edt.IntensityLower = intensityInput.Data[1].ToArray();
-            edt.Intensity = intensityInput.Data[2].ToArray();
-            edt.IntensityUpper = intensityInput.Data[3].ToArray();
-            edt.Calculate();
-
-            acdDefocus.Input = InputParser.Parse(filename_defocus);
-            acdDefocus.Calculate();
-            
-            acdThreshold.Input = InputParser.Parse(filename_threshold);
-            acdThreshold.Calculate();
+            LoadData();
             
             DrawScreen();
+        }
+
+        private void LoadData()
+        {
+            var intensityInput = InputParser.Parse(filename_intensity);
+            edt = new EDTree
+            {
+                LabelX = intensityInput.LabelX,
+                LabelY = intensityInput.LabelY,
+                Header = intensityInput.Header,
+                Focus = intensityInput.Data[0].ToArray(),
+                IntensityLower = intensityInput.Data[1].ToArray(),
+                Intensity = intensityInput.Data[2].ToArray(),
+                IntensityUpper = intensityInput.Data[3].ToArray()
+            };
+            edt.Calculate();
+
+            acdDefocus = new AerialCD
+            {
+                Input = InputParser.Parse(filename_defocus)
+            };
+            acdDefocus.Calculate();
+            
+            acdThreshold = new AerialCD
+            {
+                Input = InputParser.Parse(filename_threshold)
+            };
+            acdThreshold.Calculate();
         }
 
         private void DrawScreen()
@@ -431,6 +440,37 @@ namespace EDTree2
 
             sw.Close();
             fs.Close();
+        }
+
+        private void buttonImport_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openDlg = new OpenFileDialog()
+            {
+                Filter = "Text files (*.txt)|*.txt",
+            };
+            if (openDlg.ShowDialog() == DialogResult.Cancel)
+            {
+                return;
+            }
+
+            var filename = openDlg.FileName;
+            switch (CurrentScreen)
+            {
+                case ChartScreen.Intensity:
+                    filename_intensity = filename;
+                    break;
+                case ChartScreen.Defocus:
+                    filename_defocus = filename;
+                    break;
+                case ChartScreen.Threshold:
+                    filename_threshold = filename;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            LoadData();
+            DrawScreen();
         }
     }
 }
