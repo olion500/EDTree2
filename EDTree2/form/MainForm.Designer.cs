@@ -38,13 +38,12 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.buttonHome = new System.Windows.Forms.Button();
             this.buttonSetting = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.buttonThreshold = new System.Windows.Forms.Button();
             this.buttonDefocus = new System.Windows.Forms.Button();
+            this.buttonExport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize) (this.mainChart)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainChart
@@ -78,7 +77,6 @@
             this.tableLayoutPanel1.Controls.Add(this.listView1, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.listView2, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panel2, 2, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -102,11 +100,15 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.buttonExport);
+            this.panel1.Controls.Add(this.buttonThreshold);
             this.panel1.Controls.Add(this.buttonHome);
+            this.panel1.Controls.Add(this.buttonDefocus);
             this.panel1.Controls.Add(this.buttonSetting);
             this.panel1.Location = new System.Drawing.Point(1123, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(58, 163);
+            this.tableLayoutPanel1.SetRowSpan(this.panel1, 3);
+            this.panel1.Size = new System.Drawing.Size(58, 755);
             this.panel1.TabIndex = 4;
             // 
             // buttonHome
@@ -131,20 +133,11 @@
             this.buttonSetting.UseVisualStyleBackColor = true;
             this.buttonSetting.Click += new System.EventHandler(this.buttonSetting_Click);
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.buttonThreshold);
-            this.panel2.Controls.Add(this.buttonDefocus);
-            this.panel2.Location = new System.Drawing.Point(1123, 172);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(58, 332);
-            this.panel2.TabIndex = 5;
-            // 
             // buttonThreshold
             // 
             this.buttonThreshold.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonThreshold.BackgroundImage")));
             this.buttonThreshold.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonThreshold.Location = new System.Drawing.Point(0, 67);
+            this.buttonThreshold.Location = new System.Drawing.Point(0, 195);
             this.buttonThreshold.Name = "buttonThreshold";
             this.buttonThreshold.Size = new System.Drawing.Size(58, 58);
             this.buttonThreshold.TabIndex = 6;
@@ -155,12 +148,23 @@
             // 
             this.buttonDefocus.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonDefocus.BackgroundImage")));
             this.buttonDefocus.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonDefocus.Location = new System.Drawing.Point(0, 3);
+            this.buttonDefocus.Location = new System.Drawing.Point(0, 131);
             this.buttonDefocus.Name = "buttonDefocus";
             this.buttonDefocus.Size = new System.Drawing.Size(58, 58);
             this.buttonDefocus.TabIndex = 5;
             this.buttonDefocus.UseVisualStyleBackColor = true;
             this.buttonDefocus.Click += new System.EventHandler(this.buttonDefocus_Click);
+            // 
+            // buttonExport
+            // 
+            this.buttonExport.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonExport.BackgroundImage")));
+            this.buttonExport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonExport.Location = new System.Drawing.Point(0, 259);
+            this.buttonExport.Name = "buttonExport";
+            this.buttonExport.Size = new System.Drawing.Size(58, 58);
+            this.buttonExport.TabIndex = 7;
+            this.buttonExport.UseVisualStyleBackColor = true;
+            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
             // 
             // Form1
             // 
@@ -176,13 +180,12 @@
             ((System.ComponentModel.ISupportInitialize) (this.mainChart)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
         }
 
-        private System.Windows.Forms.Button buttonDefocus;
+        private System.Windows.Forms.Button buttonExport;
 
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button buttonDefocus;
 
         private System.Windows.Forms.Button buttonThreshold;
 

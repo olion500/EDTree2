@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -380,6 +382,55 @@ namespace EDTree2
         private bool ShouldScreenChanged(ChartScreen changeScreen)
         {
             return (CurrentScreen != changeScreen);
+        }
+
+        private void buttonExport_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveDlg = new SaveFileDialog();
+            saveDlg.Filter = "csv (*.csv)|*.csv|txt (*txt)|*.txt|All files (*.*)|*.*";
+            if (saveDlg.ShowDialog() == DialogResult.Cancel)
+            {
+                return;
+            }
+
+            FileStream fs = new FileStream(saveDlg.FileName, FileMode.Create, FileAccess.Write);
+            StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
+
+            if (CurrentScreen == ChartScreen.Intensity)
+            {
+                // write columns.
+                string line = string.Join(",", edt.Header);
+                sw.WriteLine(line);
+
+                // write data.
+                for (double x = edt.Focus.Min(); x <= edt.Focus.Max(); x += 0.1)
+                {
+                    x = Math.Round(x, 3);
+                    line = String.Join(",", new[] {x, Utils.LinearF(edt.Fl, x), Utils.LinearF(edt.F, x), Utils.LinearF(edt.Fu, x)});
+                    sw.WriteLine(line);
+                }
+            }
+            else if (CurrentScreen == ChartScreen.Defocus || CurrentScreen == ChartScreen.Threshold)
+            {
+                var acd = (CurrentScreen == ChartScreen.Defocus) ? acdDefocus : acdThreshold;
+
+                // write columns.
+                string line = string.Join(",", acd.Input.Header);
+                sw.WriteLine(line);
+                
+                var start = Math.Min(acd.Input.Data[0].First(), acd.Input.Data[0].Last());
+                var end = Math.Max(acd.Input.Data[0].First(), acd.Input.Data[0].Last());
+                for (double x = start; x <= end; x += 0.1)
+                {
+                    x = Math.Round(x, 3);
+                    var y = acd.Fs.Select(f => Utils.LinearF(f, x));
+                    line = string.Join(",", new[] {x}.Concat(y));
+                    sw.WriteLine(line);
+                }
+            }
+
+            sw.Close();
+            fs.Close();
         }
     }
 }
