@@ -25,6 +25,7 @@ namespace EDTree2
         private Color colorGreen = Color.Green;
         private Color colorBlue = Color.MediumBlue;
         private Color colorRed = Color.OrangeRed;
+        private Color colorCircle = Color.Chocolate;
         private Color colorEmpty = Color.Empty;
         
         public Form1()
@@ -87,6 +88,7 @@ namespace EDTree2
                 item.SubItems.Add($"{edt.RectRight.Size}(가로:{edt.RectRight.Width}, 세로:{edt.RectRight.Height})");
                 listView1.Items.Add(item);
 
+                // rects.
                 if (edt.RectStyle == RectStyle.Average)
                 {
                     item = new ListViewItem("Red(Average)");
@@ -99,6 +101,32 @@ namespace EDTree2
                     item = new ListViewItem("Red(Maximum)");
                     item.ForeColor = colorRed;
                     item.SubItems.Add($"{edt.RectMaximum.Size}(가로:{edt.RectMaximum.Width}, 세로:{edt.RectMaximum.Height})");
+                    listView1.Items.Add(item);
+                }
+
+                // ellipse.
+                EllipsePoint drawingCircle = edt.EllipseLeft;
+                switch (edt.CircleStyle)
+                {
+                    case CircleStyle.Left:
+                        drawingCircle = edt.EllipseLeft;
+                        break;
+                    case CircleStyle.Right:
+                        drawingCircle = edt.EllipseRight;
+                        break;
+                    case CircleStyle.Average:
+                        drawingCircle = edt.EllipseAverage;
+                        break;
+                    case CircleStyle.Max:
+                        drawingCircle = edt.EllipseMaximum;
+                        break;
+                }
+
+                if (edt.CircleStyle != CircleStyle.None)
+                {
+                    item = new ListViewItem($"Brown({edt.CircleStyle.ToString()})");
+                    item.ForeColor = colorCircle;
+                    item.SubItems.Add($"{drawingCircle.Size}(가로:{drawingCircle.Width}, 세로:{drawingCircle.Height})");
                     listView1.Items.Add(item);
                 }
 
@@ -235,20 +263,19 @@ namespace EDTree2
                     DrawRect(e, edt.RectMaximum, colorRed);
                 }
 
-                var circleColor = Color.Black;
                 switch (edt.CircleStyle)
                 {
                     case CircleStyle.Left:
-                        DrawCircle(e, edt.RectLeft, circleColor);
+                        DrawCircle(e, edt.EllipseLeft, colorCircle);
                         break;
                     case CircleStyle.Right:
-                        DrawCircle(e, edt.RectRight, circleColor);
+                        DrawCircle(e, edt.EllipseRight, colorCircle);
                         break;
                     case CircleStyle.Average:
-                        DrawCircle(e, edt.RectAverage, circleColor);
+                        DrawCircle(e, edt.EllipseAverage, colorCircle);
                         break;
                     case CircleStyle.Max:
-                        DrawCircle(e, edt.RectMaximum, circleColor);
+                        DrawCircle(e, edt.EllipseMaximum, colorCircle);
                         break;
                 }
                 
@@ -265,20 +292,14 @@ namespace EDTree2
             e.ChartGraphics.Graphics.DrawRectangle(new Pen(color), rect.X, rect.Y, rect.Width, rect.Height);
         }
 
-        private void DrawCircle(ChartPaintEventArgs e, RectanglePoint rp, Color color)
+        private void DrawCircle(ChartPaintEventArgs e, EllipsePoint ep, Color color)
         {
-            var l = (float) mainChart.ChartAreas[0].AxisX.ValueToPixelPosition(rp.L);
-            var t = (float) mainChart.ChartAreas[0].AxisY.ValueToPixelPosition(rp.T);
-            var r = (float) mainChart.ChartAreas[0].AxisX.ValueToPixelPosition(rp.R);
-            var b = (float) mainChart.ChartAreas[0].AxisY.ValueToPixelPosition(rp.B);
+            var l = (float) mainChart.ChartAreas[0].AxisX.ValueToPixelPosition(ep.L);
+            var t = (float) mainChart.ChartAreas[0].AxisY.ValueToPixelPosition(ep.T);
+            var r = (float) mainChart.ChartAreas[0].AxisX.ValueToPixelPosition(ep.R);
+            var b = (float) mainChart.ChartAreas[0].AxisY.ValueToPixelPosition(ep.B);
             var rect = RectangleF.FromLTRB(Math.Min(l, r), Math.Min(t, b), Math.Max(l, r),Math.Max(t, b));
-            
-            PointF pl = new PointF(rect.X, rect.Y);
-            PointF pr = new PointF(rect.X + rect.Width, rect.Y);
-            PointF pb = new PointF(rect.X + rect.Width / 2, rect.Y + rect.Height);
-            var pc = Utils.FindCircumcenter(pl, pr, pb);
-            var radius = Utils.PointDistance(pc, pl);
-            e.ChartGraphics.Graphics.DrawEllipse(new Pen(color), (float) (pc.X - radius), (float) (pc.Y - radius), (float) radius * 2, (float)radius * 2);
+            e.ChartGraphics.Graphics.DrawEllipse(new Pen(color), rect.X, rect.Y, rect.Width, rect.Height);
         }
 
         private void buttonSetting_Click(object sender, EventArgs e)

@@ -39,6 +39,12 @@ namespace EDTree2
         public RectanglePoint RectRight { get; set; }
         public RectanglePoint RectAverage { get; set; }
         public RectanglePoint RectMaximum { get; set; }
+        
+        // Ellipse.
+        public EllipsePoint EllipseLeft { get; set; }
+        public EllipsePoint EllipseRight { get; set; }
+        public EllipsePoint EllipseAverage { get; set; }
+        public EllipsePoint EllipseMaximum { get; set; }
 
         public EDTree()
         {
@@ -74,19 +80,32 @@ namespace EDTree2
             double t = Utils.LinearF(Fl, l);
             double r = PointX[Utils.FindXIndex(PointLower, t).Last()];
             double b = PointUpper.Max();
+            double bx = PointX[PointUpper.IndexOf(b)];
             RectLeft = new RectanglePoint(l, t, r, b);
+            EllipseLeft = new EllipsePoint(
+                new PointF((float) l, (float) t), new PointF((float) r, (float) t), new PointF((float) bx, (float) b)
+            );
 
             r = Zstep;
             t = Utils.LinearF(Fl, r);
             l = PointX[Utils.FindXIndex(PointLower, t).First()];
             b = PointUpper.Max();
+            bx = PointX[PointUpper.IndexOf(b)];
             RectRight = new RectanglePoint(l, t, r, b);
+            EllipseRight = new EllipsePoint(
+                new PointF((float) l, (float) t), new PointF((float) r, (float) t), new PointF((float) bx, (float) b)
+            );
 
             RectAverage = new RectanglePoint(
                 (RectLeft.L + RectRight.L) / 2,
                 (RectLeft.T + RectRight.T) / 2,
                 (RectLeft.R + RectRight.R) / 2,
                 (RectLeft.B + RectRight.B) / 2
+            );
+            var xs = Utils.FindXIndex(PointUpper, RectAverage.B);
+            bx = PointX[xs[xs.Count / 2]];
+            EllipseAverage = new EllipsePoint(
+                new PointF((float) RectAverage.L, (float) RectAverage.T), new PointF((float) RectAverage.R, (float) RectAverage.T), new PointF((float) bx, (float) RectAverage.B)
             );
 
             RectMaximum = new RectanglePoint(0, 0, 0, 0);
@@ -99,6 +118,10 @@ namespace EDTree2
                 var tmpRect = new RectanglePoint(l, t, r, b);
                 if (tmpRect.Size > RectMaximum.Size) RectMaximum = tmpRect;
             }
+            bx = PointX[PointUpper.IndexOf(RectMaximum.B)];
+            EllipseMaximum = new EllipsePoint(
+                new PointF((float) RectMaximum.L, (float) RectMaximum.T), new PointF((float) RectMaximum.R, (float) RectMaximum.T), new PointF((float) bx, (float) RectMaximum.B)
+            );
         }
 
         private void CalculateLines()
