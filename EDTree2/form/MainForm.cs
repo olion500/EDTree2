@@ -18,7 +18,6 @@ namespace EDTree2
         private string filename_defocus = "input_defocus.txt";
         private string filename_threshold = "input_threshold.txt";
 
-        private bool _isDataLoadSuccess = false;
         private EDTree edt;
         private AerialCD acdDefocus;
         private AerialCD acdThreshold;
