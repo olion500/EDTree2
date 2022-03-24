@@ -36,12 +36,13 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.listView2 = new System.Windows.Forms.ListView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonImport = new System.Windows.Forms.Button();
             this.buttonExport = new System.Windows.Forms.Button();
             this.buttonThreshold = new System.Windows.Forms.Button();
             this.buttonHome = new System.Windows.Forms.Button();
             this.buttonDefocus = new System.Windows.Forms.Button();
             this.buttonSetting = new System.Windows.Forms.Button();
-            this.buttonImport = new System.Windows.Forms.Button();
+            this.statusBar1 = new System.Windows.Forms.StatusBar();
             ((System.ComponentModel.ISupportInitialize) (this.mainChart)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -113,6 +114,17 @@
             this.panel1.Size = new System.Drawing.Size(58, 755);
             this.panel1.TabIndex = 4;
             // 
+            // buttonImport
+            // 
+            this.buttonImport.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonImport.BackgroundImage")));
+            this.buttonImport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonImport.Location = new System.Drawing.Point(0, 259);
+            this.buttonImport.Name = "buttonImport";
+            this.buttonImport.Size = new System.Drawing.Size(58, 58);
+            this.buttonImport.TabIndex = 8;
+            this.buttonImport.UseVisualStyleBackColor = true;
+            this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
+            // 
             // buttonExport
             // 
             this.buttonExport.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonExport.BackgroundImage")));
@@ -168,16 +180,13 @@
             this.buttonSetting.UseVisualStyleBackColor = true;
             this.buttonSetting.Click += new System.EventHandler(this.buttonSetting_Click);
             // 
-            // buttonImport
+            // statusBar1
             // 
-            this.buttonImport.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonImport.BackgroundImage")));
-            this.buttonImport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonImport.Location = new System.Drawing.Point(0, 259);
-            this.buttonImport.Name = "buttonImport";
-            this.buttonImport.Size = new System.Drawing.Size(58, 58);
-            this.buttonImport.TabIndex = 8;
-            this.buttonImport.UseVisualStyleBackColor = true;
-            this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
+            this.statusBar1.Location = new System.Drawing.Point(0, 739);
+            this.statusBar1.Name = "statusBar1";
+            this.statusBar1.Size = new System.Drawing.Size(1184, 22);
+            this.statusBar1.TabIndex = 3;
+            this.statusBar1.Text = "Not found input files.";
             // 
             // Form1
             // 
@@ -185,6 +194,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1184, 761);
+            this.Controls.Add(this.statusBar1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Location = new System.Drawing.Point(15, 15);
             this.Name = "Form1";
@@ -195,6 +205,8 @@
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.StatusBar statusBar1;
 
         private System.Windows.Forms.Button buttonImport;
 

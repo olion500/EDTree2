@@ -17,7 +17,8 @@ namespace EDTree2
         private string filename_intensity = "input_intensity.txt";
         private string filename_defocus = "input_defocus.txt";
         private string filename_threshold = "input_threshold.txt";
-        
+
+        private bool _isDataLoadSuccess = false;
         private EDTree edt;
         private AerialCD acdDefocus;
         private AerialCD acdThreshold;
@@ -40,37 +41,64 @@ namespace EDTree2
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            LoadAndDraw();
+        }
+
+        private void LoadAndDraw()
+        {
             LoadData();
-            
             DrawScreen();
         }
 
         private void LoadData()
         {
-            var intensityInput = InputParser.Parse(filename_intensity);
-            edt = new EDTree
+            try
             {
-                LabelX = intensityInput.LabelX,
-                LabelY = intensityInput.LabelY,
-                Header = intensityInput.Header,
-                Focus = intensityInput.Data[0].ToArray(),
-                IntensityLower = intensityInput.Data[1].ToArray(),
-                Intensity = intensityInput.Data[2].ToArray(),
-                IntensityUpper = intensityInput.Data[3].ToArray()
-            };
-            edt.Calculate();
+                var intensityInput = InputParser.Parse(filename_intensity);
+                edt = new EDTree
+                {
+                    LabelX = intensityInput.LabelX,
+                    LabelY = intensityInput.LabelY,
+                    Header = intensityInput.Header,
+                    Focus = intensityInput.Data[0].ToArray(),
+                    IntensityLower = intensityInput.Data[1].ToArray(),
+                    Intensity = intensityInput.Data[2].ToArray(),
+                    IntensityUpper = intensityInput.Data[3].ToArray()
+                };
+                edt.Calculate();
+            }
+            catch
+            {
+                edt = null;
+            }
 
-            acdDefocus = new AerialCD
+
+            try
             {
-                Input = InputParser.Parse(filename_defocus)
-            };
-            acdDefocus.Calculate();
-            
-            acdThreshold = new AerialCD
+                acdDefocus = new AerialCD
+                {
+                    Input = InputParser.Parse(filename_defocus)
+                };
+                acdDefocus.Calculate();
+            }
+            catch
             {
-                Input = InputParser.Parse(filename_threshold)
-            };
-            acdThreshold.Calculate();
+                acdDefocus = null;
+            }
+
+            try
+            {
+                acdThreshold = new AerialCD
+                {
+                    Input = InputParser.Parse(filename_threshold)
+                };
+                acdThreshold.Calculate();
+            }
+            catch
+            {
+                acdThreshold = null;
+            }
+
         }
 
         private void DrawScreen()
@@ -83,6 +111,23 @@ namespace EDTree2
             
             // add post paint event that draw rectangles.
             mainChart.PostPaint += MainChartOnPostPaint;
+
+            // Show load file name in status bar.
+            var fileNotFoundMsg = "Not found input file";
+            switch (CurrentScreen)
+            {
+                case ChartScreen.Intensity:
+                    statusBar1.Text = (edt == null) ? fileNotFoundMsg : "load file : " + filename_intensity;
+                    break;
+                case ChartScreen.Defocus:
+                    statusBar1.Text = (acdDefocus == null) ? fileNotFoundMsg : "load file : " + filename_defocus;
+                    break;
+                case ChartScreen.Threshold:
+                    statusBar1.Text = (acdThreshold == null) ? fileNotFoundMsg : "load file : " + filename_threshold;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         private void CreateListView()
@@ -90,7 +135,7 @@ namespace EDTree2
             listView1.BeginUpdate();
             listView1.Clear();
 
-            if (CurrentScreen == ChartScreen.Intensity)
+            if (CurrentScreen == ChartScreen.Intensity && edt != null)
             {
                 ListViewItem item = new ListViewItem($"Green(BaseLine:{edt.Zstep}um)");
                 item.ForeColor = colorGreen;
@@ -153,7 +198,7 @@ namespace EDTree2
             listView2.BeginUpdate();
             listView2.Clear();
 
-            if (CurrentScreen == ChartScreen.Intensity)
+            if (CurrentScreen == ChartScreen.Intensity && edt != null)
             {
                 for (int i=0; i<edt.Focus.Length; i++)
                 {
@@ -173,6 +218,12 @@ namespace EDTree2
             else if (CurrentScreen == ChartScreen.Defocus || CurrentScreen == ChartScreen.Threshold)
             {
                 var acd = (CurrentScreen == ChartScreen.Defocus) ? acdDefocus : acdThreshold;
+                if (acd == null)
+                {
+                    listView2.EndUpdate();
+                    return;
+                }
+                
                 int rows = acd.Rows;
                 int cols = acd.Cols;
                 for (int i = 0; i < rows; i++)
@@ -211,7 +262,7 @@ namespace EDTree2
             mainChart.ChartAreas[0].AxisY.LogarithmBase = 2.0;
             mainChart.ChartAreas[0].AxisY.IsLogarithmic = false;
 
-            if (CurrentScreen == ChartScreen.Intensity)
+            if (CurrentScreen == ChartScreen.Intensity && edt != null)
             {
                 // chart setting
                 mainChart.ChartAreas[0].AxisY.IsLogarithmic = edt.IsLogY;           
@@ -246,6 +297,7 @@ namespace EDTree2
             else if (CurrentScreen == ChartScreen.Defocus || CurrentScreen == ChartScreen.Threshold)
             {
                 var acd = (CurrentScreen == ChartScreen.Defocus) ? acdDefocus : acdThreshold;
+                if (acd == null) return;
                 
                 mainChart.ChartAreas[0].AxisX.Title = acd.Input.LabelX;
                 mainChart.ChartAreas[0].AxisX.Minimum = acd.Input.Data[0].Min();
@@ -273,7 +325,7 @@ namespace EDTree2
 
         private void MainChartOnPostPaint(object sender, ChartPaintEventArgs e)
         {
-            if (CurrentScreen == ChartScreen.Intensity)
+            if (CurrentScreen == ChartScreen.Intensity && edt != null)
             {
                 DrawText(e, Utils.PolynomialString(edt.Fl) + ",  R² : " + edt.Rsl.ToString("0.###") , colorBlue, 1);
                 DrawText(e, Utils.PolynomialString(edt.F) + ",  R² : " + edt.Rs.ToString("0.###"), colorRed, 2);
@@ -314,6 +366,7 @@ namespace EDTree2
             else if (CurrentScreen == ChartScreen.Defocus || CurrentScreen == ChartScreen.Threshold)
             {
                 var acd = (CurrentScreen == ChartScreen.Defocus) ? acdDefocus : acdThreshold;
+                if (acd == null) return;
 
                 foreach (var (f, i) in acd.Fs.Select((item, index) => (item, index)))
                 {
@@ -350,7 +403,7 @@ namespace EDTree2
 
         private void buttonSetting_Click(object sender, EventArgs e)
         {
-            if (CurrentScreen == ChartScreen.Intensity)
+            if (CurrentScreen == ChartScreen.Intensity && edt != null)
             {
                 var chartSettingsForm = new ChartSettingsForm(edt);
                 chartSettingsForm.Show();
@@ -413,7 +466,7 @@ namespace EDTree2
             FileStream fs = new FileStream(saveDlg.FileName, FileMode.Create, FileAccess.Write);
             StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
 
-            if (CurrentScreen == ChartScreen.Intensity)
+            if (CurrentScreen == ChartScreen.Intensity && edt != null)
             {
                 // write columns.
                 string line = string.Join(",", edt.Header);
@@ -430,19 +483,21 @@ namespace EDTree2
             else if (CurrentScreen == ChartScreen.Defocus || CurrentScreen == ChartScreen.Threshold)
             {
                 var acd = (CurrentScreen == ChartScreen.Defocus) ? acdDefocus : acdThreshold;
-
-                // write columns.
-                string line = string.Join(",", acd.Input.Header);
-                sw.WriteLine(line);
-                
-                var start = Math.Min(acd.Input.Data[0].First(), acd.Input.Data[0].Last());
-                var end = Math.Max(acd.Input.Data[0].First(), acd.Input.Data[0].Last());
-                for (double x = start; x <= end; x += 0.1)
+                if (acd != null)
                 {
-                    x = Math.Round(x, 3);
-                    var y = acd.Fs.Select(f => Utils.LinearF(f, x));
-                    line = string.Join(",", new[] {x}.Concat(y));
+                    // write columns.
+                    string line = string.Join(",", acd.Input.Header);
                     sw.WriteLine(line);
+                
+                    var start = Math.Min(acd.Input.Data[0].First(), acd.Input.Data[0].Last());
+                    var end = Math.Max(acd.Input.Data[0].First(), acd.Input.Data[0].Last());
+                    for (double x = start; x <= end; x += 0.1)
+                    {
+                        x = Math.Round(x, 3);
+                        var y = acd.Fs.Select(f => Utils.LinearF(f, x));
+                        line = string.Join(",", new[] {x}.Concat(y));
+                        sw.WriteLine(line);
+                    }
                 }
             }
 
@@ -476,9 +531,7 @@ namespace EDTree2
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-            LoadData();
-            DrawScreen();
+            LoadAndDraw();
         }
     }
 }
