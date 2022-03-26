@@ -237,8 +237,8 @@ namespace EDTree2
             mainChart.Series.Clear();
             
             // chart setting.
-            // mainChart.ChartAreas[0].AxisX.Interval = 1;
-            // mainChart.ChartAreas[0].AxisX.LabelAutoFitStyle = LabelAutoFitStyles.DecreaseFont;
+            mainChart.ChartAreas[0].AxisX.Interval = (CurrentScreen == ChartScreen.Threshold) ? 0.01 : 1;
+            mainChart.ChartAreas[0].AxisX.LabelAutoFitStyle = LabelAutoFitStyles.DecreaseFont;
             mainChart.ChartAreas[0].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
             mainChart.ChartAreas[0].AxisY.IsStartedFromZero = false;
             mainChart.ChartAreas[0].AxisY.IntervalAutoMode = IntervalAutoMode.VariableCount;
@@ -278,7 +278,6 @@ namespace EDTree2
                 PutChartNameOnPoint(baseChart.Points.Last(), edt.Header[2], colorBase);
                 PutChartNameOnPoint(upperChart.Points.Last(), edt.Header[3], colorUpper);
                 PutChartNameOnPoint(lowerChart.Points.Last(), edt.Header[1], colorLower);
-
             }
             else if (CurrentScreen == ChartScreen.Defocus || CurrentScreen == ChartScreen.Threshold)
             {
@@ -310,9 +309,12 @@ namespace EDTree2
         {
             if (CurrentScreen == ChartScreen.Intensity && edt != null)
             {
-                DrawText(e, Utils.PolynomialString(edt.LowerLine.Coefficients) + ",  R² : " + edt.LowerLine.RSquare.ToString("0.###"), colorLower, 1);
-                DrawText(e, Utils.PolynomialString(edt.BaseLine.Coefficients) + ",  R² : " + edt.BaseLine.RSquare.ToString("0.###"), colorBase, 2);
-                DrawText(e, Utils.PolynomialString(edt.UpperLine.Coefficients) + ",  R² : " + edt.UpperLine.RSquare.ToString("0.###"), colorUpper, 3);
+                if (edt.IsShowEquation)
+                {
+                    DrawText(e, Utils.PolynomialString(edt.LowerLine.Coefficients) + ",  R² : " + edt.LowerLine.RSquare.ToString("0.###"), colorLower, 1);
+                    DrawText(e, Utils.PolynomialString(edt.BaseLine.Coefficients) + ",  R² : " + edt.BaseLine.RSquare.ToString("0.###"), colorBase, 2);
+                    DrawText(e, Utils.PolynomialString(edt.UpperLine.Coefficients) + ",  R² : " + edt.UpperLine.RSquare.ToString("0.###"), colorUpper, 3);
+                }
                 
                 DrawRect(e, edt.GetRectangles(FittingType.Left), colorLower);
                 DrawRect(e, edt.GetRectangles(FittingType.Right), colorUpper);

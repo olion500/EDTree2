@@ -24,6 +24,7 @@ namespace EDTree2
         public CircleStyle CircleStyle { get; set; }
         public int Order { get; set; }
         public double Zstep { get; set; }
+        public bool IsShowEquation { get; set; }
         public bool IsLogY { get; set; }
         
         // Functions.
@@ -49,6 +50,7 @@ namespace EDTree2
             CircleStyle = CircleStyle.None;
             Order = 2;
             Zstep = 10;
+            IsShowEquation = true;
             IsLogY = false;
         }
         

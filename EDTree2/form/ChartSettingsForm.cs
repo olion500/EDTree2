@@ -23,6 +23,7 @@ namespace EDTree2
             ChooseRadioRectStyle(edt.RectStyle);
             ChooseFunctionRank(edt.Order);
             // ChooseRadioCircleStyle(edt.CircleStyle);
+            ChooseCheckEquation(edt.IsShowEquation);
             ChooseRadioLog(edt.IsLogY);
         }
 
@@ -190,9 +191,19 @@ namespace EDTree2
             
         }
 
+        private void ChooseCheckEquation(bool isShowEquation)
+        {
+            checkBoxEquation.Checked = isShowEquation;
+        }
+        
+        private void checkBoxEquation_CheckedChanged(object sender, EventArgs e)
+        {
+            edt.IsShowEquation = checkBoxEquation.Checked;
+        }
+
         private void ChooseRadioLog(bool isLog)
         {
-            if (edt.IsLogY)
+            if (isLog)
                 radioLog.Checked = true;
             else
             {

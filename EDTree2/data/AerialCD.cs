@@ -31,7 +31,7 @@ namespace EDTree2
         
         public AerialCD Calculate()
         {
-            Line = new FittingLine(X, Input.Data[0], Order).Fit();
+            Line = new FittingLine(X, Input.Data[1], Order).Fit();
             return this;
         }
         
