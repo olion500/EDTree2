@@ -53,19 +53,16 @@ namespace EDTree2
 
         private void LoadData()
         {
-            var intensityInput = InputParser.Parse(filename_intensity);
-            InputParser.IntensityValidate(intensityInput);
-            edt = new EDTree(intensityInput).Calculate();
-            // try
-            // {
-            //     var intensityInput = InputParser.Parse(filename_intensity);
-            //     InputParser.IntensityValidate(intensityInput);
-            //     edt = new EDTree(intensityInput).Calculate();
-            // }
-            // catch
-            // {
-            //     edt = null;
-            // }
+            try
+            {
+                var intensityInput = InputParser.Parse(filename_intensity);
+                InputParser.IntensityValidate(intensityInput);
+                edt = new EDTree(intensityInput).Calculate();
+            }
+            catch
+            {
+                edt = null;
+            }
 
 
             try
@@ -186,56 +183,50 @@ namespace EDTree2
                 listView1.Columns.Add("Size", 210);
             }
             listView1.EndUpdate();
-            
-            
-            listView2.BeginUpdate();
-            listView2.Clear();
 
+
+            Input input = null;
             if (CurrentScreen == ChartScreen.Intensity && edt != null)
             {
-                // for (int i=0; i<edt.Focus.Length; i++)
-                // {
-                //     ListViewItem row = new ListViewItem($"{edt.Focus[i]}");
-                //     row.UseItemStyleForSubItems = false;
-                //     row.SubItems.Add($"{edt.IntensityLower[i]}").ForeColor = colorUpper;
-                //     row.SubItems.Add($"{edt.Intensity[i]}").ForeColor = colorBase;
-                //     row.SubItems.Add($"{edt.IntensityUpper[i]}").ForeColor = colorLower;
-                //     listView2.Items.Add(row);
-                // }
-                //
-                // foreach (var head in edt.Header)
-                // {
-                //     listView2.Columns.Add(head, 100);
-                // }
-            } 
+                input = edt.Input;
+            }
             else if (CurrentScreen == ChartScreen.Defocus || CurrentScreen == ChartScreen.Threshold)
             {
                 var acd = (CurrentScreen == ChartScreen.Defocus) ? acdDefocus : acdThreshold;
-                if (acd == null)
-                {
-                    listView2.EndUpdate();
-                    return;
-                }
-                
-                int rows = acd.Rows;
-                int cols = acd.Cols;
-                for (int i = 0; i < rows; i++)
-                {
-                    ListViewItem item = new ListViewItem($"{acd.Input.Data[0][i]}");
-                    for (int j = 1; j < cols; j++)
-                    {
-                        item.SubItems.Add($"{acd.Input.Data[j][i]}");
-                    }
+                if (acd != null)
+                    input = acd.Input;
+            }
 
-                    listView2.Items.Add(item);
-                }
-                
-                
-                var colWidth = Math.Max(400 / acd.Input.Header.Length, 60);
-                foreach (var col in acd.Input.Header)
+            WriteInputOnListview2(input, new[] {colorUpper, colorBase, colorLower});
+        }
+
+        private void WriteInputOnListview2(Input input, Color[] colors)
+        {
+            if (input == null) return;
+            
+            listView2.BeginUpdate();
+            listView2.Clear();
+            
+            // add content on the listview.
+            int rows = input.Data[0].Count;
+            int cols = input.Header.Length;
+            for (int i = 0; i < rows; i++)
+            {
+                ListViewItem item = new ListViewItem($"{input.Data[0][i]}");
+                item.UseItemStyleForSubItems = false;
+                for (int j = 1; j < cols; j++)
                 {
-                    listView2.Columns.Add(col, colWidth);
+                    item.SubItems.Add($"{input.Data[j][i]}").ForeColor = colors[j-1];
                 }
+
+                listView2.Items.Add(item);
+            }
+            
+            // calculate proper column width.
+            var colWidth = Math.Max(400 / cols, 60);
+            foreach (var col in input.Header)
+            {
+                listView2.Columns.Add(col, colWidth);
             }
             
             listView2.EndUpdate();
