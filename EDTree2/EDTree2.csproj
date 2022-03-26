@@ -55,9 +55,8 @@
     <ItemGroup>
         <Compile Include="data\AerialCD.cs" />
         <Compile Include="data\EDTree.cs" />
-        <Compile Include="data\EllipsePoint.cs" />
         <Compile Include="Delegates.cs" />
-        <Compile Include="enum\CircleStyle.cs" />
+        <Compile Include="enum\EllipseStyle.cs" />
         <Compile Include="enum\RectStyle.cs" />
         <Compile Include="form\ChartSettingsForm.cs">
           <SubType>Form</SubType>

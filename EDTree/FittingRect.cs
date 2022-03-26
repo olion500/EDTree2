@@ -37,13 +37,13 @@ namespace EDTree
             l = -BaseX;
             t = UpperLine.Evaluate(l);
             r = UpperLine.FindXByY(t).Max();
-            b = LowerLine.MaxY().y;
+            b = LowerLine.MaxY().Y;
             RectLeft = new RectPoint(l, t, r, b);
 
             r = BaseX;
             t = UpperLine.Evaluate(r);
             l = UpperLine.FindXByY(t).Min();
-            b = LowerLine.MaxY().y;
+            b = LowerLine.MaxY().Y;
             RectRight = new RectPoint(l, t, r, b);
             
             RectAvg = new RectPoint(
@@ -54,7 +54,7 @@ namespace EDTree
             );
             
             RectMax = new RectPoint(0, 0, 0, 0);
-            b = LowerLine.MaxY().y;
+            b = LowerLine.MaxY().Y;
             for (double x = -BaseX; x <= BaseX; x++)
             {
                 l = x;

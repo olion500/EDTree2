@@ -42,10 +42,12 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="FittingCircle.cs" />
+        <Compile Include="EllipsePoint.cs" />
+        <Compile Include="FittingEllipse.cs" />
         <Compile Include="FittingLine.cs" />
         <Compile Include="FittingRect.cs" />
         <Compile Include="FittingType.cs" />
+        <Compile Include="PointD.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="RectPoint.cs" />
     </ItemGroup>

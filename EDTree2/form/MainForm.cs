@@ -153,35 +153,18 @@ namespace EDTree2
                     listView1.Items.Add(item);
                 }
             
-            //     // ellipse.
-            //     EllipsePoint drawingCircle = edt.EllipseLeft;
-            //     switch (edt.CircleStyle)
-            //     {
-            //         case CircleStyle.Left:
-            //             drawingCircle = edt.EllipseLeft;
-            //             break;
-            //         case CircleStyle.Right:
-            //             drawingCircle = edt.EllipseRight;
-            //             break;
-            //         case CircleStyle.Average:
-            //             drawingCircle = edt.EllipseAverage;
-            //             break;
-            //         case CircleStyle.Max:
-            //             drawingCircle = edt.EllipseMaximum;
-            //             break;
-            //     }
-            //
-            //     if (edt.CircleStyle != CircleStyle.None)
-            //     {
-            //         item = new ListViewItem($"Brown({edt.CircleStyle.ToString()})");
-            //         item.ForeColor = colorCircle;
-            //         item.SubItems.Add($"{drawingCircle.Size}(가로:{drawingCircle.Width}, 세로:{drawingCircle.Height})");
-            //         listView1.Items.Add(item);
-            //     }
-            //
-                listView1.Columns.Add("Rect", 210);
-                listView1.Columns.Add("Size", 210);
+                // ellipse.
+                var drawingCircle = edt.GetEllipse(edt.EllipseStyle);
+                if (drawingCircle != null)
+                {
+                    item = new ListViewItem($"Brown({edt.EllipseStyle.ToString()})");
+                    item.ForeColor = colorCircle;
+                    item.SubItems.Add($"{Math.Round(drawingCircle.Size, 3)}(가로:{drawingCircle.Width}, 세로:{drawingCircle.Height})");
+                    listView1.Items.Add(item);
+                }
             }
+            listView1.Columns.Add("Rect", 210);
+            listView1.Columns.Add("Size", 210);
             listView1.EndUpdate();
 
 
@@ -330,34 +313,18 @@ namespace EDTree2
                 {
                     DrawRect(e, edt.GetRectangles(FittingType.Max), colorBase);
                 }
-                
-                // switch (edt.CircleStyle)
-                // {
-                //     case CircleStyle.Left:
-                //         DrawCircle(e, edt.EllipseLeft, colorCircle);
-                //         break;
-                //     case CircleStyle.Right:
-                //         DrawCircle(e, edt.EllipseRight, colorCircle);
-                //         break;
-                //     case CircleStyle.Average:
-                //         DrawCircle(e, edt.EllipseAverage, colorCircle);
-                //         break;
-                //     case CircleStyle.Max:
-                //         DrawCircle(e, edt.EllipseMaximum, colorCircle);
-                //         break;
-                // }
-                
+
+                var ellipse = edt.GetEllipse(edt.EllipseStyle);
+                if (ellipse != null)
+                    DrawCircle(e, ellipse, colorCircle);
+
             } 
             else if (CurrentScreen == ChartScreen.Defocus || CurrentScreen == ChartScreen.Threshold)
             {
-                // var acd = (CurrentScreen == ChartScreen.Defocus) ? acdDefocus : acdThreshold;
-                // if (acd == null) return;
-                //
-                // foreach (var (f, i) in acd.Fs.Select((item, index) => (item, index)))
-                // {
-                //     DrawText(e, Utils.PolynomialString(f) + ",  R² : " + acd.Rs[i].ToString("0.###") , colorBlack, i+1);
-                // }
+                var acd = (CurrentScreen == ChartScreen.Defocus) ? acdDefocus : acdThreshold;
+                if (acd == null) return;
                 
+                DrawText(e, Utils.PolynomialString(acd.Line.Coefficients) + ",  R² : " + acd.Line.RSquare.ToString("0.###"), colorUpper, 1);
             }
         }
 

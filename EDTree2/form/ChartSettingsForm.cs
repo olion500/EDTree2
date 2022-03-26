@@ -22,7 +22,7 @@ namespace EDTree2
             textZStep.Text = edt.Zstep.ToString();
             ChooseRadioRectStyle(edt.RectStyle);
             ChooseFunctionRank(edt.Order);
-            // ChooseRadioCircleStyle(edt.CircleStyle);
+            ChooseRadioCircleStyle(edt.EllipseStyle);
             ChooseCheckEquation(edt.IsShowEquation);
             ChooseRadioLog(edt.IsLogY);
         }
@@ -135,23 +135,23 @@ namespace EDTree2
                 edt.Order = 3;
         }
 
-        private void ChooseRadioCircleStyle(CircleStyle style)
+        private void ChooseRadioCircleStyle(EllipseStyle style)
         {
             switch (style)
             {
-                case CircleStyle.None:
+                case EllipseStyle.None:
                     radioCircleNone.Checked = true;
                     break;
-                case CircleStyle.Left:
+                case EllipseStyle.Left:
                     radioCircleLeft.Checked = true;
                     break;
-                case CircleStyle.Right:
+                case EllipseStyle.Right:
                     radioCircleRight.Checked = true;
                     break;
-                case CircleStyle.Average:
+                case EllipseStyle.Average:
                     radioCircleAverage.Checked = true;
                     break;
-                case CircleStyle.Max:
+                case EllipseStyle.Max:
                     radioCircleMax.Checked = true;
                     break;
             }
@@ -159,35 +159,35 @@ namespace EDTree2
         
         private void radioCircleNone_CheckedChanged(object sender, EventArgs e)
         {
-            // if (radioCircleNone.Checked)
-                // edt.CircleStyle = CircleStyle.None;
+            if (radioCircleNone.Checked)
+                edt.EllipseStyle = EllipseStyle.None;
         }
 
         private void radioCircleLeft_CheckedChanged(object sender, EventArgs e)
         {
-            // if (radioCircleLeft.Checked)
-                // edt.CircleStyle = CircleStyle.Left;
+            if (radioCircleLeft.Checked)
+                edt.EllipseStyle = EllipseStyle.Left;
             
         }
 
         private void radioCircleRight_CheckedChanged(object sender, EventArgs e)
         {
-            // if (radioCircleRight.Checked)
-                // edt.CircleStyle = CircleStyle.Right;
+            if (radioCircleRight.Checked)
+                edt.EllipseStyle = EllipseStyle.Right;
             
         }
 
         private void radioCircleAverage_CheckedChanged(object sender, EventArgs e)
         {
-            // if (radioCircleAverage.Checked)
-                // edt.CircleStyle = CircleStyle.Average;
+            if (radioCircleAverage.Checked)
+                edt.EllipseStyle = EllipseStyle.Average;
             
         }
 
         private void radioCircleMax_CheckedChanged(object sender, EventArgs e)
         {
-            // if (radioCircleMax.Checked)
-                // edt.CircleStyle = CircleStyle.Max;
+            if (radioCircleMax.Checked)
+                edt.EllipseStyle = EllipseStyle.Max;
             
         }
 

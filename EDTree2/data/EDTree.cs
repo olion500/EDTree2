@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using EDTree;
-using MathNet.Numerics;
 
 namespace EDTree2
 {
@@ -21,7 +19,7 @@ namespace EDTree2
 
         // options.
         public RectStyle RectStyle { get; set; }
-        public CircleStyle CircleStyle { get; set; }
+        public EllipseStyle EllipseStyle { get; set; }
         public int Order { get; set; }
         public double Zstep { get; set; }
         public bool IsShowEquation { get; set; }
@@ -34,7 +32,7 @@ namespace EDTree2
         
         // Rects.
         private FittingRect Rect;
-        public FittingCircle Circle;
+        public FittingCircle Ellipse;
 
         public EDTree(Input input)
         {
@@ -47,7 +45,7 @@ namespace EDTree2
         public void ResetOptions()
         {
             RectStyle = RectStyle.BaseLine;
-            CircleStyle = CircleStyle.None;
+            EllipseStyle = EllipseStyle.None;
             Order = 2;
             Zstep = 10;
             IsShowEquation = true;
@@ -70,6 +68,7 @@ namespace EDTree2
             LowerLine = new FittingLine(X, lower, Order).Fit();
 
             Rect = new FittingRect(Zstep, UpperLine, LowerLine).Calculate();
+            Ellipse = new FittingCircle(Zstep, UpperLine, LowerLine).Calculate();
 
             return this;
         }
@@ -91,6 +90,23 @@ namespace EDTree2
         public RectPoint GetRectangles(FittingType type)
         {
             return Rect.GetRect(type);
+        }
+
+        public EllipsePoint GetEllipse(EllipseStyle style)
+        {
+            switch (style)
+            {
+                case EllipseStyle.Left:
+                    return Ellipse.GetEllipse(FittingType.Left);
+                case EllipseStyle.Right:
+                    return Ellipse.GetEllipse(FittingType.Right);
+                case EllipseStyle.Average:
+                    return Ellipse.GetEllipse(FittingType.Average);
+                case EllipseStyle.Max:
+                    return Ellipse.GetEllipse(FittingType.Max);
+            }
+
+            return null;
         }
     }
 }

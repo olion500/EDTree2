@@ -55,11 +55,11 @@ namespace EDTree
             return F.Evaluate(x);
         }
 
-        public (double x, double y) MaxY()
+        public PointD MaxY()
         {
             var ymax = PointY.Max();
             var x = PointX[PointY.IndexOf(ymax)];
-            return (x, ymax);
+            return new PointD(x, ymax);
         }
 
         public List<double> FindXByY(double y, double maximumAbsoluteError = 0.001)
