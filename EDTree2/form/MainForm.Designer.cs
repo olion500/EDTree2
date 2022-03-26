@@ -56,15 +56,15 @@
             this.mainChart.Location = new System.Drawing.Point(3, 3);
             this.mainChart.Name = "mainChart";
             this.tableLayoutPanel1.SetRowSpan(this.mainChart, 3);
-            this.mainChart.Size = new System.Drawing.Size(666, 755);
+            this.mainChart.Size = new System.Drawing.Size(777, 696);
             this.mainChart.TabIndex = 0;
             // 
             // listView1
             // 
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView1.Location = new System.Drawing.Point(675, 3);
+            this.listView1.Location = new System.Drawing.Point(786, 3);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(442, 163);
+            this.listView1.Size = new System.Drawing.Size(516, 149);
             this.listView1.TabIndex = 1;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -74,7 +74,7 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 64F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
             this.tableLayoutPanel1.Controls.Add(this.mainChart, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.listView1, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.listView2, 1, 1);
@@ -86,16 +86,16 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.22222F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 44.44445F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1184, 761);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1381, 702);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // listView2
             // 
             this.listView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView2.Location = new System.Drawing.Point(675, 172);
+            this.listView2.Location = new System.Drawing.Point(786, 158);
             this.listView2.Name = "listView2";
             this.tableLayoutPanel1.SetRowSpan(this.listView2, 2);
-            this.listView2.Size = new System.Drawing.Size(442, 586);
+            this.listView2.Size = new System.Drawing.Size(516, 541);
             this.listView2.TabIndex = 2;
             this.listView2.UseCompatibleStateImageBehavior = false;
             this.listView2.View = System.Windows.Forms.View.Details;
@@ -108,19 +108,19 @@
             this.panel1.Controls.Add(this.buttonHome);
             this.panel1.Controls.Add(this.buttonDefocus);
             this.panel1.Controls.Add(this.buttonSetting);
-            this.panel1.Location = new System.Drawing.Point(1123, 3);
+            this.panel1.Location = new System.Drawing.Point(1308, 3);
             this.panel1.Name = "panel1";
             this.tableLayoutPanel1.SetRowSpan(this.panel1, 3);
-            this.panel1.Size = new System.Drawing.Size(58, 755);
+            this.panel1.Size = new System.Drawing.Size(68, 696);
             this.panel1.TabIndex = 4;
             // 
             // buttonImport
             // 
             this.buttonImport.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonImport.BackgroundImage")));
             this.buttonImport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonImport.Location = new System.Drawing.Point(0, 259);
+            this.buttonImport.Location = new System.Drawing.Point(0, 239);
             this.buttonImport.Name = "buttonImport";
-            this.buttonImport.Size = new System.Drawing.Size(58, 58);
+            this.buttonImport.Size = new System.Drawing.Size(68, 54);
             this.buttonImport.TabIndex = 8;
             this.buttonImport.UseVisualStyleBackColor = true;
             this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
@@ -129,21 +129,22 @@
             // 
             this.buttonExport.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonExport.BackgroundImage")));
             this.buttonExport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonExport.Location = new System.Drawing.Point(0, 323);
+            this.buttonExport.Location = new System.Drawing.Point(0, 298);
             this.buttonExport.Name = "buttonExport";
-            this.buttonExport.Size = new System.Drawing.Size(58, 58);
+            this.buttonExport.Size = new System.Drawing.Size(68, 54);
             this.buttonExport.TabIndex = 7;
             this.buttonExport.UseVisualStyleBackColor = true;
             this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
             // 
             // buttonThreshold
             // 
-            this.buttonThreshold.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonThreshold.BackgroundImage")));
             this.buttonThreshold.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonThreshold.Location = new System.Drawing.Point(0, 195);
+            this.buttonThreshold.Font = new System.Drawing.Font("굴림", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (129)));
+            this.buttonThreshold.Location = new System.Drawing.Point(0, 180);
             this.buttonThreshold.Name = "buttonThreshold";
-            this.buttonThreshold.Size = new System.Drawing.Size(58, 58);
+            this.buttonThreshold.Size = new System.Drawing.Size(68, 54);
             this.buttonThreshold.TabIndex = 6;
+            this.buttonThreshold.Text = "TH";
             this.buttonThreshold.UseVisualStyleBackColor = true;
             this.buttonThreshold.Click += new System.EventHandler(this.buttonThreshold_Click);
             // 
@@ -153,19 +154,20 @@
             this.buttonHome.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonHome.Location = new System.Drawing.Point(0, 3);
             this.buttonHome.Name = "buttonHome";
-            this.buttonHome.Size = new System.Drawing.Size(58, 58);
+            this.buttonHome.Size = new System.Drawing.Size(68, 54);
             this.buttonHome.TabIndex = 4;
             this.buttonHome.UseVisualStyleBackColor = true;
             this.buttonHome.Click += new System.EventHandler(this.buttonHome_Click);
             // 
             // buttonDefocus
             // 
-            this.buttonDefocus.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonDefocus.BackgroundImage")));
             this.buttonDefocus.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonDefocus.Location = new System.Drawing.Point(0, 131);
+            this.buttonDefocus.Font = new System.Drawing.Font("굴림", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (129)));
+            this.buttonDefocus.Location = new System.Drawing.Point(0, 121);
             this.buttonDefocus.Name = "buttonDefocus";
-            this.buttonDefocus.Size = new System.Drawing.Size(58, 58);
+            this.buttonDefocus.Size = new System.Drawing.Size(68, 54);
             this.buttonDefocus.TabIndex = 5;
+            this.buttonDefocus.Text = "Def";
             this.buttonDefocus.UseVisualStyleBackColor = true;
             this.buttonDefocus.Click += new System.EventHandler(this.buttonDefocus_Click);
             // 
@@ -173,27 +175,27 @@
             // 
             this.buttonSetting.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonSetting.BackgroundImage")));
             this.buttonSetting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonSetting.Location = new System.Drawing.Point(0, 67);
+            this.buttonSetting.Location = new System.Drawing.Point(0, 62);
             this.buttonSetting.Name = "buttonSetting";
-            this.buttonSetting.Size = new System.Drawing.Size(58, 58);
+            this.buttonSetting.Size = new System.Drawing.Size(68, 54);
             this.buttonSetting.TabIndex = 3;
             this.buttonSetting.UseVisualStyleBackColor = true;
             this.buttonSetting.Click += new System.EventHandler(this.buttonSetting_Click);
             // 
             // statusBar1
             // 
-            this.statusBar1.Location = new System.Drawing.Point(0, 739);
+            this.statusBar1.Location = new System.Drawing.Point(0, 682);
             this.statusBar1.Name = "statusBar1";
-            this.statusBar1.Size = new System.Drawing.Size(1184, 22);
+            this.statusBar1.Size = new System.Drawing.Size(1381, 20);
             this.statusBar1.TabIndex = 3;
             this.statusBar1.Text = "Not found input files.";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1184, 761);
+            this.ClientSize = new System.Drawing.Size(1381, 702);
             this.Controls.Add(this.statusBar1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Location = new System.Drawing.Point(15, 15);
