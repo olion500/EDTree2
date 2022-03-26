@@ -117,8 +117,7 @@ namespace EDTree
                 var at = a + ratio * t;
                 var bt = b + t;
                 var yct = yc + t;
-                if (IsEllipseOutRange(xc, yct, at, bt, p1) && IsEllipseOutRange(xc, yct, at, bt, p2) &&
-                    IsEllipseOutRange(xc, yct, at, bt, p3))
+                if (IsRangeOutOfEllipse(xc, yct, at, bt))
                 {
                     a = at;
                     b = bt;
@@ -158,7 +157,21 @@ namespace EDTree
             return (minP.X + lengthX, minP.Y + lengthY, lengthX, lengthY);
         }
 
-        private bool IsEllipseOutRange(double xc, double yc, double a, double b, PointD p)
+        private bool IsRangeOutOfEllipse(double xc, double yc, double a, double b)
+        {
+            var minX = xc - a;
+            var maxX = xc + a;
+            var isAllOut = true;
+            for (double x = minX; x <= maxX; x += 0.1)
+            {
+                var p = new PointD(x, UpperLine.Evaluate(x));
+                isAllOut = isAllOut && IsPointOutOfEllipse(xc, yc, a, b, p);
+            }
+
+            return isAllOut;
+        }
+        
+        private bool IsPointOutOfEllipse(double xc, double yc, double a, double b, PointD p)
         {
             var sqX = Math.Pow(p.X - xc, 2) / Math.Pow(a, 2);
             var sqY = Math.Pow(p.Y - yc, 2) / Math.Pow(b, 2);
