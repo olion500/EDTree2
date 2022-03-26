@@ -105,6 +105,16 @@ namespace EDTree2
             var l = input.Data[0].Count;
             return input.Data.All(line => line.Count == l);
         }
+
+        public static void IntensityValidate(Input input)
+        {
+            // [data]
+            // cols가 4줄이어야 함.
+            if (input.Data.Count != 4)
+            {
+                throw new FormatException("intensity input column length must be 4.");
+            }
+        }
     }
 
     public class Input

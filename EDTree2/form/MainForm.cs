@@ -24,12 +24,11 @@ namespace EDTree2
 
         private ChartScreen CurrentScreen;
         
-        private Color colorGreen = Color.Green;
-        private Color colorBlue = Color.MediumBlue;
-        private Color colorRed = Color.OrangeRed;
+        private Color colorUpper = Color.Green;
+        private Color colorLower = Color.MediumBlue;
+        private Color colorBase = Color.OrangeRed;
         private Color colorCircle = Color.Chocolate;
         private Color colorBlack = Color.Black;
-        private Color colorEmpty = Color.Empty;
         
         public Form1()
         {
@@ -42,6 +41,8 @@ namespace EDTree2
         {
             LoadAndDraw();
         }
+        
+        
 
         private void LoadAndDraw()
         {
@@ -54,17 +55,8 @@ namespace EDTree2
             try
             {
                 var intensityInput = InputParser.Parse(filename_intensity);
-                edt = new EDTree
-                {
-                    LabelX = intensityInput.LabelX,
-                    LabelY = intensityInput.LabelY,
-                    Header = intensityInput.Header,
-                    Focus = intensityInput.Data[0].ToArray(),
-                    IntensityLower = intensityInput.Data[1].ToArray(),
-                    Intensity = intensityInput.Data[2].ToArray(),
-                    IntensityUpper = intensityInput.Data[3].ToArray()
-                };
-                edt.Calculate();
+                InputParser.IntensityValidate(intensityInput);
+                edt = new EDTree(intensityInput).Calculate();
             }
             catch
             {
@@ -131,67 +123,67 @@ namespace EDTree2
 
         private void CreateListView()
         {
-            listView1.BeginUpdate();
-            listView1.Clear();
-
-            if (CurrentScreen == ChartScreen.Intensity && edt != null)
-            {
-                ListViewItem item = new ListViewItem($"Green(BaseLine:{edt.Zstep}um)");
-                item.ForeColor = colorGreen;
-                item.SubItems.Add($"{edt.RectLeft.Size}(가로:{edt.RectLeft.Width}, 세로:{edt.RectLeft.Height})");
-                listView1.Items.Add(item);
-
-                item = new ListViewItem($"Blue(BaseLine:-{edt.Zstep}um)");
-                item.ForeColor = colorBlue;
-                item.SubItems.Add($"{edt.RectRight.Size}(가로:{edt.RectRight.Width}, 세로:{edt.RectRight.Height})");
-                listView1.Items.Add(item);
-
-                // rects.
-                if (edt.RectStyle == RectStyle.Average)
-                {
-                    item = new ListViewItem("Red(Average)");
-                    item.ForeColor = colorRed;
-                    item.SubItems.Add($"{edt.RectAverage.Size}(가로:{edt.RectAverage.Width}, 세로:{edt.RectAverage.Height})");
-                    listView1.Items.Add(item);
-                }
-                else if (edt.RectStyle == RectStyle.Maximum)
-                {
-                    item = new ListViewItem("Red(Maximum)");
-                    item.ForeColor = colorRed;
-                    item.SubItems.Add($"{edt.RectMaximum.Size}(가로:{edt.RectMaximum.Width}, 세로:{edt.RectMaximum.Height})");
-                    listView1.Items.Add(item);
-                }
-
-                // ellipse.
-                EllipsePoint drawingCircle = edt.EllipseLeft;
-                switch (edt.CircleStyle)
-                {
-                    case CircleStyle.Left:
-                        drawingCircle = edt.EllipseLeft;
-                        break;
-                    case CircleStyle.Right:
-                        drawingCircle = edt.EllipseRight;
-                        break;
-                    case CircleStyle.Average:
-                        drawingCircle = edt.EllipseAverage;
-                        break;
-                    case CircleStyle.Max:
-                        drawingCircle = edt.EllipseMaximum;
-                        break;
-                }
-
-                if (edt.CircleStyle != CircleStyle.None)
-                {
-                    item = new ListViewItem($"Brown({edt.CircleStyle.ToString()})");
-                    item.ForeColor = colorCircle;
-                    item.SubItems.Add($"{drawingCircle.Size}(가로:{drawingCircle.Width}, 세로:{drawingCircle.Height})");
-                    listView1.Items.Add(item);
-                }
-
-                listView1.Columns.Add("Rect", 210);
-                listView1.Columns.Add("Size", 210);
-            }
-            listView1.EndUpdate();
+            // listView1.BeginUpdate();
+            // listView1.Clear();
+            //
+            // if (CurrentScreen == ChartScreen.Intensity && edt != null)
+            // {
+            //     ListViewItem item = new ListViewItem($"Green(BaseLine:{edt.Zstep}um)");
+            //     item.ForeColor = colorLower;
+            //     item.SubItems.Add($"{edt.RectLeft.Size}(가로:{edt.RectLeft.Width}, 세로:{edt.RectLeft.Height})");
+            //     listView1.Items.Add(item);
+            //
+            //     item = new ListViewItem($"Blue(BaseLine:-{edt.Zstep}um)");
+            //     item.ForeColor = colorUpper;
+            //     item.SubItems.Add($"{edt.RectRight.Size}(가로:{edt.RectRight.Width}, 세로:{edt.RectRight.Height})");
+            //     listView1.Items.Add(item);
+            //
+            //     // rects.
+            //     if (edt.RectStyle == RectStyle.Average)
+            //     {
+            //         item = new ListViewItem("Red(Average)");
+            //         item.ForeColor = colorBase;
+            //         item.SubItems.Add($"{edt.RectAverage.Size}(가로:{edt.RectAverage.Width}, 세로:{edt.RectAverage.Height})");
+            //         listView1.Items.Add(item);
+            //     }
+            //     else if (edt.RectStyle == RectStyle.Maximum)
+            //     {
+            //         item = new ListViewItem("Red(Maximum)");
+            //         item.ForeColor = colorBase;
+            //         item.SubItems.Add($"{edt.RectMaximum.Size}(가로:{edt.RectMaximum.Width}, 세로:{edt.RectMaximum.Height})");
+            //         listView1.Items.Add(item);
+            //     }
+            //
+            //     // ellipse.
+            //     EllipsePoint drawingCircle = edt.EllipseLeft;
+            //     switch (edt.CircleStyle)
+            //     {
+            //         case CircleStyle.Left:
+            //             drawingCircle = edt.EllipseLeft;
+            //             break;
+            //         case CircleStyle.Right:
+            //             drawingCircle = edt.EllipseRight;
+            //             break;
+            //         case CircleStyle.Average:
+            //             drawingCircle = edt.EllipseAverage;
+            //             break;
+            //         case CircleStyle.Max:
+            //             drawingCircle = edt.EllipseMaximum;
+            //             break;
+            //     }
+            //
+            //     if (edt.CircleStyle != CircleStyle.None)
+            //     {
+            //         item = new ListViewItem($"Brown({edt.CircleStyle.ToString()})");
+            //         item.ForeColor = colorCircle;
+            //         item.SubItems.Add($"{drawingCircle.Size}(가로:{drawingCircle.Width}, 세로:{drawingCircle.Height})");
+            //         listView1.Items.Add(item);
+            //     }
+            //
+            //     listView1.Columns.Add("Rect", 210);
+            //     listView1.Columns.Add("Size", 210);
+            // }
+            // listView1.EndUpdate();
             
             
             listView2.BeginUpdate();
@@ -199,20 +191,20 @@ namespace EDTree2
 
             if (CurrentScreen == ChartScreen.Intensity && edt != null)
             {
-                for (int i=0; i<edt.Focus.Length; i++)
-                {
-                    ListViewItem row = new ListViewItem($"{edt.Focus[i]}");
-                    row.UseItemStyleForSubItems = false;
-                    row.SubItems.Add($"{edt.IntensityLower[i]}").ForeColor = colorBlue;
-                    row.SubItems.Add($"{edt.Intensity[i]}").ForeColor = colorRed;
-                    row.SubItems.Add($"{edt.IntensityUpper[i]}").ForeColor = colorGreen;
-                    listView2.Items.Add(row);
-                }
-
-                foreach (var head in edt.Header)
-                {
-                    listView2.Columns.Add(head, 100);
-                }
+                // for (int i=0; i<edt.Focus.Length; i++)
+                // {
+                //     ListViewItem row = new ListViewItem($"{edt.Focus[i]}");
+                //     row.UseItemStyleForSubItems = false;
+                //     row.SubItems.Add($"{edt.IntensityLower[i]}").ForeColor = colorUpper;
+                //     row.SubItems.Add($"{edt.Intensity[i]}").ForeColor = colorBase;
+                //     row.SubItems.Add($"{edt.IntensityUpper[i]}").ForeColor = colorLower;
+                //     listView2.Items.Add(row);
+                // }
+                //
+                // foreach (var head in edt.Header)
+                // {
+                //     listView2.Columns.Add(head, 100);
+                // }
             } 
             else if (CurrentScreen == ChartScreen.Defocus || CurrentScreen == ChartScreen.Threshold)
             {
@@ -252,6 +244,8 @@ namespace EDTree2
             mainChart.Series.Clear();
             
             // chart setting.
+            mainChart.ChartAreas[0].AxisX.Interval = 1;
+            mainChart.ChartAreas[0].AxisX.LabelAutoFitStyle = LabelAutoFitStyles.DecreaseFont;
             mainChart.ChartAreas[0].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
             mainChart.ChartAreas[0].AxisY.IsStartedFromZero = false;
             mainChart.ChartAreas[0].AxisY.IntervalAutoMode = IntervalAutoMode.VariableCount;
@@ -266,7 +260,7 @@ namespace EDTree2
                 // chart setting
                 mainChart.ChartAreas[0].AxisY.IsLogarithmic = edt.IsLogY;           
                 mainChart.ChartAreas[0].AxisX.Title = edt.LabelX;
-                mainChart.ChartAreas[0].AxisX.Minimum = edt.Focus.Min();
+                mainChart.ChartAreas[0].AxisX.Minimum = edt.X.Min();
                 mainChart.ChartAreas[0].AxisY.Title = edt.LabelY;
                 
                 // draw lines.
@@ -276,21 +270,21 @@ namespace EDTree2
                 baseChart.ChartType = SeriesChartType.Line;
                 upperChart.ChartType = SeriesChartType.Line;
                 lowerChart.ChartType = SeriesChartType.Line;
-                baseChart.Color = colorRed;
-                upperChart.Color = colorGreen;
-                lowerChart.Color = colorBlue;
+                baseChart.Color = colorBase;
+                upperChart.Color = colorUpper;
+                lowerChart.Color = colorLower;
 
-                foreach (var x in edt.PointX.Select((value, index) => (value, index)))
+                foreach (var x in edt.GetXPoints())
                 {
-                    baseChart.Points.AddXY(x.value, edt.PointBase[x.index]);
-                    upperChart.Points.AddXY(x.value, edt.PointUpper[x.index]);
-                    lowerChart.Points.AddXY(x.value, edt.PointLower[x.index]);
+                    baseChart.Points.AddXY(x, edt.BaseLine.Evaluate(x));
+                    upperChart.Points.AddXY(x, edt.UpperLine.Evaluate(x));
+                    lowerChart.Points.AddXY(x, edt.LowerLine.Evaluate(x));
                 }
-                
+
                 // Add label on the each line.
-                PutChartNameOnPoint(baseChart.Points.Last(), edt.Header[2], colorRed);
-                PutChartNameOnPoint(upperChart.Points.Last(), edt.Header[3], colorGreen);
-                PutChartNameOnPoint(lowerChart.Points.Last(), edt.Header[1], colorBlue);
+                PutChartNameOnPoint(baseChart.Points.Last(), edt.Header[2], colorBase);
+                PutChartNameOnPoint(upperChart.Points.Last(), edt.Header[3], colorUpper);
+                PutChartNameOnPoint(lowerChart.Points.Last(), edt.Header[1], colorLower);
 
             }
             else if (CurrentScreen == ChartScreen.Defocus || CurrentScreen == ChartScreen.Threshold)
@@ -326,40 +320,40 @@ namespace EDTree2
         {
             if (CurrentScreen == ChartScreen.Intensity && edt != null)
             {
-                DrawText(e, Utils.PolynomialString(edt.Fl) + ",  R² : " + edt.Rsl.ToString("0.###") , colorBlue, 1);
-                DrawText(e, Utils.PolynomialString(edt.F) + ",  R² : " + edt.Rs.ToString("0.###"), colorRed, 2);
-                DrawText(e, Utils.PolynomialString(edt.Fu) + ",  R² : " + edt.Rsu.ToString("0.###"), colorGreen, 3);
-                
-                DrawRect(e, edt.RectLeft, colorBlue);
-                DrawRect(e, edt.RectRight, colorGreen);
-                if (edt.RectStyle == RectStyle.BaseLine)
-                {
-                    // do nothing.
-                } 
-                else if (edt.RectStyle == RectStyle.Average)
-                {
-                    DrawRect(e, edt.RectAverage, colorRed);
-                } 
-                else if (edt.RectStyle == RectStyle.Maximum)
-                {
-                    DrawRect(e, edt.RectMaximum, colorRed);
-                }
-
-                switch (edt.CircleStyle)
-                {
-                    case CircleStyle.Left:
-                        DrawCircle(e, edt.EllipseLeft, colorCircle);
-                        break;
-                    case CircleStyle.Right:
-                        DrawCircle(e, edt.EllipseRight, colorCircle);
-                        break;
-                    case CircleStyle.Average:
-                        DrawCircle(e, edt.EllipseAverage, colorCircle);
-                        break;
-                    case CircleStyle.Max:
-                        DrawCircle(e, edt.EllipseMaximum, colorCircle);
-                        break;
-                }
+                // DrawText(e, Utils.PolynomialString(edt.Fl) + ",  R² : " + edt.Rsl.ToString("0.###") , colorLower, 1);
+                // DrawText(e, Utils.PolynomialString(edt.F) + ",  R² : " + edt.Rs.ToString("0.###"), colorBase, 2);
+                // DrawText(e, Utils.PolynomialString(edt.Fu) + ",  R² : " + edt.Rsu.ToString("0.###"), colorUpper, 3);
+                //
+                // DrawRect(e, edt.RectLeft, colorLower);
+                // DrawRect(e, edt.RectRight, colorUpper);
+                // if (edt.RectStyle == RectStyle.BaseLine)
+                // {
+                //     // do nothing.
+                // } 
+                // else if (edt.RectStyle == RectStyle.Average)
+                // {
+                //     DrawRect(e, edt.RectAverage, colorBase);
+                // } 
+                // else if (edt.RectStyle == RectStyle.Maximum)
+                // {
+                //     DrawRect(e, edt.RectMaximum, colorBase);
+                // }
+                //
+                // switch (edt.CircleStyle)
+                // {
+                //     case CircleStyle.Left:
+                //         DrawCircle(e, edt.EllipseLeft, colorCircle);
+                //         break;
+                //     case CircleStyle.Right:
+                //         DrawCircle(e, edt.EllipseRight, colorCircle);
+                //         break;
+                //     case CircleStyle.Average:
+                //         DrawCircle(e, edt.EllipseAverage, colorCircle);
+                //         break;
+                //     case CircleStyle.Max:
+                //         DrawCircle(e, edt.EllipseMaximum, colorCircle);
+                //         break;
+                // }
                 
             } 
             else if (CurrentScreen == ChartScreen.Defocus || CurrentScreen == ChartScreen.Threshold)
@@ -472,10 +466,16 @@ namespace EDTree2
                 sw.WriteLine(line);
 
                 // write data.
-                for (double x = edt.Focus.Min(); x <= edt.Focus.Max(); x += 0.1)
+                foreach (var x in edt.GetXPoints(0.1))
                 {
-                    x = Math.Round(x, 3);
-                    line = String.Join(",", new[] {x, Utils.LinearF(edt.Fl, x), Utils.LinearF(edt.F, x), Utils.LinearF(edt.Fu, x)});
+                    var arr = new[]
+                    {
+                        x,
+                        edt.LowerLine.Evaluate(x),
+                        edt.BaseLine.Evaluate(x),
+                        edt.UpperLine.Evaluate(x)
+                    }.Select(v => Math.Round(v, 3));
+                    line = String.Join(",", arr);
                     sw.WriteLine(line);
                 }
             }

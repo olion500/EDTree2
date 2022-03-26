@@ -29,7 +29,7 @@ namespace EDTree
             PointY = new List<double>();
         }
 
-        public void Fit()
+        public FittingLine Fit()
         {
             // generate polynomial equation.
             F = new Polynomial(MathNet.Numerics.Fit.Polynomial(X.ToArray(), Y.ToArray(), Order));
@@ -43,6 +43,8 @@ namespace EDTree
                 PointX.Add(x);
                 PointY.Add(F.Evaluate(x));
             }
+
+            return this;
         }
 
         public double Evaluate(double x)
