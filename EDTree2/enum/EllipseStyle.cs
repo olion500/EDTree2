@@ -1,6 +1,6 @@
 ﻿namespace EDTree2
 {
-    public enum CircleStyle
+    public enum EllipseStyle
     {
         None,
         Left,

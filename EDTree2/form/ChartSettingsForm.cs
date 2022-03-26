@@ -22,7 +22,8 @@ namespace EDTree2
             textZStep.Text = edt.Zstep.ToString();
             ChooseRadioRectStyle(edt.RectStyle);
             ChooseFunctionRank(edt.Order);
-            ChooseRadioCircleStyle(edt.CircleStyle);
+            ChooseRadioCircleStyle(edt.EllipseStyle);
+            ChooseCheckEquation(edt.IsShowEquation);
             ChooseRadioLog(edt.IsLogY);
         }
 
@@ -39,7 +40,7 @@ namespace EDTree2
         
         private void buttonReset_Click(object sender, EventArgs e)
         {
-            edt.ResetValues();
+            edt.ResetOptions();
             InitializeValues();
             ApplyChange(edt);
         }
@@ -57,7 +58,10 @@ namespace EDTree2
             if (!isDouble)
                 MessageBox.Show("숫자만 입력 가능합니다.");
             
-            else if (-zstep < edt.Focus.First() || edt.Focus.Last() < zstep)
+            else if (zstep < 0)
+                MessageBox.Show("0보다 큰 값만 입력 가능합니다.");
+            
+            else if (-zstep < edt.X.Min() || edt.X.Max() < zstep)
                 MessageBox.Show("입력된 Z Step 값이 Focus 범위보다 넓습니다");
 
             else
@@ -131,23 +135,23 @@ namespace EDTree2
                 edt.Order = 3;
         }
 
-        private void ChooseRadioCircleStyle(CircleStyle style)
+        private void ChooseRadioCircleStyle(EllipseStyle style)
         {
             switch (style)
             {
-                case CircleStyle.None:
+                case EllipseStyle.None:
                     radioCircleNone.Checked = true;
                     break;
-                case CircleStyle.Left:
+                case EllipseStyle.Left:
                     radioCircleLeft.Checked = true;
                     break;
-                case CircleStyle.Right:
+                case EllipseStyle.Right:
                     radioCircleRight.Checked = true;
                     break;
-                case CircleStyle.Average:
+                case EllipseStyle.Average:
                     radioCircleAverage.Checked = true;
                     break;
-                case CircleStyle.Max:
+                case EllipseStyle.Max:
                     radioCircleMax.Checked = true;
                     break;
             }
@@ -156,40 +160,50 @@ namespace EDTree2
         private void radioCircleNone_CheckedChanged(object sender, EventArgs e)
         {
             if (radioCircleNone.Checked)
-                edt.CircleStyle = CircleStyle.None;
+                edt.EllipseStyle = EllipseStyle.None;
         }
 
         private void radioCircleLeft_CheckedChanged(object sender, EventArgs e)
         {
             if (radioCircleLeft.Checked)
-                edt.CircleStyle = CircleStyle.Left;
+                edt.EllipseStyle = EllipseStyle.Left;
             
         }
 
         private void radioCircleRight_CheckedChanged(object sender, EventArgs e)
         {
             if (radioCircleRight.Checked)
-                edt.CircleStyle = CircleStyle.Right;
+                edt.EllipseStyle = EllipseStyle.Right;
             
         }
 
         private void radioCircleAverage_CheckedChanged(object sender, EventArgs e)
         {
             if (radioCircleAverage.Checked)
-                edt.CircleStyle = CircleStyle.Average;
+                edt.EllipseStyle = EllipseStyle.Average;
             
         }
 
         private void radioCircleMax_CheckedChanged(object sender, EventArgs e)
         {
             if (radioCircleMax.Checked)
-                edt.CircleStyle = CircleStyle.Max;
+                edt.EllipseStyle = EllipseStyle.Max;
             
+        }
+
+        private void ChooseCheckEquation(bool isShowEquation)
+        {
+            checkBoxEquation.Checked = isShowEquation;
+        }
+        
+        private void checkBoxEquation_CheckedChanged(object sender, EventArgs e)
+        {
+            edt.IsShowEquation = checkBoxEquation.Checked;
         }
 
         private void ChooseRadioLog(bool isLog)
         {
-            if (edt.IsLogY)
+            if (isLog)
                 radioLog.Checked = true;
             else
             {

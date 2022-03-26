@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Drawing;
 
-namespace EDTree2
+namespace EDTree
 {
-    public class RectanglePoint
+    public class RectPoint
     {
         public double L { get; set; }
         public double T { get; set; }
@@ -14,7 +13,7 @@ namespace EDTree2
         public double Height => Math.Round(Math.Abs(B - T), 3);
         public double Size => Math.Round(Width * Height, 3);
 
-        public RectanglePoint(double l, double t, double r, double b)
+        public RectPoint(double l, double t, double r, double b)
         {
             L = l;
             T = t;

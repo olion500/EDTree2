@@ -5,7 +5,7 @@
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
         <ProjectGuid>{4F382736-81A2-483A-BAD6-355F1C70CCC2}</ProjectGuid>
-        <OutputType>WinExe</OutputType>
+        <OutputType>Exe</OutputType>
         <RootNamespace>EDTree2</RootNamespace>
         <AssemblyName>EDTree2</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -33,10 +33,6 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="MathNet.Numerics, Version=4.15.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\packages\MathNet.Numerics.4.15.0\lib\net461\MathNet.Numerics.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
         <Reference Include="System" />
         <Reference Include="System.Core" />
         <Reference Include="System.Numerics" />
@@ -55,10 +51,8 @@
     <ItemGroup>
         <Compile Include="data\AerialCD.cs" />
         <Compile Include="data\EDTree.cs" />
-        <Compile Include="data\EllipsePoint.cs" />
-        <Compile Include="data\RectanglePoint.cs" />
         <Compile Include="Delegates.cs" />
-        <Compile Include="enum\CircleStyle.cs" />
+        <Compile Include="enum\EllipseStyle.cs" />
         <Compile Include="enum\RectStyle.cs" />
         <Compile Include="form\ChartSettingsForm.cs">
           <SubType>Form</SubType>
@@ -75,7 +69,7 @@
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="util\InputParser.cs" />
-        <Compile Include="util\Utils.cs" />
+        <Compile Include="util\StringUtils.cs" />
         <EmbeddedResource Include="form\ChartSettingsForm.resx">
           <DependentUpon>ChartSettingsForm.cs</DependentUpon>
         </EmbeddedResource>
@@ -104,6 +98,12 @@
     </ItemGroup>
     <ItemGroup>
         <None Include="App.config" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\EDTree\EDTree.csproj">
+        <Project>{e5f2cc9c-62ca-47d0-96c5-90316b93faf8}</Project>
+        <Name>EDTree</Name>
+      </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

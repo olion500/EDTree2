@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using MathNet.Numerics;
+using EDTree;
 
 namespace EDTree2
 {
@@ -10,47 +9,42 @@ namespace EDTree2
         private static double Step = 0.001;
         
         public Input Input { get; set; }
+        public List<double> X => Input.Data[0];
+        public string[] Header => Input.Header;
+        public string LabelX => Input.LabelX;
+        public string LabelY => Input.LabelY;
         public int Rows => Input.Data.First().Count;
         public int Cols => Input.Header.Length;
         
         public int Order { get; set; }
-        
-        public List<double> X { get; set; }
-        public List<double[]> Fs { get; set; }
-        public List<double> Rs { get; set; }
 
-        public AerialCD()
+        public FittingLine Line { get; private set; }
+        
+        public AerialCD(Input input)
         {
             Order = 3;
 
-            X = new List<double>();
-            Fs = new List<double[]>();
-            Rs = new List<double>();
+            Input = input;
         }
-
-        public void Calculate()
+        
+        public AerialCD Calculate()
         {
-            var start = Math.Min(Input.Data[0].First(), Input.Data[0].Last());
-            var end = Math.Max(Input.Data[0].First(), Input.Data[0].Last());
-            for (double k = start; k <= end; k += Step)
+            Line = new FittingLine(X, Input.Data[1], Order).Fit();
+            return this;
+        }
+        
+        public List<double> GetXPoints(double step = 0.001)
+        {
+            double start = X.Min();
+            double end = X.Max();
+
+            List<double> xPoints = new List<double>();
+            for (double i = start; i <= end; i += step)
             {
-                X.Add(k);
+                xPoints.Add(i);
             }
-            
-            for (int i = 1; i < Cols; i++)
-            {
-                var y = Input.Data[i].ToArray();
-                var f = Fit.Polynomial(Input.Data[0].ToArray(), y, Order);
-                Fs.Add(f);
-                
-                
-            }
-            
-            for (int i=0; i<Fs.Count; i++)
-            {
-                var r = GoodnessOfFit.RSquared(Input.Data[0].Select(x => Utils.LinearF(Fs[i], x)), Input.Data[i+1]);
-                Rs.Add(r);
-            }
+
+            return xPoints;
         }
     }
 }
