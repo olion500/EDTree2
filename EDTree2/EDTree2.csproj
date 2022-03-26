@@ -56,7 +56,6 @@
         <Compile Include="data\AerialCD.cs" />
         <Compile Include="data\EDTree.cs" />
         <Compile Include="data\EllipsePoint.cs" />
-        <Compile Include="data\RectanglePoint.cs" />
         <Compile Include="Delegates.cs" />
         <Compile Include="enum\CircleStyle.cs" />
         <Compile Include="enum\RectStyle.cs" />
@@ -75,7 +74,7 @@
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="util\InputParser.cs" />
-        <Compile Include="util\Utils.cs" />
+        <Compile Include="util\StringUtils.cs" />
         <EmbeddedResource Include="form\ChartSettingsForm.resx">
           <DependentUpon>ChartSettingsForm.cs</DependentUpon>
         </EmbeddedResource>

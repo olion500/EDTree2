@@ -20,19 +20,19 @@ namespace EDTree2
         public string LabelY => Input.LabelY;
 
         // options.
-        public FittingType RectStyle { get; set; }
-        public FittingType CircleStyle { get; set; }
+        public RectStyle RectStyle { get; set; }
+        public CircleStyle CircleStyle { get; set; }
         public int Order { get; set; }
         public double Zstep { get; set; }
         public bool IsLogY { get; set; }
         
         // Functions.
-        public FittingLine UpperLine;
-        public FittingLine BaseLine;
-        public FittingLine LowerLine;
+        public FittingLine UpperLine { get; private set; }
+        public FittingLine BaseLine { get; private set; }
+        public FittingLine LowerLine { get; private set; }
         
         // Rects.
-        public FittingRect Rect;
+        private FittingRect Rect;
         public FittingCircle Circle;
 
         public EDTree(Input input)
@@ -45,8 +45,8 @@ namespace EDTree2
 
         public void ResetOptions()
         {
-            RectStyle = FittingType.Left;
-            CircleStyle = FittingType.Left;
+            RectStyle = RectStyle.BaseLine;
+            CircleStyle = CircleStyle.None;
             Order = 2;
             Zstep = 10;
             IsLogY = false;
@@ -67,6 +67,8 @@ namespace EDTree2
             BaseLine = new FittingLine(X, baseline, Order).Fit();
             LowerLine = new FittingLine(X, lower, Order).Fit();
 
+            Rect = new FittingRect(Zstep, UpperLine, LowerLine).Calculate();
+
             return this;
         }
 
@@ -82,6 +84,11 @@ namespace EDTree2
             }
 
             return xPoints;
+        }
+
+        public RectPoint GetRectangles(FittingType type)
+        {
+            return Rect.GetRect(type);
         }
     }
 }

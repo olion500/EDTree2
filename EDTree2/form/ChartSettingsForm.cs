@@ -20,7 +20,7 @@ namespace EDTree2
         private void InitializeValues()
         {
             textZStep.Text = edt.Zstep.ToString();
-            // ChooseRadioRectStyle(edt.RectStyle);
+            ChooseRadioRectStyle(edt.RectStyle);
             ChooseFunctionRank(edt.Order);
             // ChooseRadioCircleStyle(edt.CircleStyle);
             ChooseRadioLog(edt.IsLogY);
@@ -98,20 +98,20 @@ namespace EDTree2
         }
         private void radioRectStyleBase_CheckedChanged(object sender, EventArgs e)
         {
-            // if (radioRectStyleBase.Checked)
-                // edt.RectStyle = RectStyle.BaseLine;
+            if (radioRectStyleBase.Checked)
+                edt.RectStyle = RectStyle.BaseLine;
         }
 
         private void radioRectStyleAverage_CheckedChanged(object sender, EventArgs e)
         {
-            // if (radioRectStyleAverage.Checked)
-                // edt.RectStyle = RectStyle.Average;
+            if (radioRectStyleAverage.Checked)
+                edt.RectStyle = RectStyle.Average;
         }
 
         private void radioRectStyleMax_CheckedChanged(object sender, EventArgs e)
         {
-            // if (radioRectStyleMax.Checked)
-                // edt.RectStyle = RectStyle.Maximum;
+            if (radioRectStyleMax.Checked)
+                edt.RectStyle = RectStyle.Maximum;
         }
 
         private void ChooseFunctionRank(int order)

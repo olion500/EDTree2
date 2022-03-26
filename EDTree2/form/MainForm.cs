@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using EDTree;
 
 namespace EDTree2
 {
@@ -52,24 +53,24 @@ namespace EDTree2
 
         private void LoadData()
         {
-            try
-            {
-                var intensityInput = InputParser.Parse(filename_intensity);
-                InputParser.IntensityValidate(intensityInput);
-                edt = new EDTree(intensityInput).Calculate();
-            }
-            catch
-            {
-                edt = null;
-            }
+            var intensityInput = InputParser.Parse(filename_intensity);
+            InputParser.IntensityValidate(intensityInput);
+            edt = new EDTree(intensityInput).Calculate();
+            // try
+            // {
+            //     var intensityInput = InputParser.Parse(filename_intensity);
+            //     InputParser.IntensityValidate(intensityInput);
+            //     edt = new EDTree(intensityInput).Calculate();
+            // }
+            // catch
+            // {
+            //     edt = null;
+            // }
 
 
             try
             {
-                acdDefocus = new AerialCD
-                {
-                    Input = InputParser.Parse(filename_defocus)
-                };
+                acdDefocus = new AerialCD(InputParser.Parse(filename_defocus));
                 acdDefocus.Calculate();
             }
             catch
@@ -79,10 +80,7 @@ namespace EDTree2
 
             try
             {
-                acdThreshold = new AerialCD
-                {
-                    Input = InputParser.Parse(filename_threshold)
-                };
+                acdThreshold = new AerialCD(InputParser.Parse(filename_threshold));
                 acdThreshold.Calculate();
             }
             catch
@@ -123,37 +121,41 @@ namespace EDTree2
 
         private void CreateListView()
         {
-            // listView1.BeginUpdate();
-            // listView1.Clear();
-            //
-            // if (CurrentScreen == ChartScreen.Intensity && edt != null)
-            // {
-            //     ListViewItem item = new ListViewItem($"Green(BaseLine:{edt.Zstep}um)");
-            //     item.ForeColor = colorLower;
-            //     item.SubItems.Add($"{edt.RectLeft.Size}(가로:{edt.RectLeft.Width}, 세로:{edt.RectLeft.Height})");
-            //     listView1.Items.Add(item);
-            //
-            //     item = new ListViewItem($"Blue(BaseLine:-{edt.Zstep}um)");
-            //     item.ForeColor = colorUpper;
-            //     item.SubItems.Add($"{edt.RectRight.Size}(가로:{edt.RectRight.Width}, 세로:{edt.RectRight.Height})");
-            //     listView1.Items.Add(item);
-            //
-            //     // rects.
-            //     if (edt.RectStyle == RectStyle.Average)
-            //     {
-            //         item = new ListViewItem("Red(Average)");
-            //         item.ForeColor = colorBase;
-            //         item.SubItems.Add($"{edt.RectAverage.Size}(가로:{edt.RectAverage.Width}, 세로:{edt.RectAverage.Height})");
-            //         listView1.Items.Add(item);
-            //     }
-            //     else if (edt.RectStyle == RectStyle.Maximum)
-            //     {
-            //         item = new ListViewItem("Red(Maximum)");
-            //         item.ForeColor = colorBase;
-            //         item.SubItems.Add($"{edt.RectMaximum.Size}(가로:{edt.RectMaximum.Width}, 세로:{edt.RectMaximum.Height})");
-            //         listView1.Items.Add(item);
-            //     }
-            //
+            listView1.BeginUpdate();
+            listView1.Clear();
+            
+            if (CurrentScreen == ChartScreen.Intensity && edt != null)
+            {
+                RectPoint rp = edt.GetRectangles(FittingType.Left);
+                ListViewItem item = new ListViewItem($"Green(BaseLine:{edt.Zstep}um)");
+                item.ForeColor = colorLower;
+                item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height})");
+                listView1.Items.Add(item);
+            
+                rp = edt.GetRectangles(FittingType.Right);
+                item = new ListViewItem($"Blue(BaseLine:-{edt.Zstep}um)");
+                item.ForeColor = colorUpper;
+                item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height})");
+                listView1.Items.Add(item);
+            
+                // rects.
+                if (edt.RectStyle == RectStyle.Average)
+                {
+                    rp = edt.GetRectangles(FittingType.Average);
+                    item = new ListViewItem("Red(Average)");
+                    item.ForeColor = colorBase;
+                    item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height})");
+                    listView1.Items.Add(item);
+                }
+                else if (edt.RectStyle == RectStyle.Maximum)
+                {
+                    rp = edt.GetRectangles(FittingType.Max);
+                    item = new ListViewItem("Red(Maximum)");
+                    item.ForeColor = colorBase;
+                    item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height})");
+                    listView1.Items.Add(item);
+                }
+            
             //     // ellipse.
             //     EllipsePoint drawingCircle = edt.EllipseLeft;
             //     switch (edt.CircleStyle)
@@ -180,10 +182,10 @@ namespace EDTree2
             //         listView1.Items.Add(item);
             //     }
             //
-            //     listView1.Columns.Add("Rect", 210);
-            //     listView1.Columns.Add("Size", 210);
-            // }
-            // listView1.EndUpdate();
+                listView1.Columns.Add("Rect", 210);
+                listView1.Columns.Add("Size", 210);
+            }
+            listView1.EndUpdate();
             
             
             listView2.BeginUpdate();
@@ -244,8 +246,8 @@ namespace EDTree2
             mainChart.Series.Clear();
             
             // chart setting.
-            mainChart.ChartAreas[0].AxisX.Interval = 1;
-            mainChart.ChartAreas[0].AxisX.LabelAutoFitStyle = LabelAutoFitStyles.DecreaseFont;
+            // mainChart.ChartAreas[0].AxisX.Interval = 1;
+            // mainChart.ChartAreas[0].AxisX.LabelAutoFitStyle = LabelAutoFitStyles.DecreaseFont;
             mainChart.ChartAreas[0].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
             mainChart.ChartAreas[0].AxisY.IsStartedFromZero = false;
             mainChart.ChartAreas[0].AxisY.IntervalAutoMode = IntervalAutoMode.VariableCount;
@@ -292,19 +294,16 @@ namespace EDTree2
                 var acd = (CurrentScreen == ChartScreen.Defocus) ? acdDefocus : acdThreshold;
                 if (acd == null) return;
                 
-                mainChart.ChartAreas[0].AxisX.Title = acd.Input.LabelX;
-                mainChart.ChartAreas[0].AxisX.Minimum = acd.Input.Data[0].Min();
-                mainChart.ChartAreas[0].AxisY.Title = acd.Input.LabelY;
+                mainChart.ChartAreas[0].AxisX.Title = acd.LabelX;
+                mainChart.ChartAreas[0].AxisX.Minimum = acd.X.Min();
+                mainChart.ChartAreas[0].AxisY.Title = acd.LabelY;
 
-                for (int i = 1; i < acd.Cols; i++)
+                Series sr = mainChart.Series.Add(acd.Header[1]);
+                sr.ChartType = SeriesChartType.Line;
+
+                foreach (var x in acd.GetXPoints())
                 {
-                    Series sr = mainChart.Series.Add(acd.Input.Header[i]);
-                    sr.ChartType = SeriesChartType.Line;
-                
-                    foreach (var x in acd.X)
-                    {
-                        sr.Points.AddXY(x, Utils.LinearF(acd.Fs[i-1], x));
-                    }
+                    sr.Points.AddXY(x, acd.Line.Evaluate(x));
                 }
             }
         }
@@ -320,25 +319,25 @@ namespace EDTree2
         {
             if (CurrentScreen == ChartScreen.Intensity && edt != null)
             {
-                // DrawText(e, Utils.PolynomialString(edt.Fl) + ",  R² : " + edt.Rsl.ToString("0.###") , colorLower, 1);
-                // DrawText(e, Utils.PolynomialString(edt.F) + ",  R² : " + edt.Rs.ToString("0.###"), colorBase, 2);
-                // DrawText(e, Utils.PolynomialString(edt.Fu) + ",  R² : " + edt.Rsu.ToString("0.###"), colorUpper, 3);
-                //
-                // DrawRect(e, edt.RectLeft, colorLower);
-                // DrawRect(e, edt.RectRight, colorUpper);
-                // if (edt.RectStyle == RectStyle.BaseLine)
-                // {
-                //     // do nothing.
-                // } 
-                // else if (edt.RectStyle == RectStyle.Average)
-                // {
-                //     DrawRect(e, edt.RectAverage, colorBase);
-                // } 
-                // else if (edt.RectStyle == RectStyle.Maximum)
-                // {
-                //     DrawRect(e, edt.RectMaximum, colorBase);
-                // }
-                //
+                DrawText(e, Utils.PolynomialString(edt.LowerLine.Coefficients) + ",  R² : " + edt.LowerLine.RSquare.ToString("0.###"), colorLower, 1);
+                DrawText(e, Utils.PolynomialString(edt.BaseLine.Coefficients) + ",  R² : " + edt.BaseLine.RSquare.ToString("0.###"), colorBase, 2);
+                DrawText(e, Utils.PolynomialString(edt.UpperLine.Coefficients) + ",  R² : " + edt.UpperLine.RSquare.ToString("0.###"), colorUpper, 3);
+                
+                DrawRect(e, edt.GetRectangles(FittingType.Left), colorLower);
+                DrawRect(e, edt.GetRectangles(FittingType.Right), colorUpper);
+                if (edt.RectStyle == RectStyle.BaseLine)
+                {
+                    // do nothing.
+                } 
+                else if (edt.RectStyle == RectStyle.Average)
+                {
+                    DrawRect(e, edt.GetRectangles(FittingType.Average), colorBase);
+                } 
+                else if (edt.RectStyle == RectStyle.Maximum)
+                {
+                    DrawRect(e, edt.GetRectangles(FittingType.Max), colorBase);
+                }
+                
                 // switch (edt.CircleStyle)
                 // {
                 //     case CircleStyle.Left:
@@ -358,13 +357,13 @@ namespace EDTree2
             } 
             else if (CurrentScreen == ChartScreen.Defocus || CurrentScreen == ChartScreen.Threshold)
             {
-                var acd = (CurrentScreen == ChartScreen.Defocus) ? acdDefocus : acdThreshold;
-                if (acd == null) return;
-
-                foreach (var (f, i) in acd.Fs.Select((item, index) => (item, index)))
-                {
-                    DrawText(e, Utils.PolynomialString(f) + ",  R² : " + acd.Rs[i].ToString("0.###") , colorBlack, i+1);
-                }
+                // var acd = (CurrentScreen == ChartScreen.Defocus) ? acdDefocus : acdThreshold;
+                // if (acd == null) return;
+                //
+                // foreach (var (f, i) in acd.Fs.Select((item, index) => (item, index)))
+                // {
+                //     DrawText(e, Utils.PolynomialString(f) + ",  R² : " + acd.Rs[i].ToString("0.###") , colorBlack, i+1);
+                // }
                 
             }
         }
@@ -374,7 +373,7 @@ namespace EDTree2
             e.ChartGraphics.Graphics.DrawString(text, new Font("Arial", 8), new SolidBrush(color), 100, 20 * n);
         }
 
-        private void DrawRect(ChartPaintEventArgs e, RectanglePoint rp, Color color)
+        private void DrawRect(ChartPaintEventArgs e, RectPoint rp, Color color)
         {
             var l = (float) mainChart.ChartAreas[0].AxisX.ValueToPixelPosition(rp.L);
             var t = (float) mainChart.ChartAreas[0].AxisY.ValueToPixelPosition(rp.T);
@@ -487,14 +486,17 @@ namespace EDTree2
                     // write columns.
                     string line = string.Join(",", acd.Input.Header);
                     sw.WriteLine(line);
-                
-                    var start = Math.Min(acd.Input.Data[0].First(), acd.Input.Data[0].Last());
-                    var end = Math.Max(acd.Input.Data[0].First(), acd.Input.Data[0].Last());
-                    for (double x = start; x <= end; x += 0.1)
+
+                    // write data.
+                    var step = (CurrentScreen == ChartScreen.Defocus) ? 0.1 : 0.001;
+                    foreach (var x in acd.GetXPoints(step))
                     {
-                        x = Math.Round(x, 3);
-                        var y = acd.Fs.Select(f => Utils.LinearF(f, x));
-                        line = string.Join(",", new[] {x}.Concat(y));
+                        var arr = new[]
+                        {
+                            x,
+                            acd.Line.Evaluate(x)
+                        }.Select(v => Math.Round(v, 3));
+                        line = String.Join(",", arr);
                         sw.WriteLine(line);
                     }
                 }

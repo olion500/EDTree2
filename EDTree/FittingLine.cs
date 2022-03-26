@@ -13,6 +13,7 @@ namespace EDTree
         public double Step { get; set; }
         
         public Polynomial F { get; private set; }
+        public double[] Coefficients => F.Coefficients;
         public double RSquare { get; private set; }
         
         private List<double> PointX { get; set; }
@@ -38,7 +39,9 @@ namespace EDTree
             // pre-calculate points on the equation.
             PointX.Clear();
             PointY.Clear();
-            foreach (var x in X)
+            var min = X.Min();
+            var max = X.Max();
+            for (var x = min; x <= max; x+=Step)
             {
                 PointX.Add(x);
                 PointY.Add(F.Evaluate(x));
@@ -59,14 +62,14 @@ namespace EDTree
             return (x, ymax);
         }
 
-        public List<double> FindXByY(double y, int decimalPlace = 3)
+        public List<double> FindXByY(double y, double maximumAbsoluteError = 0.001)
         {
             var res = new List<double>();
 
             for (var i = 0; i < PointX.Count; i++)
             {
                 
-                if (PointY[i].AlmostEqualRelative(y, decimalPlace))
+                if (PointY[i].AlmostEqual(y, maximumAbsoluteError))
                     res.Add(PointX[i]);
             }
 
