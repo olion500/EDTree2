@@ -105,5 +105,11 @@
     <ItemGroup>
         <None Include="App.config" />
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\EDTree\EDTree.csproj">
+        <Project>{e5f2cc9c-62ca-47d0-96c5-90316b93faf8}</Project>
+        <Name>EDTree</Name>
+      </ProjectReference>
+    </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
