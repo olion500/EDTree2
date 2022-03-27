@@ -62,7 +62,7 @@ namespace EDTree
             return new PointD(x, ymax);
         }
 
-        public List<double> FindXByY(double y, double maximumAbsoluteError = 0.001)
+        public List<double> FindXByY(double y, double maximumAbsoluteError = 0.0001)
         {
             var res = new List<double>();
 
