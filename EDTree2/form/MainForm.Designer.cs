@@ -42,6 +42,7 @@
             this.buttonHome = new System.Windows.Forms.Button();
             this.buttonDefocus = new System.Windows.Forms.Button();
             this.buttonSetting = new System.Windows.Forms.Button();
+            this.listView3 = new System.Windows.Forms.ListView();
             this.statusBar1 = new System.Windows.Forms.StatusBar();
             ((System.ComponentModel.ISupportInitialize) (this.mainChart)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -56,7 +57,7 @@
             this.mainChart.Location = new System.Drawing.Point(3, 3);
             this.mainChart.Name = "mainChart";
             this.tableLayoutPanel1.SetRowSpan(this.mainChart, 3);
-            this.mainChart.Size = new System.Drawing.Size(777, 696);
+            this.mainChart.Size = new System.Drawing.Size(777, 825);
             this.mainChart.TabIndex = 0;
             // 
             // listView1
@@ -64,7 +65,7 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView1.Location = new System.Drawing.Point(786, 3);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(516, 149);
+            this.listView1.Size = new System.Drawing.Size(516, 178);
             this.listView1.TabIndex = 1;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -79,23 +80,23 @@
             this.tableLayoutPanel1.Controls.Add(this.listView1, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.listView2, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.listView3, 1, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.22222F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 44.44445F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1381, 702);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 38.14681F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 39.71119F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1381, 831);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // listView2
             // 
             this.listView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView2.Location = new System.Drawing.Point(786, 158);
+            this.listView2.Location = new System.Drawing.Point(786, 187);
             this.listView2.Name = "listView2";
-            this.tableLayoutPanel1.SetRowSpan(this.listView2, 2);
-            this.listView2.Size = new System.Drawing.Size(516, 541);
+            this.listView2.Size = new System.Drawing.Size(516, 310);
             this.listView2.TabIndex = 2;
             this.listView2.UseCompatibleStateImageBehavior = false;
             this.listView2.View = System.Windows.Forms.View.Details;
@@ -111,7 +112,7 @@
             this.panel1.Location = new System.Drawing.Point(1308, 3);
             this.panel1.Name = "panel1";
             this.tableLayoutPanel1.SetRowSpan(this.panel1, 3);
-            this.panel1.Size = new System.Drawing.Size(68, 696);
+            this.panel1.Size = new System.Drawing.Size(68, 802);
             this.panel1.TabIndex = 4;
             // 
             // buttonImport
@@ -182,9 +183,19 @@
             this.buttonSetting.UseVisualStyleBackColor = true;
             this.buttonSetting.Click += new System.EventHandler(this.buttonSetting_Click);
             // 
+            // listView3
+            // 
+            this.listView3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listView3.Location = new System.Drawing.Point(786, 503);
+            this.listView3.Name = "listView3";
+            this.listView3.Size = new System.Drawing.Size(516, 325);
+            this.listView3.TabIndex = 5;
+            this.listView3.UseCompatibleStateImageBehavior = false;
+            this.listView3.View = System.Windows.Forms.View.Details;
+            // 
             // statusBar1
             // 
-            this.statusBar1.Location = new System.Drawing.Point(0, 682);
+            this.statusBar1.Location = new System.Drawing.Point(0, 811);
             this.statusBar1.Name = "statusBar1";
             this.statusBar1.Size = new System.Drawing.Size(1381, 20);
             this.statusBar1.TabIndex = 3;
@@ -195,7 +206,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1381, 702);
+            this.ClientSize = new System.Drawing.Size(1381, 831);
             this.Controls.Add(this.statusBar1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Location = new System.Drawing.Point(15, 15);
@@ -207,6 +218,8 @@
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.ListView listView3;
 
         private System.Windows.Forms.StatusBar statusBar1;
 

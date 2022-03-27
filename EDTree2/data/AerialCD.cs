@@ -6,8 +6,6 @@ namespace EDTree2
 {
     public class AerialCD
     {
-        private static double Step = 0.001;
-        
         public Input Input { get; set; }
         public List<double> X => Input.Data[0];
         public string[] Header => Input.Header;

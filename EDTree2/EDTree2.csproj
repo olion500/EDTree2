@@ -66,9 +66,12 @@
         <Compile Include="form\MainForm.Designer.cs">
           <DependentUpon>MainForm.cs</DependentUpon>
         </Compile>
+        <Compile Include="form\MainFormChartDrawing.cs" />
+        <Compile Include="form\MainFormListViewDrawing.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="util\InputParser.cs" />
+        <Compile Include="util\Palette.cs" />
         <Compile Include="util\StringUtils.cs" />
         <EmbeddedResource Include="form\ChartSettingsForm.resx">
           <DependentUpon>ChartSettingsForm.cs</DependentUpon>
