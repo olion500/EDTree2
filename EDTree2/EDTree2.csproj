@@ -72,7 +72,7 @@
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="util\InputParser.cs" />
         <Compile Include="util\Palette.cs" />
-        <Compile Include="util\StringUtils.cs" />
+        <Compile Include="util\Utils.cs" />
         <EmbeddedResource Include="form\ChartSettingsForm.resx">
           <DependentUpon>ChartSettingsForm.cs</DependentUpon>
         </EmbeddedResource>

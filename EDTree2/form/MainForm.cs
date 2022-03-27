@@ -35,8 +35,6 @@ namespace EDTree2
             LoadAndDraw();
         }
         
-        
-
         private void LoadAndDraw()
         {
             LoadData();
@@ -64,7 +62,7 @@ namespace EDTree2
             }
             catch
             {
-                edt = null;
+                edtCmp = null;
             }
 
 
@@ -118,8 +116,7 @@ namespace EDTree2
                     throw new ArgumentOutOfRangeException();
             }
         }
-
-
+        
         private void buttonSetting_Click(object sender, EventArgs e)
         {
             if (CurrentScreen == ChartScreen.Intensity && edt != null)

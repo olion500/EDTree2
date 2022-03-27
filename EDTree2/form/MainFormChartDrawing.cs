@@ -24,36 +24,18 @@ namespace EDTree2
             mainChart.ChartAreas[0].AxisY.LogarithmBase = 2.0;
             mainChart.ChartAreas[0].AxisY.IsLogarithmic = false;
 
-            if (CurrentScreen == ChartScreen.Intensity && edt != null)
+            if (CurrentScreen == ChartScreen.Intensity)
             {
+                if (edt == null) return;
+                
                 // chart setting
                 mainChart.ChartAreas[0].AxisY.IsLogarithmic = edt.IsLogY;           
                 mainChart.ChartAreas[0].AxisX.Title = edt.LabelX;
                 mainChart.ChartAreas[0].AxisX.Minimum = edt.X.Min();
                 mainChart.ChartAreas[0].AxisY.Title = edt.LabelY;
                 
-                // draw lines.
-                Series baseChart = mainChart.Series.Add("Base");
-                Series upperChart = mainChart.Series.Add("Upper");
-                Series lowerChart = mainChart.Series.Add("Lower");
-                baseChart.ChartType = SeriesChartType.Line;
-                upperChart.ChartType = SeriesChartType.Line;
-                lowerChart.ChartType = SeriesChartType.Line;
-                baseChart.Color = Palette.colorBase;
-                upperChart.Color = Palette.colorUpper;
-                lowerChart.Color = Palette.colorLower;
-
-                foreach (var x in edt.GetXPoints())
-                {
-                    baseChart.Points.AddXY(x, edt.BaseLine.Evaluate(x));
-                    upperChart.Points.AddXY(x, edt.UpperLine.Evaluate(x));
-                    lowerChart.Points.AddXY(x, edt.LowerLine.Evaluate(x));
-                }
-
-                // Add label on the each line.
-                PutChartNameOnPoint(baseChart.Points.Last(), edt.Header[2], Palette.colorBase);
-                PutChartNameOnPoint(upperChart.Points.Last(), edt.Header[3], Palette.colorUpper);
-                PutChartNameOnPoint(lowerChart.Points.Last(), edt.Header[1], Palette.colorLower);
+                DrawIntensityLineChart(edt, Palette.colorUpper, Palette.colorBase, Palette.colorLower, true);
+                DrawIntensityLineChart(edtCmp, Palette.colorUpperTrans, Palette.colorBaseTrans, Palette.colorLowerTrans, false);
             }
             else if (CurrentScreen == ChartScreen.Defocus || CurrentScreen == ChartScreen.Threshold)
             {
@@ -74,6 +56,37 @@ namespace EDTree2
             }
         }
 
+        private void DrawIntensityLineChart(EDTree edTree, Color colorUpper, Color colorBase, Color colorLower, bool showLabel)
+        {
+            if (edTree == null) return;
+            
+            // draw lines.
+            Series baseChart = mainChart.Series.Add("Base" + edTree.GetHashCode());
+            Series upperChart = mainChart.Series.Add("Upper" + edTree.GetHashCode());
+            Series lowerChart = mainChart.Series.Add("Lower" + edTree.GetHashCode());
+            baseChart.ChartType = SeriesChartType.Line;
+            upperChart.ChartType = SeriesChartType.Line;
+            lowerChart.ChartType = SeriesChartType.Line;
+            baseChart.Color = colorBase;
+            upperChart.Color = colorUpper;
+            lowerChart.Color = colorLower;
+
+            foreach (var x in edTree.GetXPoints())
+            {
+                baseChart.Points.AddXY(x, edTree.BaseLine.Evaluate(x));
+                upperChart.Points.AddXY(x, edTree.UpperLine.Evaluate(x));
+                lowerChart.Points.AddXY(x, edTree.LowerLine.Evaluate(x));
+            }
+
+            // Add label on the each line.
+            if (showLabel)
+            {
+                PutChartNameOnPoint(baseChart.Points.Last(), edTree.Header[2], colorBase);
+                PutChartNameOnPoint(upperChart.Points.Last(), edTree.Header[3], colorUpper);
+                PutChartNameOnPoint(lowerChart.Points.Last(), edTree.Header[1], colorLower);
+            }
+        }
+
         private void PutChartNameOnPoint(DataPoint p, string label, Color color)
         {
             p.Label = label;
@@ -83,33 +96,39 @@ namespace EDTree2
 
         private void MainChartOnPostPaint(object sender, ChartPaintEventArgs e)
         {
-            if (CurrentScreen == ChartScreen.Intensity && edt != null)
+            if (CurrentScreen == ChartScreen.Intensity)
             {
-                if (edt.IsShowEquation)
+                if (edt?.IsShowEquation ?? false)
                 {
                     DrawText(e, Utils.PolynomialString(edt.LowerLine.Coefficients) + ",  R² : " + edt.LowerLine.RSquare.ToString("0.###"), Palette.colorLower, 1);
                     DrawText(e, Utils.PolynomialString(edt.BaseLine.Coefficients) + ",  R² : " + edt.BaseLine.RSquare.ToString("0.###"), Palette.colorBase, 2);
                     DrawText(e, Utils.PolynomialString(edt.UpperLine.Coefficients) + ",  R² : " + edt.UpperLine.RSquare.ToString("0.###"), Palette.colorUpper, 3);
                 }
                 
-                DrawRect(e, edt.GetRectangles(FittingType.Left), Palette.colorLower);
-                DrawRect(e, edt.GetRectangles(FittingType.Right), Palette.colorUpper);
-                if (edt.RectStyle == RectStyle.BaseLine)
+                DrawRect(e, edt?.GetRectangles(FittingType.Left), Palette.colorLower);
+                DrawRect(e, edt?.GetRectangles(FittingType.Right), Palette.colorUpper);
+                DrawRect(e, edtCmp?.GetRectangles(FittingType.Left), Palette.colorLowerTrans);
+                DrawRect(e, edtCmp?.GetRectangles(FittingType.Right), Palette.colorUpperTrans);
+                if (edt?.RectStyle == RectStyle.BaseLine)
                 {
                     // do nothing.
                 } 
-                else if (edt.RectStyle == RectStyle.Average)
+                else if (edt?.RectStyle == RectStyle.Average)
                 {
-                    DrawRect(e, edt.GetRectangles(FittingType.Average), Palette.colorBase);
+                    DrawRect(e, edt?.GetRectangles(FittingType.Average), Palette.colorBase);
+                    DrawRect(e, edtCmp?.GetRectangles(FittingType.Average), Palette.colorBaseTrans);
                 } 
-                else if (edt.RectStyle == RectStyle.Maximum)
+                else if (edt?.RectStyle == RectStyle.Maximum)
                 {
-                    DrawRect(e, edt.GetRectangles(FittingType.Max), Palette.colorBase);
+                    DrawRect(e, edt?.GetRectangles(FittingType.Max), Palette.colorBase);
+                    DrawRect(e, edtCmp?.GetRectangles(FittingType.Max), Palette.colorBaseTrans);
+                    
+                    // Draw Common Rect.
+                    DrawRect(e, Utils.CommonRect(edt?.GetRectangles(FittingType.Max), edtCmp?.GetRectangles(FittingType.Max)), Palette.colorCommonRectTrans, true);
                 }
 
-                var ellipse = edt.GetEllipse(edt.EllipseStyle);
-                if (ellipse != null)
-                    DrawCircle(e, ellipse, Palette.colorCircle);
+                var ellipse = edt?.GetEllipse(edt.EllipseStyle);
+                DrawCircle(e, ellipse, Palette.colorCircle);
 
             } 
             else if (CurrentScreen == ChartScreen.Defocus || CurrentScreen == ChartScreen.Threshold)
@@ -126,18 +145,27 @@ namespace EDTree2
             e.ChartGraphics.Graphics.DrawString(text, new Font("Arial", 8), new SolidBrush(color), 100, 20 * n);
         }
 
-        private void DrawRect(ChartPaintEventArgs e, RectPoint rp, Color color)
+        private void DrawRect(ChartPaintEventArgs e, RectPoint rp, Color color, bool fill=false)
         {
+            if (rp == null) return;
+            
             var l = (float) mainChart.ChartAreas[0].AxisX.ValueToPixelPosition(rp.L);
             var t = (float) mainChart.ChartAreas[0].AxisY.ValueToPixelPosition(rp.T);
             var r = (float) mainChart.ChartAreas[0].AxisX.ValueToPixelPosition(rp.R);
             var b = (float) mainChart.ChartAreas[0].AxisY.ValueToPixelPosition(rp.B);
             var rect = RectangleF.FromLTRB(Math.Min(l, r), Math.Min(t, b), Math.Max(l, r),Math.Max(t, b));
-            e.ChartGraphics.Graphics.DrawRectangle(new Pen(color), rect.X, rect.Y, rect.Width, rect.Height);
+            if (fill)
+                e.ChartGraphics.Graphics.FillRectangle(new SolidBrush(color), rect.X, rect.Y, rect.Width, rect.Height);
+            else
+            {
+                e.ChartGraphics.Graphics.DrawRectangle(new Pen(color), rect.X, rect.Y, rect.Width, rect.Height);
+            }
         }
 
         private void DrawCircle(ChartPaintEventArgs e, EllipsePoint ep, Color color)
         {
+            if (ep == null) return;
+            
             var l = (float) mainChart.ChartAreas[0].AxisX.ValueToPixelPosition(ep.L);
             var t = (float) mainChart.ChartAreas[0].AxisY.ValueToPixelPosition(ep.T);
             var r = (float) mainChart.ChartAreas[0].AxisX.ValueToPixelPosition(ep.R);

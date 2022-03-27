@@ -42,6 +42,16 @@ namespace EDTree2
                     item.ForeColor = Palette.colorBase;
                     item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height})");
                     listView1.Items.Add(item);
+
+                    // Common Rect.
+                    rp = Utils.CommonRect(edt?.GetRectangles(FittingType.Max), edtCmp?.GetRectangles(FittingType.Max));
+                    if (rp != null)
+                    {
+                        item = new ListViewItem("Aqua(Common)");
+                        item.ForeColor = Palette.colorCommonRect;
+                        item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height}");
+                        listView1.Items.Add(item);
+                    }
                 }
             
                 // ellipse.
@@ -75,36 +85,42 @@ namespace EDTree2
                     input = acd.Input;
             }
             WriteInputOnListview(listView2, input, new[] {Palette.colorUpper, Palette.colorBase, Palette.colorLower});
-            WriteInputOnListview(listView3, inputCmp, new[] {Palette.colorUpper, Palette.colorBase, Palette.colorLower});
+            if (CurrentScreen == ChartScreen.Intensity)
+                WriteInputOnListview(listView3, inputCmp, new[] {Palette.colorUpper, Palette.colorBase, Palette.colorLower});
+            else
+            {
+                listView3.Clear();
+            }
         }
 
         private void WriteInputOnListview(ListView listView, Input input, Color[] colors)
         {
-            if (input == null) return;
-            
             listView.BeginUpdate();
             listView.Clear();
-            
-            // add content on the listview.
-            int rows = input.Data[0].Count;
-            int cols = input.Header.Length;
-            for (int i = 0; i < rows; i++)
-            {
-                ListViewItem item = new ListViewItem($"{input.Data[0][i]}");
-                item.UseItemStyleForSubItems = false;
-                for (int j = 1; j < cols; j++)
-                {
-                    item.SubItems.Add($"{input.Data[j][i]}").ForeColor = colors[j-1];
-                }
 
-                listView.Items.Add(item);
-            }
-            
-            // calculate proper column width.
-            var colWidth = Math.Max(400 / cols, 60);
-            foreach (var col in input.Header)
+            if (input != null)
             {
-                listView.Columns.Add(col, colWidth);
+                // add content on the listview.
+                int rows = input.Data[0].Count;
+                int cols = input.Header.Length;
+                for (int i = 0; i < rows; i++)
+                {
+                    ListViewItem item = new ListViewItem($"{input.Data[0][i]}");
+                    item.UseItemStyleForSubItems = false;
+                    for (int j = 1; j < cols; j++)
+                    {
+                        item.SubItems.Add($"{input.Data[j][i]}").ForeColor = colors[j-1];
+                    }
+
+                    listView.Items.Add(item);
+                }
+            
+                // calculate proper column width.
+                var colWidth = Math.Max(400 / cols, 60);
+                foreach (var col in input.Header)
+                {
+                    listView.Columns.Add(col, colWidth);
+                }
             }
             
             listView.EndUpdate();
