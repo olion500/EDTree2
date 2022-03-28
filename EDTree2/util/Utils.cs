@@ -25,10 +25,17 @@ namespace EDTree2
         {
             if (r1 == null || r2 == null) return null;
 
-            if (r1.L > r2.R
-                || r1.T > r2.B
-                || r1.R > r2.R
-                || r1.B < r2.T) return null;
+            // case 1. 왼쪽으로 벗어난 경우.
+            if (r1.L > r2.R) return null;
+            
+            // case 2. 오른쪽으로 벗어난 경우.
+            if (r1.R < r2.L) return null;
+            
+            // case 3. 위쪽으로 벗어난 경우.
+            if (r1.B > r2.T) return null;
+            
+            // case 4. 아래쪽으로 벗어난 경우.
+            if (r1.T < r2.B) return null;
 
             return new RectPoint(
                 Math.Max(r1.L, r2.L),
