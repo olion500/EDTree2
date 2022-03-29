@@ -109,7 +109,29 @@ namespace EDTree
         private (double xc, double yc , double a, double b) FindMaxEllipse(PointD p1, PointD p2, PointD p3)
         {
             var (xc, yc, a, b) = CenterInfo(p1, p2, p3);
-            var t = 0.0001;
+            var t = 0.001;
+            (xc, yc, a, b) = AdjustMinorAxis(xc, yc, a, b, t);
+            (xc, yc, a, b) = AdjustMajorAxis(xc, yc, a, b, t);
+            
+            return (xc, yc, a, b);
+        }
+
+        private (double xc, double yc, double a, double b) AdjustMajorAxis(double xc, double yc, double a, double b, double t)
+        {
+            while (true)
+            {
+                var at = a + t;
+                if (IsRangeOutOfEllipse(xc, yc, at, b))
+                    a = at;
+                else
+                    break;
+            }
+
+            return (xc, yc, a, b);
+        }
+
+        private (double xc, double yc, double a, double b) AdjustMinorAxis(double xc, double yc, double a, double b, double t)
+        {
             var ratio = a / b;
             
             while (true)
@@ -128,7 +150,7 @@ namespace EDTree
                     break;
                 }
             }
-            
+
             return (xc, yc, a, b);
         }
 
@@ -162,9 +184,11 @@ namespace EDTree
             var minX = xc - a;
             var maxX = xc + a;
             var isAllOut = true;
+            var p = new PointD();
             for (double x = minX; x <= maxX; x += 0.1)
             {
-                var p = new PointD(x, UpperLine.Evaluate(x));
+                p.X = x;
+                p.Y = UpperLine.Evaluate(x);
                 isAllOut = isAllOut && IsPointOutOfEllipse(xc, yc, a, b, p);
             }
 

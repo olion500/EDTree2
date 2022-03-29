@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using EDTree;
 
@@ -7,8 +6,6 @@ namespace EDTree2
 {
     public class EDTree
     {
-
-        private double Step = 0.001;
 
         public Input Input { get; private set; }
 
