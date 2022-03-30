@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EDTree
 {
-    public class FittingCircle
+    public class FittingEllipse
     {
         public double BaseX { get; set; }
         public EllipsePoint EllipseLeft { get; set; }
@@ -14,7 +14,7 @@ namespace EDTree
         private readonly FittingLine UpperLine;
         private readonly FittingLine LowerLine;
         
-        public FittingCircle(double baseX, FittingLine upperLine, FittingLine lowerLine)
+        public FittingEllipse(double baseX, FittingLine upperLine, FittingLine lowerLine)
         {
             BaseX = baseX;
             // divide upper and lower.
@@ -30,7 +30,7 @@ namespace EDTree
             }
         }
         
-        public FittingCircle Calculate()
+        public FittingEllipse Calculate()
         {
             double l, t, r, b;
             PointD pointBottom = LowerLine.MaxY();

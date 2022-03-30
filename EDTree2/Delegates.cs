@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using EDTree2.form.option;
 
 namespace EDTree2
 {
-    public delegate void ApplyChangeDelegate(EDTree edtree);
+    public delegate void ApplyChangeDelegate(EdtreeOption edtree);
     
 }

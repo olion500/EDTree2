@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using EDTree2.form.option;
 
 namespace EDTree2
 {
@@ -21,12 +22,17 @@ namespace EDTree2
         private AerialCD acdDefocus;
         private AerialCD acdThreshold;
 
+        private EdtreeOption edtreeOption;
+
         private ChartScreen CurrentScreen;
         
         public Form1()
         {
             // init screen.
             CurrentScreen = ChartScreen.Intensity;
+
+            edtreeOption = new EdtreeOption();
+            
             InitializeComponent();
         }
 
@@ -47,7 +53,7 @@ namespace EDTree2
             {
                 var intensityInput = InputParser.Parse(filename_intensity);
                 InputParser.IntensityValidate(intensityInput);
-                edt = new EDTree(intensityInput).Calculate();
+                edt = new EDTree(intensityInput).Calculate(edtreeOption.Order, edtreeOption.Zstep);
             }
             catch
             {
@@ -58,7 +64,7 @@ namespace EDTree2
             {
                 var intensityInput = InputParser.Parse(filename_intensity_cmp);
                 InputParser.IntensityValidate(intensityInput);
-                edtCmp = new EDTree(intensityInput).Calculate();
+                edtCmp = new EDTree(intensityInput).Calculate(edtreeOption.Order, edtreeOption.Zstep);
             }
             catch
             {
@@ -121,7 +127,7 @@ namespace EDTree2
         {
             if (CurrentScreen == ChartScreen.Intensity && edt != null)
             {
-                var chartSettingsForm = new ChartSettingsForm(edt);
+                var chartSettingsForm = new ChartSettingsForm(edtreeOption);
                 chartSettingsForm.Show();
                 chartSettingsForm.ApplyChange += ApplyChange;
             }
@@ -132,10 +138,10 @@ namespace EDTree2
             
         }
 
-        private void ApplyChange(EDTree changed)
+        private void ApplyChange(EdtreeOption changed)
         {
-            edt = changed;
-            edt.Calculate();
+            edtreeOption = changed;
+            edt.Calculate(edtreeOption.Order, edtreeOption.Zstep);
             
             // Create Chart.
             CreateChart();
@@ -170,6 +176,9 @@ namespace EDTree2
             return (CurrentScreen != changeScreen);
         }
 
+        /// <summary>
+        /// Perform csv export when the user click the export button.
+        /// </summary>
         private void buttonExport_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveDlg = new SaveFileDialog();
@@ -230,6 +239,9 @@ namespace EDTree2
             fs.Close();
         }
 
+        /// <summary>
+        /// Perform txt import when the user click the import button.
+        /// </summary>
         private void buttonImport_Click(object sender, EventArgs e)
         {
             OpenFileDialog openDlg = new OpenFileDialog()

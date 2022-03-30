@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using EDTree;
 
 namespace EDTree2
 {
@@ -14,55 +13,55 @@ namespace EDTree2
             
             if (CurrentScreen == ChartScreen.Intensity && edt != null)
             {
-                RectPoint rp = edt.GetRectangles(FittingType.Left);
-                ListViewItem item = new ListViewItem($"Green(BaseLine:{edt.Zstep}um)");
-                item.ForeColor = Palette.colorLower;
-                item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height})");
-                listView1.Items.Add(item);
-            
-                rp = edt.GetRectangles(FittingType.Right);
-                item = new ListViewItem($"Blue(BaseLine:-{edt.Zstep}um)");
-                item.ForeColor = Palette.colorUpper;
-                item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height})");
-                listView1.Items.Add(item);
-            
-                // rects.
-                if (edt.RectStyle == RectStyle.Average)
-                {
-                    rp = edt.GetRectangles(FittingType.Average);
-                    item = new ListViewItem("Red(Average)");
-                    item.ForeColor = Palette.colorBase;
-                    item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height})");
-                    listView1.Items.Add(item);
-                }
-                else if (edt.RectStyle == RectStyle.Maximum)
-                {
-                    rp = edt.GetRectangles(FittingType.Max);
-                    item = new ListViewItem("Red(Maximum)");
-                    item.ForeColor = Palette.colorBase;
-                    item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height})");
-                    listView1.Items.Add(item);
-
-                    // Common Rect.
-                    rp = edt?.GetRectangles(FittingType.Max).Intersect(edtCmp?.GetRectangles(FittingType.Max));
-                    if (rp != null)
-                    {
-                        item = new ListViewItem("Aqua(Common)");
-                        item.ForeColor = Palette.colorCommonRect;
-                        item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height}");
-                        listView1.Items.Add(item);
-                    }
-                }
-            
-                // ellipse.
-                var drawingCircle = edt.GetEllipse(edt.EllipseStyle);
-                if (drawingCircle != null)
-                {
-                    item = new ListViewItem($"Brown({edt.EllipseStyle.ToString()})");
-                    item.ForeColor = Palette.colorCircle;
-                    item.SubItems.Add($"{Math.Round(drawingCircle.Size, 3)}(가로:{drawingCircle.Width}, 세로:{drawingCircle.Height})");
-                    listView1.Items.Add(item);
-                }
+                // RectPoint rp = edt.GetRectangles(FittingType.Left);
+                // ListViewItem item = new ListViewItem($"Green(BaseLine:{edt.Zstep}um)");
+                // item.ForeColor = Palette.colorLower;
+                // item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height})");
+                // listView1.Items.Add(item);
+                //
+                // rp = edt.GetRectangles(FittingType.Right);
+                // item = new ListViewItem($"Blue(BaseLine:-{edt.Zstep}um)");
+                // item.ForeColor = Palette.colorUpper;
+                // item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height})");
+                // listView1.Items.Add(item);
+                //
+                // // rects.
+                // if (edt.RectStyle == RectStyle.Average)
+                // {
+                //     rp = edt.GetRectangles(FittingType.Average);
+                //     item = new ListViewItem("Red(Average)");
+                //     item.ForeColor = Palette.colorBase;
+                //     item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height})");
+                //     listView1.Items.Add(item);
+                // }
+                // else if (edt.RectStyle == RectStyle.Maximum)
+                // {
+                //     rp = edt.GetRectangles(FittingType.Max);
+                //     item = new ListViewItem("Red(Maximum)");
+                //     item.ForeColor = Palette.colorBase;
+                //     item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height})");
+                //     listView1.Items.Add(item);
+                //
+                //     // Common Rect.
+                //     rp = edt?.GetRectangles(FittingType.Max).Intersect(edtCmp?.GetRectangles(FittingType.Max));
+                //     if (rp != null)
+                //     {
+                //         item = new ListViewItem("Aqua(Common)");
+                //         item.ForeColor = Palette.colorCommonRect;
+                //         item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height}");
+                //         listView1.Items.Add(item);
+                //     }
+                // }
+                //
+                // // ellipse.
+                // var drawingCircle = edt.GetEllipse(edt.EllipseStyle);
+                // if (drawingCircle != null)
+                // {
+                //     item = new ListViewItem($"Brown({edt.EllipseStyle.ToString()})");
+                //     item.ForeColor = Palette.colorCircle;
+                //     item.SubItems.Add($"{Math.Round(drawingCircle.Size, 3)}(가로:{drawingCircle.Width}, 세로:{drawingCircle.Height})");
+                //     listView1.Items.Add(item);
+                // }
             }
             listView1.Columns.Add("Rect", 210);
             listView1.Columns.Add("Size", 210);

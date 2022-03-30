@@ -14,14 +14,6 @@ namespace EDTree2
         public string LabelX => Input.LabelX;
         public string LabelY => Input.LabelY;
 
-        // options.
-        public RectStyle RectStyle { get; set; }
-        public EllipseStyle EllipseStyle { get; set; }
-        public int Order { get; set; }
-        public double Zstep { get; set; }
-        public bool IsShowEquation { get; set; }
-        public bool IsLogY { get; set; }
-        
         // Functions.
         public FittingLine UpperLine { get; private set; }
         public FittingLine BaseLine { get; private set; }
@@ -29,24 +21,11 @@ namespace EDTree2
         
         // Rects.
         private FittingRect Rect;
-        public FittingCircle Ellipse;
+        public FittingEllipse Ellipse;
 
         public EDTree(Input input)
         {
             Input = input;
-            
-            // init options.
-            ResetOptions();
-        }
-
-        public void ResetOptions()
-        {
-            RectStyle = RectStyle.BaseLine;
-            EllipseStyle = EllipseStyle.None;
-            Order = 2;
-            Zstep = 10;
-            IsShowEquation = true;
-            IsLogY = false;
         }
         
         private (List<double> upper, List<double> baseline, List<double> lower) DivideInputData()
@@ -56,16 +35,16 @@ namespace EDTree2
             return (orderedList[0], orderedList[1], orderedList[2]);
         }
 
-        public EDTree Calculate()
+        public EDTree Calculate(int order, double zstep)
         {
             var (upper, baseline, lower) = DivideInputData();
 
-            UpperLine = new FittingLine(X, upper, Order).Fit();
-            BaseLine = new FittingLine(X, baseline, Order).Fit();
-            LowerLine = new FittingLine(X, lower, Order).Fit();
+            UpperLine = new FittingLine(X, upper, order).Fit();
+            BaseLine = new FittingLine(X, baseline, order).Fit();
+            LowerLine = new FittingLine(X, lower, order).Fit();
 
-            Rect = new FittingRect(Zstep, UpperLine, LowerLine).Calculate();
-            Ellipse = new FittingCircle(Zstep, UpperLine, LowerLine).Calculate();
+            Rect = new FittingRect(zstep, UpperLine, LowerLine).Calculate();
+            Ellipse = new FittingEllipse(zstep, UpperLine, LowerLine).Calculate();
 
             return this;
         }
@@ -93,12 +72,6 @@ namespace EDTree2
         {
             switch (style)
             {
-                case EllipseStyle.Left:
-                    return Ellipse.GetEllipse(FittingType.Left);
-                case EllipseStyle.Right:
-                    return Ellipse.GetEllipse(FittingType.Right);
-                case EllipseStyle.Average:
-                    return Ellipse.GetEllipse(FittingType.Average);
                 case EllipseStyle.Max:
                     return Ellipse.GetEllipse(FittingType.Max);
             }

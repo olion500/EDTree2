@@ -1,17 +1,18 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Windows.Forms;
+using EDTree2.form.option;
 
 namespace EDTree2
 {
     public partial class ChartSettingsForm : Form
     {
-        private EDTree edt;
+        private EdtreeOption _option;
         public ApplyChangeDelegate ApplyChange { get; set; }
 
-        public ChartSettingsForm(EDTree edTree)
+        public ChartSettingsForm(EdtreeOption option)
         {
-            edt = edTree;
+            _option = option;
             ApplyChange = null;
             InitializeComponent();
             InitializeValues();
@@ -19,17 +20,17 @@ namespace EDTree2
 
         private void InitializeValues()
         {
-            textZStep.Text = edt.Zstep.ToString();
-            ChooseRadioRectStyle(edt.RectStyle);
-            ChooseFunctionRank(edt.Order);
-            ChooseRadioCircleStyle(edt.EllipseStyle);
-            ChooseCheckEquation(edt.IsShowEquation);
-            ChooseRadioLog(edt.IsLogY);
+            textZStep.Text = _option.Zstep.ToString();
+            ChooseCheckRectStyle(_option.RectStyles);
+            ChooseFunctionRank(_option.Order);
+            ChooseRadioCircleStyle(_option.EllipseStyle);
+            ChooseCheckEquation(_option.IsShowEquation);
+            ChooseRadioLog(_option.IsLogY);
         }
 
         private void buttonOk_Click(object sender, EventArgs e)
         {
-            ApplyChange(edt);
+            ApplyChange(_option);
             Close();
         }
 
@@ -40,14 +41,14 @@ namespace EDTree2
         
         private void buttonReset_Click(object sender, EventArgs e)
         {
-            edt.ResetOptions();
+            _option.ResetValues();
             InitializeValues();
-            ApplyChange(edt);
+            ApplyChange(_option);
         }
 
         private void buttonApply_Click(object sender, EventArgs e)
         {
-            ApplyChange(edt);
+            ApplyChange(_option);
         }
 
         private void textZStep_TextChanged(object sender, EventArgs e)
@@ -61,58 +62,119 @@ namespace EDTree2
             else if (zstep < 0)
                 MessageBox.Show("0보다 큰 값만 입력 가능합니다.");
             
-            else if (-zstep < edt.X.Min() || edt.X.Max() < zstep)
-                MessageBox.Show("입력된 Z Step 값이 Focus 범위보다 넓습니다");
+            // else if (-zstep < edt.X.Min() || edt.X.Max() < zstep)
+                // MessageBox.Show("입력된 Z Step 값이 Focus 범위보다 넓습니다");
 
             else
             {
-                edt.Zstep = zstep;
+                _option.Zstep = zstep;
                 EnableApply();
             }
             
         }
 
+        /// <summary>
+        /// Disable apply button when the user writes wrong values.
+        /// </summary>
         private void DisableApply()
         {
             buttonApply.Enabled = false;
             buttonOk.Enabled = false;
         }
 
+        /// <summary>
+        /// Enable apply button when the user writes wrong values.
+        /// </summary>
         private void EnableApply()
         {
             buttonApply.Enabled = true;
             buttonOk.Enabled = true;
         }
 
-        private void ChooseRadioRectStyle(RectStyle rs)
+        private void ChooseCheckRectStyle(List<RectStyle> rectStyles)
         {
-            if (rs == RectStyle.BaseLine)
+            foreach (var rs in rectStyles)
             {
-                radioRectStyleBase.Checked = true;
-            } else if (rs == RectStyle.Average)
-            {
-                radioRectStyleAverage.Checked = true;
-            } else if (rs == RectStyle.Maximum)
-            {
-                radioRectStyleMax.Checked = true;
+                switch (rs)
+                {
+                    case RectStyle.None:
+                        UncheckAllRectOptions();
+                        rectNone.Checked = true;
+                        break;
+                    case RectStyle.Left:
+                        rectLeft.Checked = true;
+                        break;
+                    case RectStyle.Right:
+                        rectRight.Checked = true;
+                        break;
+                    case RectStyle.Avg:
+                        rectAvg.Checked = true;
+                        break;
+                    case RectStyle.Max:
+                        rectMax.Checked = true;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
             }
         }
-        private void radioRectStyleBase_CheckedChanged(object sender, EventArgs e)
+
+        private void UncheckAllRectOptions(bool withoutNone=false)
         {
-            if (radioRectStyleBase.Checked)
-                edt.RectStyle = RectStyle.BaseLine;
+            if (!withoutNone)
+                rectNone.Checked = false;
+            rectLeft.Checked = false;
+            rectRight.Checked = false;
+            rectAvg.Checked = false;
+            rectMax.Checked = false;
+        }
+        
+        private void rectNone_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rectNone.Checked)
+            {
+                _option.AddRectStyle(RectStyle.None);
+                UncheckAllRectOptions(withoutNone: true);
+            }
+            
         }
 
-        private void radioRectStyleAverage_CheckedChanged(object sender, EventArgs e)
+        private void rectLeft_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioRectStyleAverage.Checked)
-                edt.RectStyle = RectStyle.Average;
+            if (rectLeft.Checked)
+            {
+                _option.AddRectStyle(RectStyle.Left);
+                rectNone.Checked = false;
+            }
+                
         }
 
-        private void radioRectStyleMax_CheckedChanged(object sender, EventArgs e)
+        private void rectRight_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioRectStyleMax.Checked)
-                edt.RectStyle = RectStyle.Maximum;
+            if (rectRight.Checked)
+            {
+                _option.AddRectStyle(RectStyle.Right);
+                rectNone.Checked = false;
+            }
+        }
+
+        private void rectAvg_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rectAvg.Checked)
+            {
+                _option.AddRectStyle(RectStyle.Avg);
+                rectNone.Checked = false;
+            }
+        }
+
+        private void rectMax_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rectMax.Checked)
+            {
+                _option.AddRectStyle(RectStyle.Max);
+                rectNone.Checked = false;
+            }
+                
         }
 
         private void ChooseFunctionRank(int order)
@@ -126,13 +188,13 @@ namespace EDTree2
         private void radioFunQuadratic_CheckedChanged(object sender, EventArgs e)
         {
             if (radioFunQuadratic.Checked)
-                edt.Order = 2;
+                _option.Order = 2;
         }
 
         private void radioFunCubic_CheckedChanged(object sender, EventArgs e)
         {
             if (radioFunCubic.Checked)
-                edt.Order = 3;
+                _option.Order = 3;
         }
 
         private void ChooseRadioCircleStyle(EllipseStyle style)
@@ -141,15 +203,6 @@ namespace EDTree2
             {
                 case EllipseStyle.None:
                     radioCircleNone.Checked = true;
-                    break;
-                case EllipseStyle.Left:
-                    radioCircleLeft.Checked = true;
-                    break;
-                case EllipseStyle.Right:
-                    radioCircleRight.Checked = true;
-                    break;
-                case EllipseStyle.Average:
-                    radioCircleAverage.Checked = true;
                     break;
                 case EllipseStyle.Max:
                     radioCircleMax.Checked = true;
@@ -160,34 +213,13 @@ namespace EDTree2
         private void radioCircleNone_CheckedChanged(object sender, EventArgs e)
         {
             if (radioCircleNone.Checked)
-                edt.EllipseStyle = EllipseStyle.None;
-        }
-
-        private void radioCircleLeft_CheckedChanged(object sender, EventArgs e)
-        {
-            if (radioCircleLeft.Checked)
-                edt.EllipseStyle = EllipseStyle.Left;
-            
-        }
-
-        private void radioCircleRight_CheckedChanged(object sender, EventArgs e)
-        {
-            if (radioCircleRight.Checked)
-                edt.EllipseStyle = EllipseStyle.Right;
-            
-        }
-
-        private void radioCircleAverage_CheckedChanged(object sender, EventArgs e)
-        {
-            if (radioCircleAverage.Checked)
-                edt.EllipseStyle = EllipseStyle.Average;
-            
+                _option.EllipseStyle = EllipseStyle.None;
         }
 
         private void radioCircleMax_CheckedChanged(object sender, EventArgs e)
         {
             if (radioCircleMax.Checked)
-                edt.EllipseStyle = EllipseStyle.Max;
+                _option.EllipseStyle = EllipseStyle.Max;
             
         }
 
@@ -198,7 +230,7 @@ namespace EDTree2
         
         private void checkBoxEquation_CheckedChanged(object sender, EventArgs e)
         {
-            edt.IsShowEquation = checkBoxEquation.Checked;
+            _option.IsShowEquation = checkBoxEquation.Checked;
         }
 
         private void ChooseRadioLog(bool isLog)
@@ -213,13 +245,13 @@ namespace EDTree2
         private void radioIntensity_CheckedChanged(object sender, EventArgs e)
         {
             if (radioIntensity.Checked)
-                edt.IsLogY = false;
+                _option.IsLogY = false;
         }
 
         private void radioLog_CheckedChanged(object sender, EventArgs e)
         {
             if (radioLog.Checked)
-                edt.IsLogY = true;
+                _option.IsLogY = true;
         }
     }
 }

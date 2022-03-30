@@ -29,7 +29,7 @@ namespace EDTree2
                 if (edt == null) return;
                 
                 // chart setting
-                mainChart.ChartAreas[0].AxisY.IsLogarithmic = edt.IsLogY;           
+                // mainChart.ChartAreas[0].AxisY.IsLogarithmic = edt.IsLogY;           
                 mainChart.ChartAreas[0].AxisX.Title = edt.LabelX;
                 mainChart.ChartAreas[0].AxisX.Minimum = edt.X.Min();
                 mainChart.ChartAreas[0].AxisY.Title = edt.LabelY;
@@ -98,37 +98,37 @@ namespace EDTree2
         {
             if (CurrentScreen == ChartScreen.Intensity)
             {
-                if (edt?.IsShowEquation ?? false)
-                {
-                    DrawText(e, Utils.PolynomialString(edt.LowerLine.Coefficients) + ",  R² : " + edt.LowerLine.RSquare.ToString("0.###"), Palette.colorLower, 1);
-                    DrawText(e, Utils.PolynomialString(edt.BaseLine.Coefficients) + ",  R² : " + edt.BaseLine.RSquare.ToString("0.###"), Palette.colorBase, 2);
-                    DrawText(e, Utils.PolynomialString(edt.UpperLine.Coefficients) + ",  R² : " + edt.UpperLine.RSquare.ToString("0.###"), Palette.colorUpper, 3);
-                }
-                
-                DrawRect(e, edt?.GetRectangles(FittingType.Left), Palette.colorLower);
-                DrawRect(e, edt?.GetRectangles(FittingType.Right), Palette.colorUpper);
-                DrawRect(e, edtCmp?.GetRectangles(FittingType.Left), Palette.colorLowerTrans);
-                DrawRect(e, edtCmp?.GetRectangles(FittingType.Right), Palette.colorUpperTrans);
-                if (edt?.RectStyle == RectStyle.BaseLine)
-                {
-                    // do nothing.
-                } 
-                else if (edt?.RectStyle == RectStyle.Average)
-                {
-                    DrawRect(e, edt?.GetRectangles(FittingType.Average), Palette.colorBase);
-                    DrawRect(e, edtCmp?.GetRectangles(FittingType.Average), Palette.colorBaseTrans);
-                } 
-                else if (edt?.RectStyle == RectStyle.Maximum)
-                {
-                    DrawRect(e, edt?.GetRectangles(FittingType.Max), Palette.colorBase);
-                    DrawRect(e, edtCmp?.GetRectangles(FittingType.Max), Palette.colorBaseTrans);
-                    
-                    // Draw Common Rect.
-                    DrawRect(e, edt.GetRectangles(FittingType.Max).Intersect(edtCmp?.GetRectangles(FittingType.Max)), Palette.colorCommonRectTrans, true);
-                }
-
-                var ellipse = edt?.GetEllipse(edt.EllipseStyle);
-                DrawCircle(e, ellipse, Palette.colorCircle);
+                // if (edt?.IsShowEquation ?? false)
+                // {
+                //     DrawText(e, Utils.PolynomialString(edt.LowerLine.Coefficients) + ",  R² : " + edt.LowerLine.RSquare.ToString("0.###"), Palette.colorLower, 1);
+                //     DrawText(e, Utils.PolynomialString(edt.BaseLine.Coefficients) + ",  R² : " + edt.BaseLine.RSquare.ToString("0.###"), Palette.colorBase, 2);
+                //     DrawText(e, Utils.PolynomialString(edt.UpperLine.Coefficients) + ",  R² : " + edt.UpperLine.RSquare.ToString("0.###"), Palette.colorUpper, 3);
+                // }
+                //
+                // DrawRect(e, edt?.GetRectangles(FittingType.Left), Palette.colorLower);
+                // DrawRect(e, edt?.GetRectangles(FittingType.Right), Palette.colorUpper);
+                // DrawRect(e, edtCmp?.GetRectangles(FittingType.Left), Palette.colorLowerTrans);
+                // DrawRect(e, edtCmp?.GetRectangles(FittingType.Right), Palette.colorUpperTrans);
+                // if (edt?.RectStyle == RectStyle.BaseLine)
+                // {
+                //     // do nothing.
+                // } 
+                // else if (edt?.RectStyle == RectStyle.Average)
+                // {
+                //     DrawRect(e, edt?.GetRectangles(FittingType.Average), Palette.colorBase);
+                //     DrawRect(e, edtCmp?.GetRectangles(FittingType.Average), Palette.colorBaseTrans);
+                // } 
+                // else if (edt?.RectStyle == RectStyle.Maximum)
+                // {
+                //     DrawRect(e, edt?.GetRectangles(FittingType.Max), Palette.colorBase);
+                //     DrawRect(e, edtCmp?.GetRectangles(FittingType.Max), Palette.colorBaseTrans);
+                //     
+                //     // Draw Common Rect.
+                //     DrawRect(e, edt.GetRectangles(FittingType.Max).Intersect(edtCmp?.GetRectangles(FittingType.Max)), Palette.colorCommonRectTrans, true);
+                // }
+                //
+                // var ellipse = edt?.GetEllipse(edt.EllipseStyle);
+                // DrawCircle(e, ellipse, Palette.colorCircle);
 
             } 
             else if (CurrentScreen == ChartScreen.Defocus || CurrentScreen == ChartScreen.Threshold)
