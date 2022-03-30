@@ -21,5 +21,33 @@ namespace EDTree
             B = b;
         }
 
+        /// <summary>
+        /// Calculate intersected Rectangle between given two RectPoint.
+        /// </summary>
+        /// <returns>RectPoint. If there's no intersection, return null.</returns>
+        public RectPoint Intersect(RectPoint other)
+        {
+            if (other == null) return null;
+
+            // case 1. 왼쪽으로 벗어난 경우.
+            if (L > other.R) return null;
+            
+            // case 2. 오른쪽으로 벗어난 경우.
+            if (R < other.L) return null;
+            
+            // case 3. 위쪽으로 벗어난 경우.
+            if (B > other.T) return null;
+            
+            // case 4. 아래쪽으로 벗어난 경우.
+            if (T < other.B) return null;
+
+            return new RectPoint(
+                Math.Max(L, other.L),
+                Math.Min(T, other.T),
+                Math.Min(R, other.R),
+                Math.Max(B, other.B)
+            );
+        }
+
     }
 }

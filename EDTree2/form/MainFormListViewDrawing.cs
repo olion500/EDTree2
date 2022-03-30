@@ -44,7 +44,7 @@ namespace EDTree2
                     listView1.Items.Add(item);
 
                     // Common Rect.
-                    rp = Utils.CommonRect(edt?.GetRectangles(FittingType.Max), edtCmp?.GetRectangles(FittingType.Max));
+                    rp = edt?.GetRectangles(FittingType.Max).Intersect(edtCmp?.GetRectangles(FittingType.Max));
                     if (rp != null)
                     {
                         item = new ListViewItem("Aqua(Common)");

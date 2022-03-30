@@ -124,7 +124,7 @@ namespace EDTree2
                     DrawRect(e, edtCmp?.GetRectangles(FittingType.Max), Palette.colorBaseTrans);
                     
                     // Draw Common Rect.
-                    DrawRect(e, Utils.CommonRect(edt?.GetRectangles(FittingType.Max), edtCmp?.GetRectangles(FittingType.Max)), Palette.colorCommonRectTrans, true);
+                    DrawRect(e, edt.GetRectangles(FittingType.Max).Intersect(edtCmp?.GetRectangles(FittingType.Max)), Palette.colorCommonRectTrans, true);
                 }
 
                 var ellipse = edt?.GetEllipse(edt.EllipseStyle);
