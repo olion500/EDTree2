@@ -89,5 +89,14 @@ namespace EDTree2.form.option
             // sort list.
             RectStyles.Sort();
         }
+
+        /// <summary>
+        /// Remove rectangle style list.
+        /// </summary>
+        public void RemoveRectStyle(RectStyle rs)
+        {
+            RectStyles.Remove(rs);
+            
+        }
     }
 }

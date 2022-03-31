@@ -58,7 +58,7 @@ namespace EDTree2
         {
             DisableApply();
 
-            if (!checkMinMaxTextBoxes(textZstepMin, textZstepMax)) return;
+            if (!CheckMinMaxTextBoxes(textZstepMin, textZstepMax)) return;
             
             double.TryParse(textZstepMin.Text, out var minVal);
             _option.ZstepMin = minVal;
@@ -69,7 +69,7 @@ namespace EDTree2
         {
             DisableApply();
 
-            if (!checkMinMaxTextBoxes(textZstepMin, textZstepMax)) return;
+            if (!CheckMinMaxTextBoxes(textZstepMin, textZstepMax)) return;
             
             double.TryParse(textZstepMax.Text, out var maxVal);
             _option.ZstepMax = maxVal;
@@ -80,7 +80,7 @@ namespace EDTree2
         /// Show error when the user input wrong value in textboxes.
         /// If something goes wrong, it returns false.
         /// </summary>
-        private bool checkMinMaxTextBoxes(TextBox tbMin, TextBox tbMax)
+        private bool CheckMinMaxTextBoxes(TextBox tbMin, TextBox tbMax)
         {
             var isDoubleMin = double.TryParse(tbMin.Text, out var zstepMinValue);
             var isDoubleMax = double.TryParse(tbMax.Text, out var zstepMaxValue);
@@ -171,6 +171,10 @@ namespace EDTree2
                 _option.AddRectStyle(RectStyle.None);
                 UncheckAllRectOptions(withoutNone: true);
             }
+            else
+            {
+                _option.RemoveRectStyle(RectStyle.None);
+            }
             
         }
 
@@ -180,6 +184,10 @@ namespace EDTree2
             {
                 _option.AddRectStyle(RectStyle.Left);
                 rectNone.Checked = false;
+            }
+            else
+            {
+                _option.RemoveRectStyle(RectStyle.Left);
             }
                 
         }
@@ -191,6 +199,10 @@ namespace EDTree2
                 _option.AddRectStyle(RectStyle.Right);
                 rectNone.Checked = false;
             }
+            else
+            {
+                _option.RemoveRectStyle(RectStyle.Right);
+            }
         }
 
         private void rectAvg_CheckedChanged(object sender, EventArgs e)
@@ -199,6 +211,10 @@ namespace EDTree2
             {
                 _option.AddRectStyle(RectStyle.Avg);
                 rectNone.Checked = false;
+            }
+            else
+            {
+                _option.RemoveRectStyle(RectStyle.Avg);
             }
         }
 
@@ -209,6 +225,10 @@ namespace EDTree2
                 _option.AddRectStyle(RectStyle.Max);
                 rectNone.Checked = false;
             }
+            else
+            {
+                _option.RemoveRectStyle(RectStyle.Max);
+            }
                 
         }
         
@@ -216,7 +236,7 @@ namespace EDTree2
         {
             DisableApply();
 
-            if (!checkMinMaxTextBoxes(textCircleMinX, textCircleMaxX)) return;
+            if (!CheckMinMaxTextBoxes(textCircleMinX, textCircleMaxX)) return;
             
             double.TryParse(textCircleMinX.Text, out var minVal);
             _option.EllipseMinX = minVal;
@@ -227,7 +247,7 @@ namespace EDTree2
         {
             DisableApply();
 
-            if (!checkMinMaxTextBoxes(textCircleMinX, textCircleMaxX)) return;
+            if (!CheckMinMaxTextBoxes(textCircleMinX, textCircleMaxX)) return;
             
             double.TryParse(textCircleMaxX.Text, out var maxVal);
             _option.EllipseMaxX = maxVal;
