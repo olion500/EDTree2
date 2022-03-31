@@ -16,9 +16,13 @@ namespace EDTree2
         public static NamedColor colorLowerTrans = NamedColorWithTransparent(colorLower, "BlueTrans");
         
         public static NamedColor colorRectLeft = new NamedColor(Color.Green, "Green");
+        public static NamedColor colorRectLeftTrans = NamedColorWithTransparent(colorRectLeft, "GreenCmp");
         public static NamedColor colorRectRight = new NamedColor(Color.MediumBlue, "Blue");
+        public static NamedColor colorRectRightTrans = NamedColorWithTransparent(colorRectRight, "BlueCmp");
         public static NamedColor colorRectAvg = new NamedColor(Color.OrangeRed, "Red");
+        public static NamedColor colorRectAvgTrans = NamedColorWithTransparent(colorRectAvg, "RedCmp");
         public static NamedColor colorRectMax = new NamedColor(Color.Brown, "Brown");
+        public static NamedColor colorRectMaxTrans = NamedColorWithTransparent(colorRectMax, "BrownCmp");
         public static NamedColor colorRectCommon = new NamedColor(Color.Aqua, "Aqua");
         public static NamedColor colorRectCommonTrans = NamedColorWithTransparent(colorRectCommon, "AquaTrans");
 
@@ -37,6 +41,26 @@ namespace EDTree2
                     return colorRectAvg;
                 case RectStyle.Max:
                     return colorRectMax;
+            }
+
+            return null;
+        }
+        
+        /// <summary>
+        /// Returns Compared color with the given rect style.
+        /// </summary>
+        public static NamedColor FromRectStyleCmp(RectStyle style)
+        {
+            switch (style)
+            {
+                case RectStyle.Left:
+                    return colorRectLeftTrans;
+                case RectStyle.Right:
+                    return colorRectRightTrans;
+                case RectStyle.Avg:
+                    return colorRectAvgTrans;
+                case RectStyle.Max:
+                    return colorRectMaxTrans;
             }
 
             return null;

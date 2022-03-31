@@ -66,7 +66,7 @@ namespace EDTree2.form.option
             EllipseMaxX = 10;
             Order = 2;
             ZstepMin = -10;
-            ZstepMax = -10;
+            ZstepMax = 10;
             IsShowEquation = false;
             IsLogY = false;
         }
@@ -85,6 +85,9 @@ namespace EDTree2.form.option
                 RectStyles.Remove(RectStyle.None);
             }
             RectStyles.Add(rs);            
+            
+            // sort list.
+            RectStyles.Sort();
         }
     }
 }

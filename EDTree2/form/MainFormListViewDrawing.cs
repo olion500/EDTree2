@@ -18,42 +18,13 @@ namespace EDTree2
                     if (rect == null) continue;
 
                     var color = Palette.FromRectStyle(rs);
-                    var item = new ListViewItem($"{color.Name}")
+                    var item = new ListViewItem($"{color.Name}({rs.GetName()})")
                     {
                         ForeColor = color.Color,
                         SubItems = { $"{rect.Size}(가로:{rect.Width}, 세로:{rect.Height}" }
                     };
                     listView1.Items.Add(item);
                 }
-                // RectPoint rp = edt.GetRectangles(FittingType.Left);
-                // ListViewItem item = new ListViewItem($"Green(BaseLine:{edt.Zstep}um)");
-                // item.ForeColor = Palette.colorLower;
-                // item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height})");
-                // listView1.Items.Add(item);
-                //
-                // rp = edt.GetRectangles(FittingType.Right);
-                // item = new ListViewItem($"Blue(BaseLine:-{edt.Zstep}um)");
-                // item.ForeColor = Palette.colorUpper;
-                // item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height})");
-                // listView1.Items.Add(item);
-                //
-                // // rects.
-                // if (edt.RectStyle == RectStyle.Average)
-                // {
-                //     rp = edt.GetRectangles(FittingType.Average);
-                //     item = new ListViewItem("Red(Average)");
-                //     item.ForeColor = Palette.colorBase;
-                //     item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height})");
-                //     listView1.Items.Add(item);
-                // }
-                // else if (edt.RectStyle == RectStyle.Maximum)
-                // {
-                //     rp = edt.GetRectangles(FittingType.Max);
-                //     item = new ListViewItem("Red(Maximum)");
-                //     item.ForeColor = Palette.colorBase;
-                //     item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height})");
-                //     listView1.Items.Add(item);
-                //
                 //     // Common Rect.
                 //     rp = edt?.GetRectangles(FittingType.Max).Intersect(edtCmp?.GetRectangles(FittingType.Max));
                 //     if (rp != null)

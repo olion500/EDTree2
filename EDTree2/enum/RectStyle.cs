@@ -34,5 +34,24 @@ namespace EDTree2
 
             return null;
         }
+
+        public static string GetName(this RectStyle rs)
+        {
+            switch (rs)
+            {
+                case RectStyle.None:
+                    return "None";
+                case RectStyle.Left:
+                    return "Left";
+                case RectStyle.Right:
+                    return "Right";
+                case RectStyle.Avg:
+                    return "Average";
+                case RectStyle.Max:
+                    return "Maximum";
+                default:
+                    return "None";
+            }
+        }
     }
 }

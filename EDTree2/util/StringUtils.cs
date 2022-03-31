@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace EDTree2
 {
-    public class Utils
+    public static class StringUtils
     {
         public static string PolynomialString(IEnumerable<double> f)
         {
@@ -13,7 +14,9 @@ namespace EDTree2
             foreach (var v in f)
             {
                 var op = (v < 0) ? "-" : "+";
-                res = op + v.ToString("0.######") + postfix[pi] + res;
+                // if the value below 0.000001, then remove from the string.
+                if (Math.Abs(v) > 0.000001)
+                    res = op + v.ToString("0.######") + postfix[pi] + res;
                 pi++;
             }
             return res.TrimStart('+');
