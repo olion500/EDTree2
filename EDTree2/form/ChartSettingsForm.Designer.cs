@@ -32,19 +32,22 @@ namespace EDTree2
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.textZstepMax = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textZstepMin = new System.Windows.Forms.TextBox();
             this.checkBoxEquation = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textMaxX = new System.Windows.Forms.TextBox();
+            this.textCircleMaxX = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textMinX = new System.Windows.Forms.TextBox();
+            this.textCircleMinX = new System.Windows.Forms.TextBox();
             this.radioCircleMax = new System.Windows.Forms.RadioButton();
             this.radioCircleNone = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.radioFunCubic = new System.Windows.Forms.RadioButton();
             this.radioFunQuadratic = new System.Windows.Forms.RadioButton();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textZStep = new System.Windows.Forms.TextBox();
             this.groupValueType = new System.Windows.Forms.GroupBox();
             this.radioLog = new System.Windows.Forms.RadioButton();
             this.radioIntensity = new System.Windows.Forms.RadioButton();
@@ -61,6 +64,7 @@ namespace EDTree2
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonOk = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupValueType.SuspendLayout();
@@ -71,11 +75,10 @@ namespace EDTree2
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.groupBox4);
             this.groupBox1.Controls.Add(this.checkBoxEquation);
             this.groupBox1.Controls.Add(this.groupBox3);
             this.groupBox1.Controls.Add(this.groupBox2);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.textZStep);
             this.groupBox1.Controls.Add(this.groupValueType);
             this.groupBox1.Controls.Add(this.groupRectStyle);
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
@@ -84,9 +87,56 @@ namespace EDTree2
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.textZstepMax);
+            this.groupBox4.Controls.Add(this.label4);
+            this.groupBox4.Controls.Add(this.label1);
+            this.groupBox4.Controls.Add(this.textZstepMin);
+            this.groupBox4.Location = new System.Drawing.Point(9, 206);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(368, 44);
+            this.groupBox4.TabIndex = 8;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Rect Z step";
+            // 
+            // textZstepMax
+            // 
+            this.textZstepMax.Location = new System.Drawing.Point(241, 17);
+            this.textZstepMax.Name = "textZstepMax";
+            this.textZstepMax.Size = new System.Drawing.Size(89, 21);
+            this.textZstepMax.TabIndex = 5;
+            this.textZstepMax.TextChanged += new System.EventHandler(this.textZstepMax_TextChanged);
+            // 
+            // label4
+            // 
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.label4.Location = new System.Drawing.Point(189, 17);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 17);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "Max";
+            // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.label1.Location = new System.Drawing.Point(6, 17);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 17);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Min";
+            // 
+            // textZstepMin
+            // 
+            this.textZstepMin.Location = new System.Drawing.Point(56, 15);
+            this.textZstepMin.Name = "textZstepMin";
+            this.textZstepMin.Size = new System.Drawing.Size(89, 21);
+            this.textZstepMin.TabIndex = 2;
+            this.textZstepMin.TextChanged += new System.EventHandler(this.textZstepMin_TextChanged);
+            // 
             // checkBoxEquation
             // 
-            this.checkBoxEquation.Location = new System.Drawing.Point(14, 256);
+            this.checkBoxEquation.Location = new System.Drawing.Point(9, 265);
             this.checkBoxEquation.Name = "checkBoxEquation";
             this.checkBoxEquation.Size = new System.Drawing.Size(140, 24);
             this.checkBoxEquation.TabIndex = 7;
@@ -97,9 +147,9 @@ namespace EDTree2
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Controls.Add(this.textMaxX);
+            this.groupBox3.Controls.Add(this.textCircleMaxX);
             this.groupBox3.Controls.Add(this.label2);
-            this.groupBox3.Controls.Add(this.textMinX);
+            this.groupBox3.Controls.Add(this.textCircleMinX);
             this.groupBox3.Controls.Add(this.radioCircleMax);
             this.groupBox3.Controls.Add(this.radioCircleNone);
             this.groupBox3.Location = new System.Drawing.Point(7, 56);
@@ -118,12 +168,13 @@ namespace EDTree2
             this.label3.TabIndex = 10;
             this.label3.Text = "Max X";
             // 
-            // textMaxX
+            // textCircleMaxX
             // 
-            this.textMaxX.Location = new System.Drawing.Point(243, 59);
-            this.textMaxX.Name = "textMaxX";
-            this.textMaxX.Size = new System.Drawing.Size(89, 21);
-            this.textMaxX.TabIndex = 9;
+            this.textCircleMaxX.Location = new System.Drawing.Point(243, 59);
+            this.textCircleMaxX.Name = "textCircleMaxX";
+            this.textCircleMaxX.Size = new System.Drawing.Size(89, 21);
+            this.textCircleMaxX.TabIndex = 9;
+            this.textCircleMaxX.TextChanged += new System.EventHandler(this.textCircleMaxX_TextChanged);
             // 
             // label2
             // 
@@ -134,12 +185,13 @@ namespace EDTree2
             this.label2.TabIndex = 8;
             this.label2.Text = "Min X";
             // 
-            // textMinX
+            // textCircleMinX
             // 
-            this.textMinX.Location = new System.Drawing.Point(58, 59);
-            this.textMinX.Name = "textMinX";
-            this.textMinX.Size = new System.Drawing.Size(89, 21);
-            this.textMinX.TabIndex = 8;
+            this.textCircleMinX.Location = new System.Drawing.Point(58, 59);
+            this.textCircleMinX.Name = "textCircleMinX";
+            this.textCircleMinX.Size = new System.Drawing.Size(89, 21);
+            this.textCircleMinX.TabIndex = 8;
+            this.textCircleMinX.TextChanged += new System.EventHandler(this.textCircleMinX_TextChanged);
             // 
             // radioCircleMax
             // 
@@ -197,23 +249,6 @@ namespace EDTree2
             this.radioFunQuadratic.Text = "Quadratic";
             this.radioFunQuadratic.UseVisualStyleBackColor = true;
             this.radioFunQuadratic.CheckedChanged += new System.EventHandler(this.radioFunQuadratic_CheckedChanged);
-            // 
-            // label1
-            // 
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
-            this.label1.Location = new System.Drawing.Point(14, 219);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(92, 17);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Rect Z Step";
-            // 
-            // textZStep
-            // 
-            this.textZStep.Location = new System.Drawing.Point(142, 215);
-            this.textZStep.Name = "textZStep";
-            this.textZStep.Size = new System.Drawing.Size(116, 21);
-            this.textZStep.TabIndex = 2;
-            this.textZStep.TextChanged += new System.EventHandler(this.textZStep_TextChanged);
             // 
             // groupValueType
             // 
@@ -393,7 +428,8 @@ namespace EDTree2
             this.Name = "ChartSettingsForm";
             this.Text = "FmAnalysis_EDTreeData";
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -404,9 +440,13 @@ namespace EDTree2
             this.ResumeLayout(false);
         }
 
-        private System.Windows.Forms.TextBox textMinX;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textZstepMax;
+
+        private System.Windows.Forms.TextBox textCircleMinX;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textMaxX;
+        private System.Windows.Forms.TextBox textCircleMaxX;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox rectNone;
         private System.Windows.Forms.CheckBox rectLeft;
@@ -435,7 +475,7 @@ namespace EDTree2
 
         private System.Windows.Forms.Label label1;
 
-        private System.Windows.Forms.TextBox textZStep;
+        private System.Windows.Forms.TextBox textZstepMin;
 
         private System.Windows.Forms.GroupBox groupValueType;
         private System.Windows.Forms.RadioButton radioIntensity;

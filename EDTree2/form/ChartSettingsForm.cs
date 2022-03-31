@@ -20,7 +20,10 @@ namespace EDTree2
 
         private void InitializeValues()
         {
-            textZStep.Text = _option.Zstep.ToString();
+            textZstepMin.Text = _option.ZstepMin.ToString();
+            textZstepMax.Text = _option.ZstepMax.ToString();
+            textCircleMinX.Text = _option.EllipseMinX.ToString();
+            textCircleMaxX.Text = _option.EllipseMaxX.ToString();
             ChooseCheckRectStyle(_option.RectStyles);
             ChooseFunctionRank(_option.Order);
             ChooseRadioCircleStyle(_option.EllipseStyle);
@@ -51,27 +54,59 @@ namespace EDTree2
             ApplyChange(_option);
         }
 
-        private void textZStep_TextChanged(object sender, EventArgs e)
+        private void textZstepMin_TextChanged(object sender, EventArgs e)
         {
             DisableApply();
-            
-            var isDouble = Double.TryParse(textZStep.Text, out var zstep);
-            if (!isDouble)
-                MessageBox.Show("숫자만 입력 가능합니다.");
-            
-            else if (zstep < 0)
-                MessageBox.Show("0보다 큰 값만 입력 가능합니다.");
-            
-            // else if (-zstep < edt.X.Min() || edt.X.Max() < zstep)
-                // MessageBox.Show("입력된 Z Step 값이 Focus 범위보다 넓습니다");
 
-            else
+            if (!checkMinMaxTextBoxes(textZstepMin, textZstepMax)) return;
+            
+            double.TryParse(textZstepMin.Text, out var minVal);
+            _option.ZstepMin = minVal;
+            EnableApply();
+        }
+        
+        private void textZstepMax_TextChanged(object sender, EventArgs e)
+        {
+            DisableApply();
+
+            if (!checkMinMaxTextBoxes(textZstepMin, textZstepMax)) return;
+            
+            double.TryParse(textZstepMax.Text, out var maxVal);
+            _option.ZstepMax = maxVal;
+            EnableApply();
+        }
+
+        /// <summary>
+        /// Show error when the user input wrong value in textboxes.
+        /// If something goes wrong, it returns false.
+        /// </summary>
+        private bool checkMinMaxTextBoxes(TextBox tbMin, TextBox tbMax)
+        {
+            var isDoubleMin = double.TryParse(tbMin.Text, out var zstepMinValue);
+            var isDoubleMax = double.TryParse(tbMax.Text, out var zstepMaxValue);
+            if (!string.IsNullOrEmpty(tbMin.Text) && !isDoubleMin)
             {
-                _option.Zstep = zstep;
-                EnableApply();
+                MessageBox.Show("숫자만 입력 가능합니다.");
+                textZstepMin.Clear();
+                return false;
+            }
+
+            if (!string.IsNullOrEmpty(tbMax.Text) && !isDoubleMax)
+            {
+                MessageBox.Show("숫자만 입력 가능합니다.");
+                textZstepMax.Clear();
+                return false;
             }
             
+            if (zstepMinValue > zstepMaxValue)
+            {
+                MessageBox.Show("최소값이 최대값보다 작아야합니다.");
+                return false;
+            }
+
+            return true;
         }
+        
 
         /// <summary>
         /// Disable apply button when the user writes wrong values.
@@ -175,6 +210,28 @@ namespace EDTree2
                 rectNone.Checked = false;
             }
                 
+        }
+        
+        private void textCircleMinX_TextChanged(object sender, EventArgs e)
+        {
+            DisableApply();
+
+            if (!checkMinMaxTextBoxes(textCircleMinX, textCircleMaxX)) return;
+            
+            double.TryParse(textCircleMinX.Text, out var minVal);
+            _option.EllipseMinX = minVal;
+            EnableApply();
+        }
+
+        private void textCircleMaxX_TextChanged(object sender, EventArgs e)
+        {
+            DisableApply();
+
+            if (!checkMinMaxTextBoxes(textCircleMinX, textCircleMaxX)) return;
+            
+            double.TryParse(textCircleMaxX.Text, out var maxVal);
+            _option.EllipseMaxX = maxVal;
+            EnableApply();
         }
 
         private void ChooseFunctionRank(int order)

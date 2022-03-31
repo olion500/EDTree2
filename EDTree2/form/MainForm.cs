@@ -7,6 +7,10 @@ using EDTree2.form.option;
 
 namespace EDTree2
 {
+    
+    /// <summary>
+    /// Which screen will be shown in the display.
+    /// </summary>
     internal enum ChartScreen
     {
         Intensity, Defocus, Threshold
@@ -53,7 +57,9 @@ namespace EDTree2
             {
                 var intensityInput = InputParser.Parse(filename_intensity);
                 InputParser.IntensityValidate(intensityInput);
-                edt = new EDTree(intensityInput).Calculate(edtreeOption.Order, edtreeOption.Zstep);
+                edt = new EDTree(intensityInput)
+                    .SetOption(edtreeOption)
+                    .Calculate();
             }
             catch
             {
@@ -64,7 +70,9 @@ namespace EDTree2
             {
                 var intensityInput = InputParser.Parse(filename_intensity_cmp);
                 InputParser.IntensityValidate(intensityInput);
-                edtCmp = new EDTree(intensityInput).Calculate(edtreeOption.Order, edtreeOption.Zstep);
+                edtCmp = new EDTree(intensityInput)
+                    .SetOption(edtreeOption)
+                    .Calculate();
             }
             catch
             {
@@ -141,7 +149,9 @@ namespace EDTree2
         private void ApplyChange(EdtreeOption changed)
         {
             edtreeOption = changed;
-            edt.Calculate(edtreeOption.Order, edtreeOption.Zstep);
+            edt
+                .SetOption(edtreeOption)
+                .Calculate();
             
             // Create Chart.
             CreateChart();

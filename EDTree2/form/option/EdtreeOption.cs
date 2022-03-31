@@ -33,9 +33,14 @@ namespace EDTree2.form.option
         public int Order { get; set; }
         
         /// <summary>
-        /// The base value of rectangle drawing.
+        /// The min value of rectangle drawing.
         /// </summary>
-        public double Zstep { get; set; }
+        public double ZstepMin { get; set; }
+        
+        /// <summary>
+        /// The max value of rectangle drawing.
+        /// </summary>
+        public double ZstepMax { get; set; }
         
         /// <summary>
         /// Whether the equation is shown in the chart.
@@ -60,7 +65,8 @@ namespace EDTree2.form.option
             EllipseMinX = -10;
             EllipseMaxX = 10;
             Order = 2;
-            Zstep = 10;
+            ZstepMin = -10;
+            ZstepMax = -10;
             IsShowEquation = false;
             IsLogY = false;
         }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using EDTree;
+using EDTree2.form.option;
 
 namespace EDTree2
 {
@@ -8,6 +9,7 @@ namespace EDTree2
     {
 
         public Input Input { get; private set; }
+        public EdtreeOption Option { get; private set; }
 
         public List<double> X => Input.Data[0];
         public string[] Header => Input.Header;
@@ -27,24 +29,29 @@ namespace EDTree2
         {
             Input = input;
         }
-        
-        private (List<double> upper, List<double> baseline, List<double> lower) DivideInputData()
-        {
-            var lines = new[] {Input.Data[1], Input.Data[2], Input.Data[3]};
-            var orderedList = lines.OrderBy(v => v[0]).ToList();
-            return (orderedList[0], orderedList[1], orderedList[2]);
-        }
 
-        public EDTree Calculate(int order, double zstep)
+        /// <summary>
+        /// Set Edtree option that contains user's input.
+        /// </summary>
+        public EDTree SetOption(EdtreeOption option)
+        {
+            Option = option;
+            return this;
+        }
+        
+        /// <summary>
+        /// Calculate and create line equations, rectangles, and ellipses with the given option.
+        /// </summary>
+        public EDTree Calculate()
         {
             var (upper, baseline, lower) = DivideInputData();
 
-            UpperLine = new FittingLine(X, upper, order).Fit();
-            BaseLine = new FittingLine(X, baseline, order).Fit();
-            LowerLine = new FittingLine(X, lower, order).Fit();
+            UpperLine = new FittingLine(X, upper, Option.Order).Fit();
+            BaseLine = new FittingLine(X, baseline, Option.Order).Fit();
+            LowerLine = new FittingLine(X, lower, Option.Order).Fit();
 
-            Rect = new FittingRect(zstep, UpperLine, LowerLine).Calculate();
-            Ellipse = new FittingEllipse(zstep, UpperLine, LowerLine).Calculate();
+            Rect = new FittingRect(Option.ZstepMin, Option.ZstepMax, UpperLine, LowerLine).Calculate();
+            Ellipse = new FittingEllipse(Option.EllipseMinX, Option.EllipseMaxX, UpperLine, LowerLine).Calculate();
 
             return this;
         }
@@ -77,6 +84,18 @@ namespace EDTree2
             }
 
             return null;
+        }
+        
+        /// <summary>
+        /// Paring Input to upper, base, lower lines.
+        /// It assumes that the three lines are placed in order.
+        /// </summary>
+        /// <returns></returns>
+        private (List<double> upper, List<double> baseline, List<double> lower) DivideInputData()
+        {
+            var lines = new[] {Input.Data[1], Input.Data[2], Input.Data[3]};
+            var orderedList = lines.OrderBy(v => v[0]).ToList();
+            return (orderedList[0], orderedList[1], orderedList[2]);
         }
     }
 }
