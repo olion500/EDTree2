@@ -56,7 +56,7 @@ namespace EDTree2
             }
         }
 
-        private void DrawIntensityLineChart(EDTree edTree, Color colorUpper, Color colorBase, Color colorLower, bool showLabel)
+        private void DrawIntensityLineChart(EDTree edTree, NamedColor colorUpper, NamedColor colorBase, NamedColor colorLower, bool showLabel)
         {
             if (edTree == null) return;
             
@@ -67,9 +67,9 @@ namespace EDTree2
             baseChart.ChartType = SeriesChartType.Line;
             upperChart.ChartType = SeriesChartType.Line;
             lowerChart.ChartType = SeriesChartType.Line;
-            baseChart.Color = colorBase;
-            upperChart.Color = colorUpper;
-            lowerChart.Color = colorLower;
+            baseChart.Color = colorBase.Color;
+            upperChart.Color = colorUpper.Color;
+            lowerChart.Color = colorLower.Color;
 
             foreach (var x in edTree.GetXPoints())
             {
@@ -87,10 +87,10 @@ namespace EDTree2
             }
         }
 
-        private void PutChartNameOnPoint(DataPoint p, string label, Color color)
+        private void PutChartNameOnPoint(DataPoint p, string label, NamedColor color)
         {
             p.Label = label;
-            p.LabelForeColor = color;
+            p.LabelForeColor = color.Color;
             p.Font = new Font(p.Font.FontFamily, 16);
         }
 
@@ -140,9 +140,9 @@ namespace EDTree2
             }
         }
 
-        private void DrawText(ChartPaintEventArgs e, string text, Color color, int n)
+        private void DrawText(ChartPaintEventArgs e, string text, NamedColor color, int n)
         {
-            e.ChartGraphics.Graphics.DrawString(text, new Font("Arial", 8), new SolidBrush(color), 100, 20 * n);
+            e.ChartGraphics.Graphics.DrawString(text, new Font("Arial", 8), new SolidBrush(color.Color), 100, 20 * n);
         }
 
         private void DrawRect(ChartPaintEventArgs e, RectPoint rp, Color color, bool fill=false)

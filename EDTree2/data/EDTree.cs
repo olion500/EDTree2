@@ -70,11 +70,31 @@ namespace EDTree2
             return xPoints;
         }
 
-        public RectPoint GetRectangles(FittingType type)
+        /// <summary>
+        /// Return Rectangle with the given style.
+        /// </summary>
+        public RectPoint GetRectangles(RectStyle style)
         {
-            return Rect.GetRect(type);
+            switch (style)
+            {
+                case RectStyle.None:
+                    return null;
+                case RectStyle.Left:
+                    return Rect.GetRect(FittingType.Left);
+                case RectStyle.Right:
+                    return Rect.GetRect(FittingType.Right);
+                case RectStyle.Avg:
+                    return Rect.GetRect(FittingType.Average);
+                case RectStyle.Max:
+                    return Rect.GetRect(FittingType.Max);
+            }
+
+            return null;
         }
 
+        /// <summary>
+        /// Return Ellipse with the given style.
+        /// </summary>
         public EllipsePoint GetEllipse(EllipseStyle style)
         {
             switch (style)

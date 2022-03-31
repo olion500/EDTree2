@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace EDTree2
@@ -13,6 +12,19 @@ namespace EDTree2
             
             if (CurrentScreen == ChartScreen.Intensity && edt != null)
             {
+                foreach (var rs in edtreeOption.RectStyles)
+                {
+                    var rect = edt.GetRectangles(rs);
+                    if (rect == null) continue;
+
+                    var color = Palette.FromRectStyle(rs);
+                    var item = new ListViewItem($"{color.Name}")
+                    {
+                        ForeColor = color.Color,
+                        SubItems = { $"{rect.Size}(가로:{rect.Width}, 세로:{rect.Height}" }
+                    };
+                    listView1.Items.Add(item);
+                }
                 // RectPoint rp = edt.GetRectangles(FittingType.Left);
                 // ListViewItem item = new ListViewItem($"Green(BaseLine:{edt.Zstep}um)");
                 // item.ForeColor = Palette.colorLower;
@@ -92,7 +104,7 @@ namespace EDTree2
             }
         }
 
-        private void WriteInputOnListview(ListView listView, Input input, Color[] colors)
+        private void WriteInputOnListview(ListView listView, Input input, NamedColor[] colors)
         {
             listView.BeginUpdate();
             listView.Clear();
@@ -108,7 +120,7 @@ namespace EDTree2
                     item.UseItemStyleForSubItems = false;
                     for (int j = 1; j < cols; j++)
                     {
-                        item.SubItems.Add($"{input.Data[j][i]}").ForeColor = colors[j-1];
+                        item.SubItems.Add($"{input.Data[j][i]}").ForeColor = colors[j-1].Color;
                     }
 
                     listView.Items.Add(item);
