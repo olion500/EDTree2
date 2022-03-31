@@ -16,21 +16,30 @@ namespace EDTree2
         
         public int Order { get; set; }
 
-        public FittingLine Line { get; private set; }
+        public List<FittingLine> Lines { get; private set; }
         
         public AerialCD(Input input)
         {
             Order = 3;
-
             Input = input;
+            Lines = new List<FittingLine>();
         }
         
         public AerialCD Calculate()
         {
-            Line = new FittingLine(X, Input.Data[1], Order).Fit();
+            Lines.Clear();
+
+            for (int i = 1; i < Cols; i++)
+            {
+                var line = new FittingLine(X, Input.Data[i], Order).Fit();
+                Lines.Add(line);
+            }
             return this;
         }
         
+        /// <summary>
+        /// Returns X points to draw lines. The lower step, more smooth line.
+        /// </summary>
         public List<double> GetXPoints(double step = 0.001)
         {
             double start = X.Min();

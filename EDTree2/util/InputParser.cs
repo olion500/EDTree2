@@ -5,13 +5,19 @@ using System.Linq;
 
 namespace EDTree2
 {
-    enum Stage
+    /// <summary>
+    /// Stage for the file parsing.
+    /// </summary>
+    internal enum Stage
     {
         None, Label, Header, Data
     }
     
     public class InputParser
     {
+        /// <summary>
+        /// Parse the given file to Input class. When it fails, throw file format unmatched exception.
+        /// </summary>
         public static Input Parse(string filename)
         {
             Stage stage = Stage.None;
@@ -106,6 +112,9 @@ namespace EDTree2
             return input.Data.All(line => line.Count == l);
         }
 
+        /// <summary>
+        /// Throw Format Exception when it doesn't match with intensity data.
+        /// </summary>
         public static void IntensityValidate(Input input)
         {
             // [data]
@@ -113,6 +122,19 @@ namespace EDTree2
             if (input.Data.Count != 4)
             {
                 throw new FormatException("intensity input column length must be 4.");
+            }
+        }
+
+        /// <summary>
+        /// Throw Format Exception when it doesn't match with aerial data.
+        /// </summary>
+        public static void AerialValidate(Input input)
+        {
+            // [data]
+            // cols가 11줄을 넘어가면 안됨 (x 값 포함 overlap 가능한 데이터 개수)
+            if (input.Data.Count > 11)
+            {
+                throw new FormatException("aerial input column length cannot exceed 11.");
             }
         }
     }

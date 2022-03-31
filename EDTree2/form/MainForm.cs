@@ -82,7 +82,9 @@ namespace EDTree2
 
             try
             {
-                acdDefocus = new AerialCD(InputParser.Parse(filename_defocus));
+                var defocusInput = InputParser.Parse(filename_defocus);
+                InputParser.AerialValidate(defocusInput);
+                acdDefocus = new AerialCD(defocusInput);
                 acdDefocus.Calculate();
             }
             catch
@@ -92,7 +94,9 @@ namespace EDTree2
 
             try
             {
-                acdThreshold = new AerialCD(InputParser.Parse(filename_threshold));
+                var thresholdInput = InputParser.Parse(filename_threshold);
+                InputParser.AerialValidate(thresholdInput);
+                acdThreshold = new AerialCD(thresholdInput);
                 acdThreshold.Calculate();
             }
             catch
@@ -133,18 +137,10 @@ namespace EDTree2
         
         private void buttonSetting_Click(object sender, EventArgs e)
         {
-            if (CurrentScreen == ChartScreen.Intensity)
-            {
-                // Rect style is multi-selectable, when compared data is not provided.
-                var chartSettingsForm = new ChartSettingsForm(edtreeOption, (edtCmp == null));
-                chartSettingsForm.Show();
-                chartSettingsForm.ApplyChange += ApplyChange;
-            }
-            else
-            {
-                MessageBox.Show("설정을 지원하는 화면이 아닙니다.");
-            }
-            
+            // Rect style is multi-selectable, when compared data is not provided.
+            var chartSettingsForm = new ChartSettingsForm(edtreeOption, (edtCmp == null));
+            chartSettingsForm.Show();
+            chartSettingsForm.ApplyChange += ApplyChange;
         }
 
         private void ApplyChange(EdtreeOption changed)
@@ -235,11 +231,13 @@ namespace EDTree2
                     var step = (CurrentScreen == ChartScreen.Defocus) ? 0.1 : 0.001;
                     foreach (var x in acd.GetXPoints(step))
                     {
-                        var arr = new[]
-                        {
-                            x,
-                            acd.Line.Evaluate(x)
-                        }.Select(v => Math.Round(v, 3));
+                        var y =
+                            acd.Lines
+                                .Select(f => f.Evaluate(x))
+                                .ToList();
+                        y.Insert(0, x);
+
+                        var arr = y.Select(v => Math.Round(v, 3));
                         line = String.Join(",", arr);
                         sw.WriteLine(line);
                     }
