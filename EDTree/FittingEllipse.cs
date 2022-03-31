@@ -3,22 +3,33 @@ using System.Linq;
 
 namespace EDTree
 {
-    public class FittingCircle
+    /// <summary>
+    /// Calculate the maximum size of ellipse with the given FittingLines.
+    /// </summary>
+    public class FittingEllipse
     {
-        public double BaseX { get; set; }
-        public EllipsePoint EllipseLeft { get; set; }
-        public EllipsePoint EllipseRight { get; set; }
-        public EllipsePoint EllipseAvg { get; set; }
-        public EllipsePoint EllipseMax { get; set; }
+        public double MinX { get; }
+        public double MaxX { get; }
+        public EllipsePoint EllipseLeft { get; private set; }
+        public EllipsePoint EllipseRight { get; private set; }
+        public EllipsePoint EllipseAvg { get; private set; }
+        public EllipsePoint EllipseMax { get; private set; }
         
+        /// <summary>
+        /// Geometrical upper line.
+        /// </summary>
         private readonly FittingLine UpperLine;
+        /// <summary>
+        /// Geometrical lower line.
+        /// </summary>
         private readonly FittingLine LowerLine;
         
-        public FittingCircle(double baseX, FittingLine upperLine, FittingLine lowerLine)
+        public FittingEllipse(double min, double max, FittingLine upperLine, FittingLine lowerLine)
         {
-            BaseX = baseX;
+            MinX = min;
+            MaxX = max;
             // divide upper and lower.
-            if (upperLine.Evaluate(baseX) > lowerLine.Evaluate(baseX))
+            if (upperLine.Evaluate(MinX) > lowerLine.Evaluate(MinX))
             {
                 UpperLine = upperLine;
                 LowerLine = lowerLine;
@@ -30,12 +41,12 @@ namespace EDTree
             }
         }
         
-        public FittingCircle Calculate()
+        public FittingEllipse Calculate()
         {
             double l, t, r, b;
             PointD pointBottom = LowerLine.MaxY();
             
-            l = -BaseX;
+            l = MinX;
             t = UpperLine.Evaluate(l);
             r = UpperLine.FindXByY(t).Max();
             EllipseLeft = FindEllipseWithinPoints(
@@ -44,7 +55,7 @@ namespace EDTree
                 pointBottom
             );
 
-            r = BaseX;
+            r = MaxX;
             t = UpperLine.Evaluate(r);
             l = UpperLine.FindXByY(t).Min();
             EllipseRight = FindEllipseWithinPoints(
@@ -62,7 +73,7 @@ namespace EDTree
             
             var rectMax = new RectPoint(0, 0, 0, 0);
             b = LowerLine.MaxY().Y;
-            for (double x = -BaseX; x <= BaseX; x++)
+            for (double x = MinX; x <= MaxX; x++)
             {
                 l = x;
                 t = UpperLine.Evaluate(x);

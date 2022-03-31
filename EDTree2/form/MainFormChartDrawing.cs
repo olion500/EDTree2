@@ -29,7 +29,7 @@ namespace EDTree2
                 if (edt == null) return;
                 
                 // chart setting
-                mainChart.ChartAreas[0].AxisY.IsLogarithmic = edt.IsLogY;           
+                mainChart.ChartAreas[0].AxisY.IsLogarithmic = edtreeOption.IsLogY;           
                 mainChart.ChartAreas[0].AxisX.Title = edt.LabelX;
                 mainChart.ChartAreas[0].AxisX.Minimum = edt.X.Min();
                 mainChart.ChartAreas[0].AxisY.Title = edt.LabelY;
@@ -56,7 +56,7 @@ namespace EDTree2
             }
         }
 
-        private void DrawIntensityLineChart(EDTree edTree, Color colorUpper, Color colorBase, Color colorLower, bool showLabel)
+        private void DrawIntensityLineChart(EDTree edTree, NamedColor colorUpper, NamedColor colorBase, NamedColor colorLower, bool showLabel)
         {
             if (edTree == null) return;
             
@@ -67,9 +67,9 @@ namespace EDTree2
             baseChart.ChartType = SeriesChartType.Line;
             upperChart.ChartType = SeriesChartType.Line;
             lowerChart.ChartType = SeriesChartType.Line;
-            baseChart.Color = colorBase;
-            upperChart.Color = colorUpper;
-            lowerChart.Color = colorLower;
+            baseChart.Color = colorBase.Color;
+            upperChart.Color = colorUpper.Color;
+            lowerChart.Color = colorLower.Color;
 
             foreach (var x in edTree.GetXPoints())
             {
@@ -87,10 +87,10 @@ namespace EDTree2
             }
         }
 
-        private void PutChartNameOnPoint(DataPoint p, string label, Color color)
+        private void PutChartNameOnPoint(DataPoint p, string label, NamedColor color)
         {
             p.Label = label;
-            p.LabelForeColor = color;
+            p.LabelForeColor = color.Color;
             p.Font = new Font(p.Font.FontFamily, 16);
         }
 
@@ -98,37 +98,47 @@ namespace EDTree2
         {
             if (CurrentScreen == ChartScreen.Intensity)
             {
-                if (edt?.IsShowEquation ?? false)
+                // draw text about polynomial equation.
+                if (edtreeOption.IsShowEquation)
                 {
-                    DrawText(e, Utils.PolynomialString(edt.LowerLine.Coefficients) + ",  R² : " + edt.LowerLine.RSquare.ToString("0.###"), Palette.colorLower, 1);
-                    DrawText(e, Utils.PolynomialString(edt.BaseLine.Coefficients) + ",  R² : " + edt.BaseLine.RSquare.ToString("0.###"), Palette.colorBase, 2);
-                    DrawText(e, Utils.PolynomialString(edt.UpperLine.Coefficients) + ",  R² : " + edt.UpperLine.RSquare.ToString("0.###"), Palette.colorUpper, 3);
-                }
-                
-                DrawRect(e, edt?.GetRectangles(FittingType.Left), Palette.colorLower);
-                DrawRect(e, edt?.GetRectangles(FittingType.Right), Palette.colorUpper);
-                DrawRect(e, edtCmp?.GetRectangles(FittingType.Left), Palette.colorLowerTrans);
-                DrawRect(e, edtCmp?.GetRectangles(FittingType.Right), Palette.colorUpperTrans);
-                if (edt?.RectStyle == RectStyle.BaseLine)
-                {
-                    // do nothing.
-                } 
-                else if (edt?.RectStyle == RectStyle.Average)
-                {
-                    DrawRect(e, edt?.GetRectangles(FittingType.Average), Palette.colorBase);
-                    DrawRect(e, edtCmp?.GetRectangles(FittingType.Average), Palette.colorBaseTrans);
-                } 
-                else if (edt?.RectStyle == RectStyle.Maximum)
-                {
-                    DrawRect(e, edt?.GetRectangles(FittingType.Max), Palette.colorBase);
-                    DrawRect(e, edtCmp?.GetRectangles(FittingType.Max), Palette.colorBaseTrans);
-                    
-                    // Draw Common Rect.
-                    DrawRect(e, edt.GetRectangles(FittingType.Max).Intersect(edtCmp?.GetRectangles(FittingType.Max)), Palette.colorCommonRectTrans, true);
+                    DrawText(e, StringUtils.PolynomialString(edt.LowerLine.Coefficients) + ",  R² : " + edt.LowerLine.RSquare.ToString("0.###"), Palette.colorLower, 1);
+                    DrawText(e, StringUtils.PolynomialString(edt.BaseLine.Coefficients) + ",  R² : " + edt.BaseLine.RSquare.ToString("0.###"), Palette.colorBase, 2);
+                    DrawText(e, StringUtils.PolynomialString(edt.UpperLine.Coefficients) + ",  R² : " + edt.UpperLine.RSquare.ToString("0.###"), Palette.colorUpper, 3);
                 }
 
-                var ellipse = edt?.GetEllipse(edt.EllipseStyle);
-                DrawCircle(e, ellipse, Palette.colorCircle);
+                // draw rectangle of edt.
+                foreach (var rs in edtreeOption.RectStyles)
+                {
+                    var rect = edt?.GetRectangles(rs);
+                    if (rect == null) continue;
+                    
+                    var color = Palette.FromRectStyle(rs);
+                    DrawRect(e, edt?.GetRectangles(rs), color);
+                }
+                
+                // draw rectangle of edtCmp.
+                foreach (var rs in edtreeOption.RectStyles)
+                {
+                    var rect = edtCmp?.GetRectangles(rs);
+                    if (rect == null) continue;
+                    
+                    var color = Palette.FromRectStyleCmp(rs);
+                    DrawRect(e, edtCmp?.GetRectangles(rs), color);
+                }
+                
+                // draw common rect.
+                var rectStyle = edtreeOption.RectStyles.FirstOrDefault();
+                var commonRect = edt?.GetRectangles(rectStyle)?.Intersect(edtCmp?.GetRectangles(rectStyle));
+                if (commonRect != null)
+                {
+                    DrawRect(e, commonRect, Palette.colorRectCommonTrans, true);
+                }
+
+                // draw ellipse.
+                var ellipse = edt?.GetEllipse(edtreeOption.EllipseStyle);
+                var ellipseCmp = edtCmp?.GetEllipse(edtreeOption.EllipseStyle);
+                DrawCircle(e, ellipse, Palette.colorEllipse);
+                DrawCircle(e, ellipseCmp, Palette.colorEllipseTrans);
 
             } 
             else if (CurrentScreen == ChartScreen.Defocus || CurrentScreen == ChartScreen.Threshold)
@@ -136,16 +146,23 @@ namespace EDTree2
                 var acd = (CurrentScreen == ChartScreen.Defocus) ? acdDefocus : acdThreshold;
                 if (acd == null) return;
                 
-                DrawText(e, Utils.PolynomialString(acd.Line.Coefficients) + ",  R² : " + acd.Line.RSquare.ToString("0.###"), Palette.colorUpper, 1);
+                DrawText(e, StringUtils.PolynomialString(acd.Line.Coefficients) + ",  R² : " + acd.Line.RSquare.ToString("0.###"), Palette.colorUpper, 1);
             }
         }
 
-        private void DrawText(ChartPaintEventArgs e, string text, Color color, int n)
+        /// <summary>
+        /// Show polynomial Equations on the chart.
+        /// </summary>
+        private void DrawText(ChartPaintEventArgs e, string text, NamedColor color, int n)
         {
-            e.ChartGraphics.Graphics.DrawString(text, new Font("Arial", 8), new SolidBrush(color), 100, 20 * n);
+            e.ChartGraphics.Graphics.DrawString(text, new Font("Arial", 8), new SolidBrush(color.Color), 120, 20 * n);
         }
 
-        private void DrawRect(ChartPaintEventArgs e, RectPoint rp, Color color, bool fill=false)
+        /// <summary>
+        /// Draw rectangle on the chart.
+        /// </summary>
+        /// <param name="fill">Whether the rectangle is filled or not.</param>
+        private void DrawRect(ChartPaintEventArgs e, RectPoint rp, NamedColor color, bool fill=false)
         {
             if (rp == null) return;
             
@@ -155,14 +172,17 @@ namespace EDTree2
             var b = (float) mainChart.ChartAreas[0].AxisY.ValueToPixelPosition(rp.B);
             var rect = RectangleF.FromLTRB(Math.Min(l, r), Math.Min(t, b), Math.Max(l, r),Math.Max(t, b));
             if (fill)
-                e.ChartGraphics.Graphics.FillRectangle(new SolidBrush(color), rect.X, rect.Y, rect.Width, rect.Height);
+                e.ChartGraphics.Graphics.FillRectangle(new SolidBrush(color.Color), rect.X, rect.Y, rect.Width, rect.Height);
             else
             {
-                e.ChartGraphics.Graphics.DrawRectangle(new Pen(color), rect.X, rect.Y, rect.Width, rect.Height);
+                e.ChartGraphics.Graphics.DrawRectangle(new Pen(color.Color), rect.X, rect.Y, rect.Width, rect.Height);
             }
         }
 
-        private void DrawCircle(ChartPaintEventArgs e, EllipsePoint ep, Color color)
+        /// <summary>
+        /// Draw Circle on the chart.
+        /// </summary>
+        private void DrawCircle(ChartPaintEventArgs e, EllipsePoint ep, NamedColor color)
         {
             if (ep == null) return;
             
@@ -171,7 +191,7 @@ namespace EDTree2
             var r = (float) mainChart.ChartAreas[0].AxisX.ValueToPixelPosition(ep.R);
             var b = (float) mainChart.ChartAreas[0].AxisY.ValueToPixelPosition(ep.B);
             var rect = RectangleF.FromLTRB(Math.Min(l, r), Math.Min(t, b), Math.Max(l, r),Math.Max(t, b));
-            e.ChartGraphics.Graphics.DrawEllipse(new Pen(color), rect.X, rect.Y, rect.Width, rect.Height);
+            e.ChartGraphics.Graphics.DrawEllipse(new Pen(color.Color), rect.X, rect.Y, rect.Width, rect.Height);
         }
     }
 }

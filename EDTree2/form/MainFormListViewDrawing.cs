@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
-using EDTree;
 
 namespace EDTree2
 {
@@ -12,55 +11,68 @@ namespace EDTree2
             listView1.BeginUpdate();
             listView1.Clear();
             
-            if (CurrentScreen == ChartScreen.Intensity && edt != null)
+            if (CurrentScreen == ChartScreen.Intensity)
             {
-                RectPoint rp = edt.GetRectangles(FittingType.Left);
-                ListViewItem item = new ListViewItem($"Green(BaseLine:{edt.Zstep}um)");
-                item.ForeColor = Palette.colorLower;
-                item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height})");
-                listView1.Items.Add(item);
-            
-                rp = edt.GetRectangles(FittingType.Right);
-                item = new ListViewItem($"Blue(BaseLine:-{edt.Zstep}um)");
-                item.ForeColor = Palette.colorUpper;
-                item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height})");
-                listView1.Items.Add(item);
-            
-                // rects.
-                if (edt.RectStyle == RectStyle.Average)
+                // show edt's rectangle info in the listview1.
+                foreach (var rs in edtreeOption.RectStyles)
                 {
-                    rp = edt.GetRectangles(FittingType.Average);
-                    item = new ListViewItem("Red(Average)");
-                    item.ForeColor = Palette.colorBase;
-                    item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height})");
-                    listView1.Items.Add(item);
-                }
-                else if (edt.RectStyle == RectStyle.Maximum)
-                {
-                    rp = edt.GetRectangles(FittingType.Max);
-                    item = new ListViewItem("Red(Maximum)");
-                    item.ForeColor = Palette.colorBase;
-                    item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height})");
-                    listView1.Items.Add(item);
+                    var rect = edt?.GetRectangles(rs);
+                    if (rect == null) continue;
 
-                    // Common Rect.
-                    rp = edt?.GetRectangles(FittingType.Max).Intersect(edtCmp?.GetRectangles(FittingType.Max));
-                    if (rp != null)
+                    var color = Palette.FromRectStyle(rs);
+                    var item = new ListViewItem($"{color.Name}({rs.GetName()})")
                     {
-                        item = new ListViewItem("Aqua(Common)");
-                        item.ForeColor = Palette.colorCommonRect;
-                        item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height}");
-                        listView1.Items.Add(item);
-                    }
+                        ForeColor = color.Color,
+                        SubItems = { $"{rect.Size}(가로:{rect.Width}, 세로:{rect.Height}" }
+                    };
+                    listView1.Items.Add(item);
                 }
-            
-                // ellipse.
-                var drawingCircle = edt.GetEllipse(edt.EllipseStyle);
-                if (drawingCircle != null)
+                
+                // show edtCmp's rectangle info in the listview1.
+                foreach (var rs in edtreeOption.RectStyles)
                 {
-                    item = new ListViewItem($"Brown({edt.EllipseStyle.ToString()})");
-                    item.ForeColor = Palette.colorCircle;
-                    item.SubItems.Add($"{Math.Round(drawingCircle.Size, 3)}(가로:{drawingCircle.Width}, 세로:{drawingCircle.Height})");
+                    var rect = edtCmp?.GetRectangles(rs);
+                    if (rect == null) continue;
+
+                    var color = Palette.FromRectStyleCmp(rs);
+                    var item = new ListViewItem($"{color.Name}({rs.GetName()})")
+                    {
+                        ForeColor = color.Color,
+                        SubItems = { $"{rect.Size}(가로:{rect.Width}, 세로:{rect.Height}" }
+                    };
+                    listView1.Items.Add(item);
+                }
+                
+                // Common Rect.
+                var rectStyle = edtreeOption.RectStyles.FirstOrDefault();
+                var commonRect = edt?.GetRectangles(rectStyle)?.Intersect(edtCmp?.GetRectangles(rectStyle));
+                if (commonRect != null)
+                {
+                    var color = Palette.colorRectCommon;
+                    var item = new ListViewItem($"{color.Name}(Intersect)")
+                    {
+                        ForeColor = color.Color,
+                        SubItems = { $"{commonRect.Size}(가로:{commonRect.Width}, 세로:{commonRect.Height}" }
+                    };
+                    listView1.Items.Add(item);
+                }
+                
+                // ellipse.
+                var drawingCircles = new[]
+                    {edt?.GetEllipse(edtreeOption.EllipseStyle), edtCmp?.GetEllipse(edtreeOption.EllipseStyle)};
+                var circleColors = new[] {Palette.colorEllipse, Palette.colorEllipseTrans};
+
+                for (int i = 0; i < drawingCircles.Length; i++)
+                {
+                    var ep = drawingCircles[i];
+                    var color = circleColors[i];
+                    if (ep == null) continue;
+                    
+                    var item = new ListViewItem($"{color.Name}(Maximum Ellipse)")
+                    {
+                        ForeColor = color.Color,
+                        SubItems = { $"{Math.Round(ep.Size, 3)}(가로:{ep.Width}, 세로:{ep.Height})" }
+                    };
                     listView1.Items.Add(item);
                 }
             }
@@ -93,7 +105,7 @@ namespace EDTree2
             }
         }
 
-        private void WriteInputOnListview(ListView listView, Input input, Color[] colors)
+        private void WriteInputOnListview(ListView listView, Input input, NamedColor[] colors)
         {
             listView.BeginUpdate();
             listView.Clear();
@@ -109,7 +121,7 @@ namespace EDTree2
                     item.UseItemStyleForSubItems = false;
                     for (int j = 1; j < cols; j++)
                     {
-                        item.SubItems.Add($"{input.Data[j][i]}").ForeColor = colors[j-1];
+                        item.SubItems.Add($"{input.Data[j][i]}").ForeColor = colors[j-1].Color;
                     }
 
                     listView.Items.Add(item);

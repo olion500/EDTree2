@@ -32,25 +32,31 @@ namespace EDTree2
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.textZstepMax = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textZstepMin = new System.Windows.Forms.TextBox();
             this.checkBoxEquation = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textCircleMaxX = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textCircleMinX = new System.Windows.Forms.TextBox();
             this.radioCircleMax = new System.Windows.Forms.RadioButton();
-            this.radioCircleAverage = new System.Windows.Forms.RadioButton();
-            this.radioCircleRight = new System.Windows.Forms.RadioButton();
-            this.radioCircleLeft = new System.Windows.Forms.RadioButton();
             this.radioCircleNone = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.radioFunCubic = new System.Windows.Forms.RadioButton();
             this.radioFunQuadratic = new System.Windows.Forms.RadioButton();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textZStep = new System.Windows.Forms.TextBox();
             this.groupValueType = new System.Windows.Forms.GroupBox();
             this.radioLog = new System.Windows.Forms.RadioButton();
             this.radioIntensity = new System.Windows.Forms.RadioButton();
             this.groupRectStyle = new System.Windows.Forms.GroupBox();
-            this.radioRectStyleMax = new System.Windows.Forms.RadioButton();
-            this.radioRectStyleAverage = new System.Windows.Forms.RadioButton();
-            this.radioRectStyleBase = new System.Windows.Forms.RadioButton();
+            this.rectMax = new System.Windows.Forms.CheckBox();
+            this.rectAvg = new System.Windows.Forms.CheckBox();
+            this.rectRight = new System.Windows.Forms.CheckBox();
+            this.rectLeft = new System.Windows.Forms.CheckBox();
+            this.rectNone = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.buttonReset = new System.Windows.Forms.Button();
@@ -58,6 +64,7 @@ namespace EDTree2
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonOk = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupValueType.SuspendLayout();
@@ -68,22 +75,68 @@ namespace EDTree2
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.groupBox4);
             this.groupBox1.Controls.Add(this.checkBoxEquation);
             this.groupBox1.Controls.Add(this.groupBox3);
             this.groupBox1.Controls.Add(this.groupBox2);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.textZStep);
             this.groupBox1.Controls.Add(this.groupValueType);
             this.groupBox1.Controls.Add(this.groupRectStyle);
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(385, 309);
+            this.groupBox1.Size = new System.Drawing.Size(385, 365);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.textZstepMax);
+            this.groupBox4.Controls.Add(this.label4);
+            this.groupBox4.Controls.Add(this.label1);
+            this.groupBox4.Controls.Add(this.textZstepMin);
+            this.groupBox4.Location = new System.Drawing.Point(9, 206);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(368, 44);
+            this.groupBox4.TabIndex = 8;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Rect Z step";
+            // 
+            // textZstepMax
+            // 
+            this.textZstepMax.Location = new System.Drawing.Point(241, 17);
+            this.textZstepMax.Name = "textZstepMax";
+            this.textZstepMax.Size = new System.Drawing.Size(89, 21);
+            this.textZstepMax.TabIndex = 5;
+            this.textZstepMax.TextChanged += new System.EventHandler(this.textZstepMax_TextChanged);
+            // 
+            // label4
+            // 
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.label4.Location = new System.Drawing.Point(189, 17);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 17);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "Max";
+            // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.label1.Location = new System.Drawing.Point(6, 17);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 17);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Min";
+            // 
+            // textZstepMin
+            // 
+            this.textZstepMin.Location = new System.Drawing.Point(56, 15);
+            this.textZstepMin.Name = "textZstepMin";
+            this.textZstepMin.Size = new System.Drawing.Size(89, 21);
+            this.textZstepMin.TabIndex = 2;
+            this.textZstepMin.TextChanged += new System.EventHandler(this.textZstepMin_TextChanged);
+            // 
             // checkBoxEquation
             // 
-            this.checkBoxEquation.Location = new System.Drawing.Point(17, 206);
+            this.checkBoxEquation.Location = new System.Drawing.Point(9, 265);
             this.checkBoxEquation.Name = "checkBoxEquation";
             this.checkBoxEquation.Size = new System.Drawing.Size(140, 24);
             this.checkBoxEquation.TabIndex = 7;
@@ -93,22 +146,57 @@ namespace EDTree2
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label3);
+            this.groupBox3.Controls.Add(this.textCircleMaxX);
+            this.groupBox3.Controls.Add(this.label2);
+            this.groupBox3.Controls.Add(this.textCircleMinX);
             this.groupBox3.Controls.Add(this.radioCircleMax);
-            this.groupBox3.Controls.Add(this.radioCircleAverage);
-            this.groupBox3.Controls.Add(this.radioCircleRight);
-            this.groupBox3.Controls.Add(this.radioCircleLeft);
             this.groupBox3.Controls.Add(this.radioCircleNone);
             this.groupBox3.Location = new System.Drawing.Point(7, 56);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(371, 42);
+            this.groupBox3.Size = new System.Drawing.Size(371, 98);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Circle Style";
             // 
+            // label3
+            // 
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.label3.Location = new System.Drawing.Point(191, 61);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(46, 19);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Max X";
+            // 
+            // textCircleMaxX
+            // 
+            this.textCircleMaxX.Location = new System.Drawing.Point(243, 59);
+            this.textCircleMaxX.Name = "textCircleMaxX";
+            this.textCircleMaxX.Size = new System.Drawing.Size(89, 21);
+            this.textCircleMaxX.TabIndex = 9;
+            this.textCircleMaxX.TextChanged += new System.EventHandler(this.textCircleMaxX_TextChanged);
+            // 
+            // label2
+            // 
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.label2.Location = new System.Drawing.Point(6, 61);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(46, 19);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Min X";
+            // 
+            // textCircleMinX
+            // 
+            this.textCircleMinX.Location = new System.Drawing.Point(58, 59);
+            this.textCircleMinX.Name = "textCircleMinX";
+            this.textCircleMinX.Size = new System.Drawing.Size(89, 21);
+            this.textCircleMinX.TabIndex = 8;
+            this.textCircleMinX.TextChanged += new System.EventHandler(this.textCircleMinX_TextChanged);
+            // 
             // radioCircleMax
             // 
             this.radioCircleMax.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioCircleMax.Location = new System.Drawing.Point(299, 15);
+            this.radioCircleMax.Location = new System.Drawing.Point(243, 20);
             this.radioCircleMax.Name = "radioCircleMax";
             this.radioCircleMax.Size = new System.Drawing.Size(65, 22);
             this.radioCircleMax.TabIndex = 4;
@@ -117,46 +205,10 @@ namespace EDTree2
             this.radioCircleMax.UseVisualStyleBackColor = true;
             this.radioCircleMax.CheckedChanged += new System.EventHandler(this.radioCircleMax_CheckedChanged);
             // 
-            // radioCircleAverage
-            // 
-            this.radioCircleAverage.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioCircleAverage.Location = new System.Drawing.Point(208, 15);
-            this.radioCircleAverage.Name = "radioCircleAverage";
-            this.radioCircleAverage.Size = new System.Drawing.Size(84, 22);
-            this.radioCircleAverage.TabIndex = 3;
-            this.radioCircleAverage.TabStop = true;
-            this.radioCircleAverage.Text = "Average";
-            this.radioCircleAverage.UseVisualStyleBackColor = true;
-            this.radioCircleAverage.CheckedChanged += new System.EventHandler(this.radioCircleAverage_CheckedChanged);
-            // 
-            // radioCircleRight
-            // 
-            this.radioCircleRight.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioCircleRight.Location = new System.Drawing.Point(135, 15);
-            this.radioCircleRight.Name = "radioCircleRight";
-            this.radioCircleRight.Size = new System.Drawing.Size(65, 22);
-            this.radioCircleRight.TabIndex = 2;
-            this.radioCircleRight.TabStop = true;
-            this.radioCircleRight.Text = "Right";
-            this.radioCircleRight.UseVisualStyleBackColor = true;
-            this.radioCircleRight.CheckedChanged += new System.EventHandler(this.radioCircleRight_CheckedChanged);
-            // 
-            // radioCircleLeft
-            // 
-            this.radioCircleLeft.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioCircleLeft.Location = new System.Drawing.Point(80, 15);
-            this.radioCircleLeft.Name = "radioCircleLeft";
-            this.radioCircleLeft.Size = new System.Drawing.Size(70, 22);
-            this.radioCircleLeft.TabIndex = 1;
-            this.radioCircleLeft.TabStop = true;
-            this.radioCircleLeft.Text = "Left";
-            this.radioCircleLeft.UseVisualStyleBackColor = true;
-            this.radioCircleLeft.CheckedChanged += new System.EventHandler(this.radioCircleLeft_CheckedChanged);
-            // 
             // radioCircleNone
             // 
             this.radioCircleNone.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioCircleNone.Location = new System.Drawing.Point(7, 15);
+            this.radioCircleNone.Location = new System.Drawing.Point(7, 20);
             this.radioCircleNone.Name = "radioCircleNone";
             this.radioCircleNone.Size = new System.Drawing.Size(77, 22);
             this.radioCircleNone.TabIndex = 0;
@@ -169,7 +221,7 @@ namespace EDTree2
             // 
             this.groupBox2.Controls.Add(this.radioFunCubic);
             this.groupBox2.Controls.Add(this.radioFunQuadratic);
-            this.groupBox2.Location = new System.Drawing.Point(7, 113);
+            this.groupBox2.Location = new System.Drawing.Point(7, 160);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(371, 40);
             this.groupBox2.TabIndex = 6;
@@ -198,28 +250,11 @@ namespace EDTree2
             this.radioFunQuadratic.UseVisualStyleBackColor = true;
             this.radioFunQuadratic.CheckedChanged += new System.EventHandler(this.radioFunQuadratic_CheckedChanged);
             // 
-            // label1
-            // 
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
-            this.label1.Location = new System.Drawing.Point(17, 171);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(92, 17);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Rect Z Step";
-            // 
-            // textZStep
-            // 
-            this.textZStep.Location = new System.Drawing.Point(142, 168);
-            this.textZStep.Name = "textZStep";
-            this.textZStep.Size = new System.Drawing.Size(116, 21);
-            this.textZStep.TabIndex = 2;
-            this.textZStep.TextChanged += new System.EventHandler(this.textZStep_TextChanged);
-            // 
             // groupValueType
             // 
             this.groupValueType.Controls.Add(this.radioLog);
             this.groupValueType.Controls.Add(this.radioIntensity);
-            this.groupValueType.Location = new System.Drawing.Point(7, 250);
+            this.groupValueType.Location = new System.Drawing.Point(6, 306);
             this.groupValueType.Name = "groupValueType";
             this.groupValueType.Size = new System.Drawing.Size(371, 50);
             this.groupValueType.TabIndex = 1;
@@ -252,9 +287,11 @@ namespace EDTree2
             // 
             // groupRectStyle
             // 
-            this.groupRectStyle.Controls.Add(this.radioRectStyleMax);
-            this.groupRectStyle.Controls.Add(this.radioRectStyleAverage);
-            this.groupRectStyle.Controls.Add(this.radioRectStyleBase);
+            this.groupRectStyle.Controls.Add(this.rectMax);
+            this.groupRectStyle.Controls.Add(this.rectAvg);
+            this.groupRectStyle.Controls.Add(this.rectRight);
+            this.groupRectStyle.Controls.Add(this.rectLeft);
+            this.groupRectStyle.Controls.Add(this.rectNone);
             this.groupRectStyle.Location = new System.Drawing.Point(7, 8);
             this.groupRectStyle.Name = "groupRectStyle";
             this.groupRectStyle.Size = new System.Drawing.Size(371, 42);
@@ -262,41 +299,55 @@ namespace EDTree2
             this.groupRectStyle.TabStop = false;
             this.groupRectStyle.Text = "Rect Style";
             // 
-            // radioRectStyleMax
+            // rectMax
             // 
-            this.radioRectStyleMax.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioRectStyleMax.Location = new System.Drawing.Point(243, 11);
-            this.radioRectStyleMax.Name = "radioRectStyleMax";
-            this.radioRectStyleMax.Size = new System.Drawing.Size(121, 22);
-            this.radioRectStyleMax.TabIndex = 2;
-            this.radioRectStyleMax.TabStop = true;
-            this.radioRectStyleMax.Text = "Maximum";
-            this.radioRectStyleMax.UseVisualStyleBackColor = true;
-            this.radioRectStyleMax.CheckedChanged += new System.EventHandler(this.radioRectStyleMax_CheckedChanged);
+            this.rectMax.Location = new System.Drawing.Point(272, 12);
+            this.rectMax.Name = "rectMax";
+            this.rectMax.Size = new System.Drawing.Size(60, 24);
+            this.rectMax.TabIndex = 11;
+            this.rectMax.Text = "Max";
+            this.rectMax.UseVisualStyleBackColor = true;
+            this.rectMax.Click += new System.EventHandler(this.rectMax_CheckedChanged);
             // 
-            // radioRectStyleAverage
+            // rectAvg
             // 
-            this.radioRectStyleAverage.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioRectStyleAverage.Location = new System.Drawing.Point(135, 11);
-            this.radioRectStyleAverage.Name = "radioRectStyleAverage";
-            this.radioRectStyleAverage.Size = new System.Drawing.Size(121, 22);
-            this.radioRectStyleAverage.TabIndex = 1;
-            this.radioRectStyleAverage.TabStop = true;
-            this.radioRectStyleAverage.Text = "Average";
-            this.radioRectStyleAverage.UseVisualStyleBackColor = true;
-            this.radioRectStyleAverage.CheckedChanged += new System.EventHandler(this.radioRectStyleAverage_CheckedChanged);
+            this.rectAvg.Location = new System.Drawing.Point(204, 12);
+            this.rectAvg.Name = "rectAvg";
+            this.rectAvg.Size = new System.Drawing.Size(60, 24);
+            this.rectAvg.TabIndex = 10;
+            this.rectAvg.Text = "Avg";
+            this.rectAvg.UseVisualStyleBackColor = true;
+            this.rectAvg.Click += new System.EventHandler(this.rectAvg_CheckedChanged);
             // 
-            // radioRectStyleBase
+            // rectRight
             // 
-            this.radioRectStyleBase.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioRectStyleBase.Location = new System.Drawing.Point(7, 11);
-            this.radioRectStyleBase.Name = "radioRectStyleBase";
-            this.radioRectStyleBase.Size = new System.Drawing.Size(121, 22);
-            this.radioRectStyleBase.TabIndex = 0;
-            this.radioRectStyleBase.TabStop = true;
-            this.radioRectStyleBase.Text = "BaseLine";
-            this.radioRectStyleBase.UseVisualStyleBackColor = true;
-            this.radioRectStyleBase.CheckedChanged += new System.EventHandler(this.radioRectStyleBase_CheckedChanged);
+            this.rectRight.Location = new System.Drawing.Point(138, 12);
+            this.rectRight.Name = "rectRight";
+            this.rectRight.Size = new System.Drawing.Size(60, 24);
+            this.rectRight.TabIndex = 9;
+            this.rectRight.Text = "Right";
+            this.rectRight.UseVisualStyleBackColor = true;
+            this.rectRight.Click += new System.EventHandler(this.rectRight_CheckedChanged);
+            // 
+            // rectLeft
+            // 
+            this.rectLeft.Location = new System.Drawing.Point(72, 12);
+            this.rectLeft.Name = "rectLeft";
+            this.rectLeft.Size = new System.Drawing.Size(60, 24);
+            this.rectLeft.TabIndex = 8;
+            this.rectLeft.Text = "Left";
+            this.rectLeft.UseVisualStyleBackColor = true;
+            this.rectLeft.Click += new System.EventHandler(this.rectLeft_CheckedChanged);
+            // 
+            // rectNone
+            // 
+            this.rectNone.Location = new System.Drawing.Point(6, 12);
+            this.rectNone.Name = "rectNone";
+            this.rectNone.Size = new System.Drawing.Size(60, 24);
+            this.rectNone.TabIndex = 7;
+            this.rectNone.Text = "None";
+            this.rectNone.UseVisualStyleBackColor = true;
+            this.rectNone.Click += new System.EventHandler(this.rectNone_CheckedChanged);
             // 
             // tableLayoutPanel1
             // 
@@ -310,7 +361,7 @@ namespace EDTree2
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(495, 315);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(495, 371);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // panel1
@@ -322,12 +373,12 @@ namespace EDTree2
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(395, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(97, 309);
+            this.panel1.Size = new System.Drawing.Size(97, 365);
             this.panel1.TabIndex = 3;
             // 
             // buttonReset
             // 
-            this.buttonReset.Location = new System.Drawing.Point(3, 256);
+            this.buttonReset.Location = new System.Drawing.Point(3, 306);
             this.buttonReset.Name = "buttonReset";
             this.buttonReset.Size = new System.Drawing.Size(87, 23);
             this.buttonReset.TabIndex = 3;
@@ -337,7 +388,7 @@ namespace EDTree2
             // 
             // buttonApply
             // 
-            this.buttonApply.Location = new System.Drawing.Point(3, 285);
+            this.buttonApply.Location = new System.Drawing.Point(3, 341);
             this.buttonApply.Name = "buttonApply";
             this.buttonApply.Size = new System.Drawing.Size(87, 21);
             this.buttonApply.TabIndex = 2;
@@ -369,7 +420,7 @@ namespace EDTree2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(495, 315);
+            this.ClientSize = new System.Drawing.Size(495, 371);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -377,8 +428,10 @@ namespace EDTree2
             this.Name = "ChartSettingsForm";
             this.Text = "FmAnalysis_EDTreeData";
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupValueType.ResumeLayout(false);
             this.groupRectStyle.ResumeLayout(false);
@@ -387,13 +440,24 @@ namespace EDTree2
             this.ResumeLayout(false);
         }
 
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textZstepMax;
+
+        private System.Windows.Forms.TextBox textCircleMinX;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textCircleMaxX;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox rectNone;
+        private System.Windows.Forms.CheckBox rectLeft;
+        private System.Windows.Forms.CheckBox rectRight;
+        private System.Windows.Forms.CheckBox rectAvg;
+        private System.Windows.Forms.CheckBox rectMax;
+
         private System.Windows.Forms.CheckBox checkBoxEquation;
 
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.RadioButton radioCircleRight;
-        private System.Windows.Forms.RadioButton radioCircleLeft;
         private System.Windows.Forms.RadioButton radioCircleNone;
-        private System.Windows.Forms.RadioButton radioCircleAverage;
         private System.Windows.Forms.RadioButton radioCircleMax;
 
         private System.Windows.Forms.RadioButton radioFunQuadratic;
@@ -411,16 +475,13 @@ namespace EDTree2
 
         private System.Windows.Forms.Label label1;
 
-        private System.Windows.Forms.TextBox textZStep;
+        private System.Windows.Forms.TextBox textZstepMin;
 
-        private System.Windows.Forms.RadioButton radioRectStyleAverage;
-        private System.Windows.Forms.RadioButton radioRectStyleMax;
         private System.Windows.Forms.GroupBox groupValueType;
         private System.Windows.Forms.RadioButton radioIntensity;
         private System.Windows.Forms.RadioButton radioLog;
 
         private System.Windows.Forms.GroupBox groupRectStyle;
-        private System.Windows.Forms.RadioButton radioRectStyleBase;
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;

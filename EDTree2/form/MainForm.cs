@@ -3,9 +3,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using EDTree2.form.option;
 
 namespace EDTree2
 {
+    
+    /// <summary>
+    /// Which screen will be shown in the display.
+    /// </summary>
     internal enum ChartScreen
     {
         Intensity, Defocus, Threshold
@@ -21,12 +26,17 @@ namespace EDTree2
         private AerialCD acdDefocus;
         private AerialCD acdThreshold;
 
+        private EdtreeOption edtreeOption;
+
         private ChartScreen CurrentScreen;
         
         public Form1()
         {
             // init screen.
             CurrentScreen = ChartScreen.Intensity;
+
+            edtreeOption = new EdtreeOption();
+            
             InitializeComponent();
         }
 
@@ -47,7 +57,9 @@ namespace EDTree2
             {
                 var intensityInput = InputParser.Parse(filename_intensity);
                 InputParser.IntensityValidate(intensityInput);
-                edt = new EDTree(intensityInput).Calculate();
+                edt = new EDTree(intensityInput)
+                    .SetOption(edtreeOption)
+                    .Calculate();
             }
             catch
             {
@@ -58,7 +70,9 @@ namespace EDTree2
             {
                 var intensityInput = InputParser.Parse(filename_intensity_cmp);
                 InputParser.IntensityValidate(intensityInput);
-                edtCmp = new EDTree(intensityInput).Calculate();
+                edtCmp = new EDTree(intensityInput)
+                    .SetOption(edtreeOption)
+                    .Calculate();
             }
             catch
             {
@@ -119,9 +133,10 @@ namespace EDTree2
         
         private void buttonSetting_Click(object sender, EventArgs e)
         {
-            if (CurrentScreen == ChartScreen.Intensity && edt != null)
+            if (CurrentScreen == ChartScreen.Intensity)
             {
-                var chartSettingsForm = new ChartSettingsForm(edt);
+                // Rect style is multi-selectable, when compared data is not provided.
+                var chartSettingsForm = new ChartSettingsForm(edtreeOption, (edtCmp == null));
                 chartSettingsForm.Show();
                 chartSettingsForm.ApplyChange += ApplyChange;
             }
@@ -132,10 +147,12 @@ namespace EDTree2
             
         }
 
-        private void ApplyChange(EDTree changed)
+        private void ApplyChange(EdtreeOption changed)
         {
-            edt = changed;
-            edt.Calculate();
+            edtreeOption = changed;
+            edt
+                .SetOption(edtreeOption)
+                .Calculate();
             
             // Create Chart.
             CreateChart();
@@ -170,6 +187,9 @@ namespace EDTree2
             return (CurrentScreen != changeScreen);
         }
 
+        /// <summary>
+        /// Perform csv export when the user click the export button.
+        /// </summary>
         private void buttonExport_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveDlg = new SaveFileDialog();
@@ -230,6 +250,9 @@ namespace EDTree2
             fs.Close();
         }
 
+        /// <summary>
+        /// Perform txt import when the user click the import button.
+        /// </summary>
         private void buttonImport_Click(object sender, EventArgs e)
         {
             OpenFileDialog openDlg = new OpenFileDialog()

@@ -3,22 +3,35 @@ using System.Linq;
 
 namespace EDTree
 {
+    /// <summary>
+    /// Calculate all types of rectangle with the given FittingLines.
+    /// </summary>
     public class FittingRect
     {
-        public double BaseX { get; set; }
-        public RectPoint RectLeft { get; set; }
-        public RectPoint RectRight { get; set; }
-        public RectPoint RectAvg { get; set; }
-        public RectPoint RectMax { get; set; }
+        public double MinX { get; }
+        public double MaxX { get; }
+        public RectPoint RectLeft { get; private set; }
+        public RectPoint RectRight { get; private set; }
+        public RectPoint RectAvg { get; private set; }
+        public RectPoint RectMax { get; private set; }
 
+        /// <summary>
+        /// Geometrical upper line.
+        /// </summary>
         private readonly FittingLine UpperLine;
+        
+        /// <summary>
+        /// geometrical lower line.
+        /// </summary>
         private readonly FittingLine LowerLine;
 
-        public FittingRect(double baseX, FittingLine upperLine, FittingLine lowerLine)
+        public FittingRect(double min, double max, FittingLine upperLine, FittingLine lowerLine)
         {
-            BaseX = Math.Abs(baseX);
-            // divide upper and lower.
-            if (upperLine.Evaluate(baseX) > lowerLine.Evaluate(baseX))
+            MinX = min;
+            MaxX = max;
+            
+            // confirm which line is upper or lower by evaluate certain x value.
+            if (upperLine.Evaluate(MinX) > lowerLine.Evaluate(MinX))
             {
                 UpperLine = upperLine;
                 LowerLine = lowerLine;
@@ -30,17 +43,21 @@ namespace EDTree
             }
         }
 
+        /// <summary>
+        /// Calculate all type of rectangles.
+        /// </summary>
+        /// <returns></returns>
         public FittingRect Calculate()
         {
             double l, t, r, b;
 
-            l = -BaseX;
+            l = MinX;
             t = UpperLine.Evaluate(l);
             r = UpperLine.FindXByY(t).Max();
             b = LowerLine.MaxY().Y;
             RectLeft = new RectPoint(l, t, r, b);
 
-            r = BaseX;
+            r = MaxX;
             t = UpperLine.Evaluate(r);
             l = UpperLine.FindXByY(t).Min();
             b = LowerLine.MaxY().Y;
@@ -55,7 +72,7 @@ namespace EDTree
             
             RectMax = new RectPoint(0, 0, 0, 0);
             b = LowerLine.MaxY().Y;
-            for (double x = -BaseX; x <= BaseX; x++)
+            for (double x = MinX; x <= MaxX; x++)
             {
                 l = x;
                 t = UpperLine.Evaluate(x);
@@ -67,6 +84,9 @@ namespace EDTree
             return this;
         }
 
+        /// <summary>
+        /// Returns rectangle by fitting type.
+        /// </summary>
         public RectPoint GetRect(FittingType rectType)
         {
             switch (rectType)
