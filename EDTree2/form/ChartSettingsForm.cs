@@ -89,17 +89,20 @@ namespace EDTree2
         {
             var isDoubleMin = double.TryParse(tbMin.Text, out var zstepMinValue);
             var isDoubleMax = double.TryParse(tbMax.Text, out var zstepMaxValue);
-            if (!string.IsNullOrEmpty(tbMin.Text) && !isDoubleMin)
+            // empty : pass
+            // - (minus) : pass
+            // number : pass
+            if (!string.IsNullOrEmpty(tbMin.Text) && !"-".Equals(tbMin.Text) && !isDoubleMin)
             {
                 MessageBox.Show("숫자만 입력 가능합니다.");
-                textZstepMin.Clear();
+                tbMin.Clear();
                 return false;
             }
 
-            if (!string.IsNullOrEmpty(tbMax.Text) && !isDoubleMax)
+            if (!string.IsNullOrEmpty(tbMax.Text) && !"-".Equals(tbMax.Text) && !isDoubleMax)
             {
                 MessageBox.Show("숫자만 입력 가능합니다.");
-                textZstepMax.Clear();
+                tbMax.Clear();
                 return false;
             }
             

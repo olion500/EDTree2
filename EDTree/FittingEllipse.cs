@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace EDTree
 {
@@ -8,12 +7,23 @@ namespace EDTree
     /// </summary>
     public class FittingEllipse
     {
+        /// <summary>
+        /// A base tick for the Finding Ellipse Algorithm 
+        /// </summary>
+        private const double stepX = 0.01;
+
+        private const double stepY = 0.001;
+        
+        /// <summary>
+        /// Minimum boundary for calculation of finding max ellipse.
+        /// </summary>
         public double MinX { get; }
+        
+        /// <summary>
+        /// Maximum boundary for calculation of finding max ellipse.
+        /// </summary>
         public double MaxX { get; }
-        public EllipsePoint EllipseLeft { get; private set; }
-        public EllipsePoint EllipseRight { get; private set; }
-        public EllipsePoint EllipseAvg { get; private set; }
-        public EllipsePoint EllipseMax { get; private set; }
+        public EllipsePoint Ellipse { get; private set; }
         
         /// <summary>
         /// Geometrical upper line.
@@ -41,71 +51,76 @@ namespace EDTree
             }
         }
         
+        /// <summary>
+        /// Calculate the ellipse with the given input.
+        /// The ellipse will be stored in 'Ellipse' member.
+        /// </summary>
         public FittingEllipse Calculate()
         {
-            double l, t, r, b;
             PointD pointBottom = LowerLine.MaxY();
-            
-            l = MinX;
-            t = UpperLine.Evaluate(l);
-            r = UpperLine.FindXByY(t).Max();
-            EllipseLeft = FindEllipseWithinPoints(
-                new PointD(l, t),
-                new PointD(r, t),
-                pointBottom
-            );
-
-            r = MaxX;
-            t = UpperLine.Evaluate(r);
-            l = UpperLine.FindXByY(t).Min();
-            EllipseRight = FindEllipseWithinPoints(
-                new PointD(l, t),
-                new PointD(r, t),
-                pointBottom
-            );
-
-            EllipseAvg = new EllipsePoint(
-                (EllipseLeft.L + EllipseRight.L) / 2,
-                (EllipseLeft.T + EllipseRight.T) / 2,
-                (EllipseLeft.R + EllipseRight.R) / 2,
-                (EllipseLeft.B + EllipseRight.B) / 2
-            );
-            
-            var rectMax = new RectPoint(0, 0, 0, 0);
-            b = LowerLine.MaxY().Y;
-            for (double x = MinX; x <= MaxX; x++)
-            {
-                l = x;
-                t = UpperLine.Evaluate(x);
-                r = UpperLine.FindXByY(t).Max();
-                var tmpRect = new RectPoint(l, t, r, b);
-                if (tmpRect.Size > rectMax.Size) rectMax = tmpRect;
-            }
-            EllipseMax = FindEllipseWithinPoints(
-                new PointD(rectMax.L, rectMax.T),
-                new PointD(rectMax.R, rectMax.T),
-                pointBottom
-            );
+            Ellipse = FindMaxSizeEllipse(MinX, MaxX, pointBottom);
             return this;
         }
 
-        public EllipsePoint GetEllipse(FittingType rectType)
+        private EllipsePoint FindMaxSizeEllipse(double minX, double maxX, PointD pointBottom)
         {
-            switch (rectType)
+            EllipsePoint maxEllipse = new EllipsePoint(minX, pointBottom.Y, maxX, pointBottom.Y);
+
+            var min = minX;
+            var max = maxX;
+            while (min < max)
             {
-                case FittingType.Left:
-                    return EllipseLeft;
-                case FittingType.Right:
-                    return EllipseRight;
-                case FittingType.Average:
-                    return EllipseAvg;
-                case FittingType.Max:
-                    return EllipseMax;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(rectType), rectType, null);
+                var tmpEllipse = StretchHeightUntilTop(new EllipsePoint(min, maxEllipse.T, max, maxEllipse.B));
+                if (tmpEllipse.Size > maxEllipse.Size)
+                    maxEllipse = tmpEllipse;
+
+                min += stepX;
+                max -= stepX;
             }
+            return maxEllipse;
         }
 
+        private EllipsePoint StretchHeightUntilTop(EllipsePoint initEllipsePoint)
+        {
+            EllipsePoint ep = initEllipsePoint;
+            while (true)
+            {
+                var epn = new EllipsePoint(
+                    ep.L,
+                    ep.T + stepY,
+                    ep.R,
+                    ep.B);
+                if (!IsEllipseBelowOfUpperLine(epn)) break;
+
+                if (epn.T > UpperLine.MaxY().Y) break;
+
+                ep = epn;
+            }
+
+            return ep;
+        }
+
+        private bool IsEllipseBelowOfUpperLine(EllipsePoint ep)
+        {
+            Ellipse ellipse = EDTree.Ellipse.FromRect(ep.L, ep.T, ep.R, ep.B);
+            for (double x = MinX; x <= MaxX; x += stepX)
+            {
+                if (!IsPointOutOfEllipse(ellipse, x, UpperLine.Evaluate(x))) return false;
+            }
+
+            return true;
+        }
+
+        private bool IsPointOutOfEllipse(Ellipse ellipse, double x, double y)
+        {
+            var sqX = Math.Pow(x - ellipse.CenterX, 2) / Math.Pow(ellipse.A, 2);
+            var sqY = Math.Pow(y - ellipse.CenterY, 2) / Math.Pow(ellipse.B, 2);
+            return sqX + sqY - 1.0 > 0;
+        }
+
+        /// <summary>
+        /// Unused. Returns ellipse boundary for the given 3 points. 
+        /// </summary>
         private EllipsePoint FindEllipseWithinPoints(PointD p1, PointD p2, PointD p3)
         {
             var (xc, yc, a, b) = FindMaxEllipse(p1, p2, p3);
@@ -117,6 +132,9 @@ namespace EDTree
             );
         }
         
+        /// <summary>
+        /// Unused. Return one ellipse equation for the given 3 points.
+        /// </summary>
         private (double xc, double yc , double a, double b) FindMaxEllipse(PointD p1, PointD p2, PointD p3)
         {
             var (xc, yc, a, b) = CenterInfo(p1, p2, p3);
@@ -127,6 +145,9 @@ namespace EDTree
             return (xc, yc, a, b);
         }
 
+        /// <summary>
+        /// Unused. Stretch the circle on main axis until the circle is placed between the lines. 
+        /// </summary>
         private (double xc, double yc, double a, double b) AdjustMajorAxis(double xc, double yc, double a, double b, double t)
         {
             while (true)
@@ -141,6 +162,9 @@ namespace EDTree
             return (xc, yc, a, b);
         }
 
+        /// <summary>
+        /// Unused. Stretch the circle on minor axis until the circle is placed between the lines. 
+        /// </summary>
         private (double xc, double yc, double a, double b) AdjustMinorAxis(double xc, double yc, double a, double b, double t)
         {
             var ratio = a / b;
@@ -165,6 +189,9 @@ namespace EDTree
             return (xc, yc, a, b);
         }
 
+        /// <summary>
+        /// Unused. Returns maximum value of given points.
+        /// </summary>
         private PointD MaxPoint3(PointD p1, PointD p2, PointD p3)
         {
             return new PointD(
@@ -173,6 +200,9 @@ namespace EDTree
             );
         }
         
+        /// <summary>
+        /// Unused. Returns minimum value of given points.
+        /// </summary>
         private PointD MinPoint3(PointD p1, PointD p2, PointD p3)
         {
             return new PointD(
@@ -181,6 +211,9 @@ namespace EDTree
             );
         }
 
+        /// <summary>
+        /// Unused. Returns center of three point.
+        /// </summary>
         private (double cx, double cy, double a, double b) CenterInfo(PointD p1, PointD p2, PointD p3)
         {
             var minP = MinPoint3(p1, p2, p3);
@@ -190,6 +223,9 @@ namespace EDTree
             return (minP.X + lengthX, minP.Y + lengthY, lengthX, lengthY);
         }
 
+        /// <summary>
+        /// Unused. Check if all of ellipse is placed between two lines.
+        /// </summary>
         private bool IsRangeOutOfEllipse(double xc, double yc, double a, double b)
         {
             var minX = xc - a;
@@ -206,6 +242,9 @@ namespace EDTree
             return isAllOut;
         }
         
+        /// <summary>
+        /// Unused. Check if the given point is placed out of the ellipse.
+        /// </summary>
         private bool IsPointOutOfEllipse(double xc, double yc, double a, double b, PointD p)
         {
             var sqX = Math.Pow(p.X - xc, 2) / Math.Pow(a, 2);
