@@ -46,12 +46,17 @@ namespace EDTree2
                 mainChart.ChartAreas[0].AxisX.Minimum = acd.X.Min();
                 mainChart.ChartAreas[0].AxisY.Title = acd.LabelY;
 
-                Series sr = mainChart.Series.Add(acd.Header[1]);
-                sr.ChartType = SeriesChartType.Line;
-
-                foreach (var x in acd.GetXPoints())
+                var xPoints = acd.GetXPoints();
+                for (int i = 0; i < acd.Lines.Count; i++)
                 {
-                    sr.Points.AddXY(x, acd.Line.Evaluate(x));
+                    var line = acd.Lines[i];
+                    Series sr = mainChart.Series.Add(acd.Header[i + 1]);
+                    sr.ChartType = SeriesChartType.Line;
+
+                    foreach (var x in xPoints)
+                    {
+                        sr.Points.AddXY(x, line.Evaluate(x));
+                    }
                 }
             }
         }
@@ -145,8 +150,18 @@ namespace EDTree2
             {
                 var acd = (CurrentScreen == ChartScreen.Defocus) ? acdDefocus : acdThreshold;
                 if (acd == null) return;
-                
-                DrawText(e, StringUtils.PolynomialString(acd.Line.Coefficients) + ",  R² : " + acd.Line.RSquare.ToString("0.###"), Palette.colorUpper, 1);
+
+                // draw polynomial equation on the chart.
+                if (edtreeOption.IsShowEquation)
+                {
+                    var colors = Palette.GetAerialLineColors();
+                    var n = 1;
+                    foreach (var line in acd.Lines)
+                    {
+                        DrawText(e, StringUtils.PolynomialString(line.Coefficients) + ",  R² : " + line.RSquare.ToString("0.###"), colors[n-1], n);
+                        n++;
+                    }
+                }
             }
         }
 

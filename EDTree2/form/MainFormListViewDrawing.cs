@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -85,27 +86,31 @@ namespace EDTree2
             Input inputCmp = null;
             if (CurrentScreen == ChartScreen.Intensity)
             {
-                if (edt != null)
-                    input = edt.Input;
-                if (edtCmp != null)
-                    inputCmp = edtCmp.Input;
+                input = edt?.Input;
+                inputCmp = edtCmp?.Input;
+                WriteInputOnListview(listView2, input, Palette.GetIntensityColors());
+                WriteInputOnListview(listView3, inputCmp, Palette.GetIntensityColors());
             }
             else if (CurrentScreen == ChartScreen.Defocus || CurrentScreen == ChartScreen.Threshold)
             {
                 var acd = (CurrentScreen == ChartScreen.Defocus) ? acdDefocus : acdThreshold;
-                if (acd != null)
-                    input = acd.Input;
+                input = acd?.Input;
+                WriteInputOnListview(listView2, input, Palette.GetAerialLineColors());
             }
-            WriteInputOnListview(listView2, input, new[] {Palette.colorUpper, Palette.colorBase, Palette.colorLower});
-            if (CurrentScreen == ChartScreen.Intensity)
-                WriteInputOnListview(listView3, inputCmp, new[] {Palette.colorUpper, Palette.colorBase, Palette.colorLower});
-            else
-            {
+            
+            
+            // Remove comparison data when the screen is not intensity.
+            if (CurrentScreen != ChartScreen.Intensity)
                 listView3.Clear();
-            }
         }
 
-        private void WriteInputOnListview(ListView listView, Input input, NamedColor[] colors)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="listView">Target listview</param>
+        /// <param name="input">The data to show on the listview.</param>
+        /// <param name="colors"></param>
+        private void WriteInputOnListview(ListView listView, Input input, IReadOnlyList<NamedColor> colors)
         {
             listView.BeginUpdate();
             listView.Clear();
@@ -128,7 +133,7 @@ namespace EDTree2
                 }
             
                 // calculate proper column width.
-                var colWidth = Math.Max(400 / cols, 60);
+                var colWidth = Math.Max(400 / cols, 80);
                 foreach (var col in input.Header)
                 {
                     listView.Columns.Add(col, colWidth);
