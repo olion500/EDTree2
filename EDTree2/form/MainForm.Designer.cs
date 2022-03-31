@@ -119,7 +119,7 @@
             // 
             this.buttonImport.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonImport.BackgroundImage")));
             this.buttonImport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonImport.Location = new System.Drawing.Point(0, 239);
+            this.buttonImport.Location = new System.Drawing.Point(0, 244);
             this.buttonImport.Name = "buttonImport";
             this.buttonImport.Size = new System.Drawing.Size(68, 54);
             this.buttonImport.TabIndex = 8;
@@ -130,7 +130,7 @@
             // 
             this.buttonExport.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonExport.BackgroundImage")));
             this.buttonExport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonExport.Location = new System.Drawing.Point(0, 298);
+            this.buttonExport.Location = new System.Drawing.Point(0, 304);
             this.buttonExport.Name = "buttonExport";
             this.buttonExport.Size = new System.Drawing.Size(68, 54);
             this.buttonExport.TabIndex = 7;
@@ -140,8 +140,8 @@
             // buttonThreshold
             // 
             this.buttonThreshold.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonThreshold.Font = new System.Drawing.Font("굴림", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (129)));
-            this.buttonThreshold.Location = new System.Drawing.Point(0, 180);
+            this.buttonThreshold.Font = new System.Drawing.Font("Gulim", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (129)));
+            this.buttonThreshold.Location = new System.Drawing.Point(0, 124);
             this.buttonThreshold.Name = "buttonThreshold";
             this.buttonThreshold.Size = new System.Drawing.Size(68, 54);
             this.buttonThreshold.TabIndex = 6;
@@ -163,8 +163,8 @@
             // buttonDefocus
             // 
             this.buttonDefocus.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonDefocus.Font = new System.Drawing.Font("굴림", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (129)));
-            this.buttonDefocus.Location = new System.Drawing.Point(0, 121);
+            this.buttonDefocus.Font = new System.Drawing.Font("Gulim", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (129)));
+            this.buttonDefocus.Location = new System.Drawing.Point(0, 63);
             this.buttonDefocus.Name = "buttonDefocus";
             this.buttonDefocus.Size = new System.Drawing.Size(68, 54);
             this.buttonDefocus.TabIndex = 5;
@@ -176,7 +176,7 @@
             // 
             this.buttonSetting.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonSetting.BackgroundImage")));
             this.buttonSetting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonSetting.Location = new System.Drawing.Point(0, 62);
+            this.buttonSetting.Location = new System.Drawing.Point(0, 184);
             this.buttonSetting.Name = "buttonSetting";
             this.buttonSetting.Size = new System.Drawing.Size(68, 54);
             this.buttonSetting.TabIndex = 3;
