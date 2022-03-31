@@ -82,7 +82,9 @@ namespace EDTree2
 
             try
             {
-                acdDefocus = new AerialCD(InputParser.Parse(filename_defocus));
+                var defocusInput = InputParser.Parse(filename_defocus);
+                InputParser.AerialValidate(defocusInput);
+                acdDefocus = new AerialCD(defocusInput);
                 acdDefocus.Calculate();
             }
             catch
@@ -92,7 +94,9 @@ namespace EDTree2
 
             try
             {
-                acdThreshold = new AerialCD(InputParser.Parse(filename_threshold));
+                var thresholdInput = InputParser.Parse(filename_threshold);
+                InputParser.AerialValidate(thresholdInput);
+                acdThreshold = new AerialCD(thresholdInput);
                 acdThreshold.Calculate();
             }
             catch
