@@ -133,9 +133,10 @@ namespace EDTree2
         
         private void buttonSetting_Click(object sender, EventArgs e)
         {
-            if (CurrentScreen == ChartScreen.Intensity && edt != null)
+            if (CurrentScreen == ChartScreen.Intensity)
             {
-                var chartSettingsForm = new ChartSettingsForm(edtreeOption);
+                // Rect style is multi-selectable, when compared data is not provided.
+                var chartSettingsForm = new ChartSettingsForm(edtreeOption, (edtCmp == null));
                 chartSettingsForm.Show();
                 chartSettingsForm.ApplyChange += ApplyChange;
             }

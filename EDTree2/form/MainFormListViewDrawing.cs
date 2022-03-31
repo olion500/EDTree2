@@ -44,7 +44,7 @@ namespace EDTree2
                 }
                 
                 // Common Rect.
-                var rectStyle = edtreeOption.RectStyles.First();
+                var rectStyle = edtreeOption.RectStyles.FirstOrDefault();
                 var commonRect = edt?.GetRectangles(rectStyle)?.Intersect(edtCmp?.GetRectangles(rectStyle));
                 if (commonRect != null)
                 {

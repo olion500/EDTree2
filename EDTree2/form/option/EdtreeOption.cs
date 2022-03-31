@@ -96,7 +96,14 @@ namespace EDTree2.form.option
         public void RemoveRectStyle(RectStyle rs)
         {
             RectStyles.Remove(rs);
-            
+        }
+
+        /// <summary>
+        /// Remove all rectangle style from the list.
+        /// </summary>
+        public void ClearRectStyle()
+        {
+            RectStyles.Clear();
         }
     }
 }

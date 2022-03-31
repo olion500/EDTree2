@@ -127,7 +127,7 @@ namespace EDTree2
                 }
                 
                 // draw common rect.
-                var rectStyle = edtreeOption.RectStyles.First();
+                var rectStyle = edtreeOption.RectStyles.FirstOrDefault();
                 var commonRect = edt?.GetRectangles(rectStyle)?.Intersect(edtCmp?.GetRectangles(rectStyle));
                 if (commonRect != null)
                 {

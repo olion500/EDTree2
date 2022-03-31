@@ -8,11 +8,16 @@ namespace EDTree2
     public partial class ChartSettingsForm : Form
     {
         private EdtreeOption _option;
+        /// <summary>
+        /// Whether rect style is multi selectable.
+        /// </summary>
+        private bool _isRectMultiSelect;
         public ApplyChangeDelegate ApplyChange { get; set; }
 
-        public ChartSettingsForm(EdtreeOption option)
+        public ChartSettingsForm(EdtreeOption option, bool isRectMultiSelect)
         {
             _option = option;
+            _isRectMultiSelect = isRectMultiSelect;
             ApplyChange = null;
             InitializeComponent();
             InitializeValues();
@@ -126,6 +131,9 @@ namespace EDTree2
             buttonOk.Enabled = true;
         }
 
+        /// <summary>
+        /// Sync with Edtree Option. 
+        /// </summary>
         private void ChooseCheckRectStyle(List<RectStyle> rectStyles)
         {
             foreach (var rs in rectStyles)
@@ -154,22 +162,40 @@ namespace EDTree2
             }
         }
 
-        private void UncheckAllRectOptions(bool withoutNone=false)
+        /// <summary>
+        /// Uncheck all rect options without the parametered checkbox.
+        /// </summary>
+        private void UncheckAllRectOptions(CheckBox without = null)
         {
-            if (!withoutNone)
+            var checkBoxes = new[] {rectNone, rectLeft, rectRight, rectAvg, rectMax};
+            foreach (var checkBox in checkBoxes)
+            {
+                if (!checkBox.Equals(without))
+                    checkBox.Checked = false;
+            }
+        }
+
+        /// <summary>
+        /// This function has side-effect. Option's rect style are gone when multi-select is not provided.
+        /// </summary>
+        private void UncheckOtherRectOptions(CheckBox without = null)
+        {
+            if (_isRectMultiSelect)
                 rectNone.Checked = false;
-            rectLeft.Checked = false;
-            rectRight.Checked = false;
-            rectAvg.Checked = false;
-            rectMax.Checked = false;
+            else
+            {
+                UncheckAllRectOptions(without);  
+                _option.ClearRectStyle();
+            }
+                
         }
         
         private void rectNone_CheckedChanged(object sender, EventArgs e)
         {
             if (rectNone.Checked)
             {
+                UncheckAllRectOptions(rectNone);
                 _option.AddRectStyle(RectStyle.None);
-                UncheckAllRectOptions(withoutNone: true);
             }
             else
             {
@@ -182,8 +208,8 @@ namespace EDTree2
         {
             if (rectLeft.Checked)
             {
+                UncheckOtherRectOptions(rectLeft);
                 _option.AddRectStyle(RectStyle.Left);
-                rectNone.Checked = false;
             }
             else
             {
@@ -196,8 +222,8 @@ namespace EDTree2
         {
             if (rectRight.Checked)
             {
+                UncheckOtherRectOptions(rectRight);
                 _option.AddRectStyle(RectStyle.Right);
-                rectNone.Checked = false;
             }
             else
             {
@@ -209,8 +235,8 @@ namespace EDTree2
         {
             if (rectAvg.Checked)
             {
+                UncheckOtherRectOptions(rectAvg);
                 _option.AddRectStyle(RectStyle.Avg);
-                rectNone.Checked = false;
             }
             else
             {
@@ -222,8 +248,8 @@ namespace EDTree2
         {
             if (rectMax.Checked)
             {
+                UncheckOtherRectOptions(rectMax);
                 _option.AddRectStyle(RectStyle.Max);
-                rectNone.Checked = false;
             }
             else
             {
