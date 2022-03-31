@@ -6,15 +6,17 @@ namespace EDTree2
     {
         private static int alpha = 20;
 
+        // line colors.
         public static NamedColor colorUpper = new NamedColor(Color.Green, "Green");
         public static NamedColor colorLower = new NamedColor(Color.MediumBlue, "Blue");
         public static NamedColor colorBase = new NamedColor(Color.OrangeRed, "Red");
-       
 
+        // comparison line color
         public static NamedColor colorUpperTrans = NamedColorWithTransparent(colorUpper, "GreenTrans");
         public static NamedColor colorBaseTrans = NamedColorWithTransparent(colorBase, "RedTrans");
         public static NamedColor colorLowerTrans = NamedColorWithTransparent(colorLower, "BlueTrans");
         
+        // rectangle color
         public static NamedColor colorRectLeft = new NamedColor(Color.Green, "Green");
         public static NamedColor colorRectLeftTrans = NamedColorWithTransparent(colorRectLeft, "GreenCmp");
         public static NamedColor colorRectRight = new NamedColor(Color.MediumBlue, "Blue");
@@ -25,6 +27,10 @@ namespace EDTree2
         public static NamedColor colorRectMaxTrans = NamedColorWithTransparent(colorRectMax, "BrownCmp");
         public static NamedColor colorRectCommon = new NamedColor(Color.Aqua, "Aqua");
         public static NamedColor colorRectCommonTrans = NamedColorWithTransparent(colorRectCommon, "AquaTrans");
+        
+        // ellipse color
+        public static NamedColor colorEllipse = new NamedColor(Color.Goldenrod, "Gold");
+        public static NamedColor colorEllipseTrans = NamedColorWithTransparent(colorEllipse, "GoldTrans");
 
         /// <summary>
         /// Returns color with the given rect style.

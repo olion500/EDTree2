@@ -49,21 +49,32 @@ namespace EDTree2
                 if (commonRect != null)
                 {
                     var color = Palette.colorRectCommon;
-                    var item = new ListViewItem($"{color.Name}(Intersect)");
-                    item.ForeColor = color.Color;
-                    item.SubItems.Add($"{commonRect.Size}(가로:{commonRect.Width}, 세로:{commonRect.Height}");
+                    var item = new ListViewItem($"{color.Name}(Intersect)")
+                    {
+                        ForeColor = color.Color,
+                        SubItems = { $"{commonRect.Size}(가로:{commonRect.Width}, 세로:{commonRect.Height}" }
+                    };
                     listView1.Items.Add(item);
                 }
-                //
-                // // ellipse.
-                // var drawingCircle = edt.GetEllipse(edt.EllipseStyle);
-                // if (drawingCircle != null)
-                // {
-                //     item = new ListViewItem($"Brown({edt.EllipseStyle.ToString()})");
-                //     item.ForeColor = Palette.colorCircle;
-                //     item.SubItems.Add($"{Math.Round(drawingCircle.Size, 3)}(가로:{drawingCircle.Width}, 세로:{drawingCircle.Height})");
-                //     listView1.Items.Add(item);
-                // }
+                
+                // ellipse.
+                var drawingCircles = new[]
+                    {edt?.GetEllipse(edtreeOption.EllipseStyle), edtCmp?.GetEllipse(edtreeOption.EllipseStyle)};
+                var circleColors = new[] {Palette.colorEllipse, Palette.colorEllipseTrans};
+
+                for (int i = 0; i < drawingCircles.Length; i++)
+                {
+                    var ep = drawingCircles[i];
+                    var color = circleColors[i];
+                    if (ep == null) continue;
+                    
+                    var item = new ListViewItem($"{color.Name}(Maximum Ellipse)")
+                    {
+                        ForeColor = color.Color,
+                        SubItems = { $"{Math.Round(ep.Size, 3)}(가로:{ep.Width}, 세로:{ep.Height})" }
+                    };
+                    listView1.Items.Add(item);
+                }
             }
             listView1.Columns.Add("Rect", 210);
             listView1.Columns.Add("Size", 210);

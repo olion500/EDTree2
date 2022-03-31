@@ -134,8 +134,11 @@ namespace EDTree2
                     DrawRect(e, commonRect, Palette.colorRectCommonTrans, true);
                 }
 
-                // var ellipse = edt?.GetEllipse(edt.EllipseStyle);
-                // DrawCircle(e, ellipse, Palette.colorCircle);
+                // draw ellipse.
+                var ellipse = edt?.GetEllipse(edtreeOption.EllipseStyle);
+                var ellipseCmp = edtCmp?.GetEllipse(edtreeOption.EllipseStyle);
+                DrawCircle(e, ellipse, Palette.colorEllipse);
+                DrawCircle(e, ellipseCmp, Palette.colorEllipseTrans);
 
             } 
             else if (CurrentScreen == ChartScreen.Defocus || CurrentScreen == ChartScreen.Threshold)
@@ -179,7 +182,7 @@ namespace EDTree2
         /// <summary>
         /// Draw Circle on the chart.
         /// </summary>
-        private void DrawCircle(ChartPaintEventArgs e, EllipsePoint ep, Color color)
+        private void DrawCircle(ChartPaintEventArgs e, EllipsePoint ep, NamedColor color)
         {
             if (ep == null) return;
             
@@ -188,7 +191,7 @@ namespace EDTree2
             var r = (float) mainChart.ChartAreas[0].AxisX.ValueToPixelPosition(ep.R);
             var b = (float) mainChart.ChartAreas[0].AxisY.ValueToPixelPosition(ep.B);
             var rect = RectangleF.FromLTRB(Math.Min(l, r), Math.Min(t, b), Math.Max(l, r),Math.Max(t, b));
-            e.ChartGraphics.Graphics.DrawEllipse(new Pen(color), rect.X, rect.Y, rect.Width, rect.Height);
+            e.ChartGraphics.Graphics.DrawEllipse(new Pen(color.Color), rect.X, rect.Y, rect.Width, rect.Height);
         }
     }
 }
