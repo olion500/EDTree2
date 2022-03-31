@@ -125,29 +125,15 @@ namespace EDTree2
                     var color = Palette.FromRectStyleCmp(rs);
                     DrawRect(e, edtCmp?.GetRectangles(rs), color);
                 }
+                
+                // draw common rect.
+                var rectStyle = edtreeOption.RectStyles.First();
+                var commonRect = edt?.GetRectangles(rectStyle)?.Intersect(edtCmp?.GetRectangles(rectStyle));
+                if (commonRect != null)
+                {
+                    DrawRect(e, commonRect, Palette.colorRectCommonTrans, true);
+                }
 
-                // DrawRect(e, edt?.GetRectangles(FittingType.Left), Palette.colorLower);
-                // DrawRect(e, edt?.GetRectangles(FittingType.Right), Palette.colorUpper);
-                // DrawRect(e, edtCmp?.GetRectangles(FittingType.Left), Palette.colorLowerTrans);
-                // DrawRect(e, edtCmp?.GetRectangles(FittingType.Right), Palette.colorUpperTrans);
-                // if (edt?.RectStyle == RectStyle.BaseLine)
-                // {
-                //     // do nothing.
-                // } 
-                // else if (edt?.RectStyle == RectStyle.Average)
-                // {
-                //     DrawRect(e, edt?.GetRectangles(FittingType.Average), Palette.colorBase);
-                //     DrawRect(e, edtCmp?.GetRectangles(FittingType.Average), Palette.colorBaseTrans);
-                // } 
-                // else if (edt?.RectStyle == RectStyle.Maximum)
-                // {
-                //     DrawRect(e, edt?.GetRectangles(FittingType.Max), Palette.colorBase);
-                //     DrawRect(e, edtCmp?.GetRectangles(FittingType.Max), Palette.colorBaseTrans);
-                //     
-                //     // Draw Common Rect.
-                //     DrawRect(e, edt.GetRectangles(FittingType.Max).Intersect(edtCmp?.GetRectangles(FittingType.Max)), Palette.colorCommonRectTrans, true);
-                // }
-                //
                 // var ellipse = edt?.GetEllipse(edt.EllipseStyle);
                 // DrawCircle(e, ellipse, Palette.colorCircle);
 

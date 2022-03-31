@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace EDTree2
@@ -10,11 +11,12 @@ namespace EDTree2
             listView1.BeginUpdate();
             listView1.Clear();
             
-            if (CurrentScreen == ChartScreen.Intensity && edt != null)
+            if (CurrentScreen == ChartScreen.Intensity)
             {
+                // show edt's rectangle info in the listview1.
                 foreach (var rs in edtreeOption.RectStyles)
                 {
-                    var rect = edt.GetRectangles(rs);
+                    var rect = edt?.GetRectangles(rs);
                     if (rect == null) continue;
 
                     var color = Palette.FromRectStyle(rs);
@@ -25,16 +27,33 @@ namespace EDTree2
                     };
                     listView1.Items.Add(item);
                 }
-                //     // Common Rect.
-                //     rp = edt?.GetRectangles(FittingType.Max).Intersect(edtCmp?.GetRectangles(FittingType.Max));
-                //     if (rp != null)
-                //     {
-                //         item = new ListViewItem("Aqua(Common)");
-                //         item.ForeColor = Palette.colorCommonRect;
-                //         item.SubItems.Add($"{rp.Size}(가로:{rp.Width}, 세로:{rp.Height}");
-                //         listView1.Items.Add(item);
-                //     }
-                // }
+                
+                // show edtCmp's rectangle info in the listview1.
+                foreach (var rs in edtreeOption.RectStyles)
+                {
+                    var rect = edtCmp?.GetRectangles(rs);
+                    if (rect == null) continue;
+
+                    var color = Palette.FromRectStyleCmp(rs);
+                    var item = new ListViewItem($"{color.Name}({rs.GetName()})")
+                    {
+                        ForeColor = color.Color,
+                        SubItems = { $"{rect.Size}(가로:{rect.Width}, 세로:{rect.Height}" }
+                    };
+                    listView1.Items.Add(item);
+                }
+                
+                // Common Rect.
+                var rectStyle = edtreeOption.RectStyles.First();
+                var commonRect = edt?.GetRectangles(rectStyle)?.Intersect(edtCmp?.GetRectangles(rectStyle));
+                if (commonRect != null)
+                {
+                    var color = Palette.colorRectCommon;
+                    var item = new ListViewItem($"{color.Name}(Intersect)");
+                    item.ForeColor = color.Color;
+                    item.SubItems.Add($"{commonRect.Size}(가로:{commonRect.Width}, 세로:{commonRect.Height}");
+                    listView1.Items.Add(item);
+                }
                 //
                 // // ellipse.
                 // var drawingCircle = edt.GetEllipse(edt.EllipseStyle);
