@@ -100,7 +100,7 @@ namespace EDTree2
             switch (style)
             {
                 case EllipseStyle.Max:
-                    return Ellipse.GetEllipse(FittingType.Max);
+                    return Ellipse.Ellipse;
             }
 
             return null;
