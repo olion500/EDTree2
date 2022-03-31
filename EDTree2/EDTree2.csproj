@@ -6,8 +6,8 @@
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
         <ProjectGuid>{4F382736-81A2-483A-BAD6-355F1C70CCC2}</ProjectGuid>
         <OutputType>WinExe</OutputType>
-        <RootNamespace>EDTree2</RootNamespace>
-        <AssemblyName>EDTree2</AssemblyName>
+        <RootNamespace>EDTreeWinform</RootNamespace>
+        <AssemblyName>EDTreeWinform</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

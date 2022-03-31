@@ -8,10 +8,9 @@ namespace EDTree
     public class FittingEllipse
     {
         /// <summary>
-        /// A base tick for the Finding Ellipse Algorithm 
+        /// A base ticks for the Finding Ellipse Algorithm 
         /// </summary>
         private const double stepX = 0.01;
-
         private const double stepY = 0.001;
         
         /// <summary>
@@ -62,6 +61,14 @@ namespace EDTree
             return this;
         }
 
+        /// <summary>
+        /// Find Max size ellipse.
+        /// First, adjust main axis then minor axis.
+        /// </summary>
+        /// <param name="minX"></param>
+        /// <param name="maxX"></param>
+        /// <param name="pointBottom"></param>
+        /// <returns></returns>
         private EllipsePoint FindMaxSizeEllipse(double minX, double maxX, PointD pointBottom)
         {
             EllipsePoint maxEllipse = new EllipsePoint(minX, pointBottom.Y, maxX, pointBottom.Y);
@@ -80,6 +87,9 @@ namespace EDTree
             return maxEllipse;
         }
 
+        /// <summary>
+        /// Stretch ellipse' height until it reaches to the upper line.
+        /// </summary>
         private EllipsePoint StretchHeightUntilTop(EllipsePoint initEllipsePoint)
         {
             EllipsePoint ep = initEllipsePoint;
@@ -100,6 +110,9 @@ namespace EDTree
             return ep;
         }
 
+        /// <summary>
+        /// Check if the ellipse is placed below the upper line.
+        /// </summary>
         private bool IsEllipseBelowOfUpperLine(EllipsePoint ep)
         {
             Ellipse ellipse = EDTree.Ellipse.FromRect(ep.L, ep.T, ep.R, ep.B);
@@ -111,6 +124,9 @@ namespace EDTree
             return true;
         }
 
+        /// <summary>
+        /// Check if the point is place outside of the ellipse using Ellipse Equation.
+        /// </summary>
         private bool IsPointOutOfEllipse(Ellipse ellipse, double x, double y)
         {
             var sqX = Math.Pow(x - ellipse.CenterX, 2) / Math.Pow(ellipse.A, 2);
