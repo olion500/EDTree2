@@ -51,7 +51,6 @@
     <ItemGroup>
         <Compile Include="data\AerialCD.cs" />
         <Compile Include="data\EDTree.cs" />
-        <Compile Include="Delegates.cs" />
         <Compile Include="enum\EllipseStyle.cs" />
         <Compile Include="enum\NamedColor.cs" />
         <Compile Include="enum\RectStyle.cs" />
@@ -72,6 +71,7 @@
         <Compile Include="form\option\EdtreeOption.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="util\Delegates.cs" />
         <Compile Include="util\InputParser.cs" />
         <Compile Include="util\Palette.cs" />
         <Compile Include="util\StringUtils.cs" />

@@ -1,6 +1,6 @@
 ﻿namespace EDTree2
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.mainChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.listView1 = new System.Windows.Forms.ListView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -201,7 +201,7 @@
             this.statusBar1.TabIndex = 3;
             this.statusBar1.Text = "Not found input files.";
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -210,8 +210,8 @@
             this.Controls.Add(this.statusBar1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Location = new System.Drawing.Point(15, 15);
-            this.Name = "Form1";
-            this.Text = "FmAnalysis";
+            this.Name = "MainForm";
+            this.Text = "EDTree prerelease 0.1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize) (this.mainChart)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);

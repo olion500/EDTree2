@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace EDTree2
 {
-    public partial class Form1
+    public partial class MainForm
     {
         private void CreateListView()
         {

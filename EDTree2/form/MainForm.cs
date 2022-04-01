@@ -15,7 +15,7 @@ namespace EDTree2
     {
         Intensity, Defocus, Threshold
     }
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private string filename_intensity = "input_intensity.txt";
         private string filename_intensity_cmp = "input_intensity2.txt";
@@ -30,7 +30,7 @@ namespace EDTree2
 
         private ChartScreen CurrentScreen;
         
-        public Form1()
+        public MainForm()
         {
             // init screen.
             CurrentScreen = ChartScreen.Intensity;

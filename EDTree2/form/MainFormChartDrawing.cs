@@ -6,7 +6,7 @@ using EDTree;
 
 namespace EDTree2
 {
-    public partial class Form1
+    public partial class MainForm
     {
         private void CreateChart()
         {
