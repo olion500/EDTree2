@@ -10,9 +10,21 @@ namespace EDTree
     {
         public double MinX { get; }
         public double MaxX { get; }
+        /// <summary>
+        /// Rect based on minX. If null, the rect cannot be drawn.
+        /// </summary>
         public RectPoint RectLeft { get; private set; }
+        /// <summary>
+        /// Rect based on maxX. If null, the rect cannot be drawn.
+        /// </summary>
         public RectPoint RectRight { get; private set; }
+        /// <summary>
+        /// Rect based on rectLeft, rectright. If null, the rect cannot be drawn.
+        /// </summary>
         public RectPoint RectAvg { get; private set; }
+        /// <summary>
+        /// Maximum size of rect. Default : 0 size rectangle.
+        /// </summary>
         public RectPoint RectMax { get; private set; }
 
         /// <summary>
@@ -51,24 +63,32 @@ namespace EDTree
         {
             double l, t, r, b;
 
-            l = MinX;
-            t = UpperLine.Evaluate(l);
-            r = UpperLine.FindXByY(t).Max();
-            b = LowerLine.MaxY().Y;
-            RectLeft = new RectPoint(l, t, r, b);
+            // l = MinX;
+            // t = UpperLine.Evaluate(l);
+            // r = UpperLine.FindXByY(t).Max();
+            // b = LowerLine.MaxY().Y;
+            // RectLeft = new RectPoint(l, t, r, b);
+            RectLeft = null;
 
             r = MaxX;
             t = UpperLine.Evaluate(r);
             l = UpperLine.FindXByY(t).Min();
             b = LowerLine.MaxY().Y;
             RectRight = new RectPoint(l, t, r, b);
-            
-            RectAvg = new RectPoint(
-                (RectLeft.L + RectRight.L) / 2,
-                (RectLeft.T + RectRight.T) / 2,
-                (RectLeft.R + RectRight.R) / 2,
-                (RectLeft.B + RectRight.B) / 2
-            );
+
+            if (RectLeft != null && RectRight != null)
+            {
+                RectAvg = new RectPoint(
+                    (RectLeft.L + RectRight.L) / 2,
+                    (RectLeft.T + RectRight.T) / 2,
+                    (RectLeft.R + RectRight.R) / 2,
+                    (RectLeft.B + RectRight.B) / 2
+                );
+            }
+            else
+            {
+                RectAvg = null;
+            }
             
             RectMax = new RectPoint(0, 0, 0, 0);
             b = LowerLine.MaxY().Y;

@@ -43,6 +43,9 @@ namespace EDTree2
         private void Form1_Load(object sender, EventArgs e)
         {
             LoadAndDraw();
+            
+            // add post paint event that draw rectangles and ellipses..
+            mainChart.PostPaint += MainChartOnPostPaint;
         }
         
         private void LoadAndDraw()
@@ -113,9 +116,6 @@ namespace EDTree2
 
             // Create Data grid.
             CreateListView();
-            
-            // add post paint event that draw rectangles.
-            mainChart.PostPaint += MainChartOnPostPaint;
 
             // Show load file name in status bar.
             var fileNotFoundMsg = "Not found input file";

@@ -152,15 +152,13 @@ namespace EDTree2
                 if (acd == null) return;
 
                 // draw polynomial equation on the chart.
-                if (edtreeOption.IsShowEquation)
+                if (!edtreeOption.IsShowEquation) return;
+                var colors = Palette.GetAerialLineColors();
+                var n = 1;
+                foreach (var line in acd.Lines)
                 {
-                    var colors = Palette.GetAerialLineColors();
-                    var n = 1;
-                    foreach (var line in acd.Lines)
-                    {
-                        DrawText(e, StringUtils.PolynomialString(line.Coefficients) + ",  R² : " + line.RSquare.ToString("0.###"), colors[n-1], n);
-                        n++;
-                    }
+                    DrawText(e, StringUtils.PolynomialString(line.Coefficients) + ",  R² : " + line.RSquare.ToString("0.###"), colors[n-1], n);
+                    n++;
                 }
             }
         }

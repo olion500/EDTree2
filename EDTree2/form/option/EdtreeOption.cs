@@ -61,7 +61,7 @@ namespace EDTree2.form.option
         {
             // init values.
             RectStyles = new List<RectStyle>(new []{RectStyle.None});
-            EllipseStyle = EllipseStyle.Max;
+            EllipseStyle = EllipseStyle.None;
             EllipseMinX = -10;
             EllipseMaxX = 10;
             Order = 2;
