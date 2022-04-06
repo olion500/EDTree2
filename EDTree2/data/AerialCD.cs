@@ -14,8 +14,14 @@ namespace EDTree2
         public int Rows => Input.Data.First().Count;
         public int Cols => Input.Header.Length;
         
+        /// <summary>
+        /// The degree of the fitting line.
+        /// </summary>
         public int Order { get; set; }
 
+        /// <summary>
+        /// List of fitting lines. Supported number of lines is 10.
+        /// </summary>
         public List<FittingLine> Lines { get; private set; }
         
         public AerialCD(Input input)
@@ -25,6 +31,9 @@ namespace EDTree2
             Lines = new List<FittingLine>();
         }
         
+        /// <summary>
+        /// Calculate fitting line for all over-lay data. 
+        /// </summary>
         public AerialCD Calculate()
         {
             Lines.Clear();

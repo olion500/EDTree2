@@ -17,15 +17,18 @@ namespace EDTree2
     }
     public partial class MainForm : Form
     {
+        // initial file path to import. 
         private string filename_intensity = "input_intensity.txt";
         private string filename_intensity_cmp = "input_intensity2.txt";
         private string filename_defocus = "input_defocus.txt";
         private string filename_threshold = "input_threshold.txt";
 
+        // data object to draw chart and listview.
         private EDTree edt, edtCmp;
         private AerialCD acdDefocus;
         private AerialCD acdThreshold;
 
+        // option that the user changes.
         private EdtreeOption edtreeOption;
 
         private ChartScreen CurrentScreen;
@@ -54,6 +57,9 @@ namespace EDTree2
             DrawScreen();
         }
 
+        /// <summary>
+        /// Load Data from files. When it failed, the object will be set null.
+        /// </summary>
         private void LoadData()
         {
             try
@@ -109,6 +115,9 @@ namespace EDTree2
 
         }
 
+        /// <summary>
+        /// Draw chart and listview based on the data.
+        /// </summary>
         private void DrawScreen()
         {
             // Create Chart.
@@ -130,8 +139,6 @@ namespace EDTree2
                 case ChartScreen.Threshold:
                     statusBar1.Text = (acdThreshold == null) ? fileNotFoundMsg : "load file : " + filename_threshold;
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
         

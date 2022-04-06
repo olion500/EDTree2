@@ -92,6 +92,9 @@ namespace EDTree2
             }
         }
 
+        /// <summary>
+        /// Show line label at the end of the line.
+        /// </summary>
         private void PutChartNameOnPoint(DataPoint p, string label, NamedColor color)
         {
             p.Label = label;

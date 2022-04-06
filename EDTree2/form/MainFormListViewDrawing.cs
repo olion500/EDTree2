@@ -105,11 +105,11 @@ namespace EDTree2
         }
 
         /// <summary>
-        /// 
+        /// Show listview data with given input data.
         /// </summary>
         /// <param name="listView">Target listview</param>
         /// <param name="input">The data to show on the listview.</param>
-        /// <param name="colors"></param>
+        /// <param name="colors">The text colors seperated by column.</param>
         private void WriteInputOnListview(ListView listView, Input input, IReadOnlyList<NamedColor> colors)
         {
             listView.BeginUpdate();

@@ -5,6 +5,7 @@ namespace EDTree2
 {
     public class Palette
     {
+        // opacity value.
         private static int alpha = 20;
 
         // line colors.

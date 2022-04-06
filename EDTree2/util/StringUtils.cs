@@ -5,6 +5,10 @@ namespace EDTree2
 {
     public static class StringUtils
     {
+        /// <summary>
+        /// Convert polynomial coefficient to polynomial string. It supports degree 3 polynomials.
+        /// </summary>
+        /// <param name="f">Coefficients of polynomial equation.</param>
         public static string PolynomialString(IEnumerable<double> f)
         {
             var postfix = new [] {"", "x", "x²", "x³"};
