@@ -7,6 +7,9 @@ namespace EDTree2
 {
     public partial class MainForm
     {
+        /// <summary>
+        /// Show data in listview based on edt, edtCmp.
+        /// </summary>
         private void CreateListView()
         {
             listView1.BeginUpdate();

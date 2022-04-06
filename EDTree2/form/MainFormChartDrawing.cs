@@ -8,6 +8,9 @@ namespace EDTree2
 {
     public partial class MainForm
     {
+        /// <summary>
+        /// Draw chart based on edt, edtCmp.
+        /// </summary>
         private void CreateChart()
         {
             mainChart.Series.Clear();

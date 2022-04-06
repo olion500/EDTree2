@@ -157,11 +157,32 @@ namespace EDTree2
                 .SetOption(edtreeOption)
                 .Calculate();
             
+            ShowAlert();
+            
             // Create Chart.
             CreateChart();
 
             // Create Data grid.
             CreateListView();
+        }
+
+        /// <summary>
+        /// Show Alert when something is wrong.
+        /// </summary>
+        private void ShowAlert()
+        {
+            // show alert when one of selected rect cannot be calculated.
+            foreach (var rectStyle in edtreeOption.RectStyles)
+            {
+                if (rectStyle == RectStyle.None) continue;
+
+                var rect = edt?.GetRectangles(rectStyle);
+                if (rect == null)
+                {
+                    MessageBox.Show("Error! 데이터 조건이 만족하지 않습니다");
+                    break;
+                }
+            }
         }
 
         private void buttonHome_Click(object sender, EventArgs e)
