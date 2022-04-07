@@ -99,19 +99,38 @@ namespace EDTree
             {
                 RectAvg = null;
             }
-            
-            RectMax = new RectPoint(0, 0, 0, 0);
+
+            RectMax = null;
             b = LowerLine.MaxY().Y;
             for (double x = MinX; x <= MaxX; x++)
             {
                 l = x;
                 t = UpperLine.Evaluate(x);
-                r = UpperLine.FindXByY(t).Max();
-                var tmpRect = new RectPoint(l, t, r, b);
-                if (tmpRect.Size > RectMax.Size) RectMax = tmpRect;
+                var xValues = UpperLine.FindXByY(t);
+                var possibleR1 = xValues.Min();
+                var possibleR2 = xValues.Max();
+
+                RectMax = FindMaximumRect(l, t, possibleR1, b);
+                RectMax = FindMaximumRect(l, t, possibleR2, b);
             }
 
             return this;
+        }
+
+        /// <summary>
+        /// Returns Maximum Rect between RectMax and new rect based on the input.
+        /// </summary>
+        private RectPoint FindMaximumRect(double l, double t, double r, double b)
+        {
+            if (!IsNormalRectangle(l, t, r, b)) return RectMax;
+            
+            var newRect = new RectPoint(l, t, r, b);
+            if (RectMax == null || newRect.Size > RectMax.Size)
+            {
+                return newRect;
+            }
+
+            return RectMax;
         }
 
         /// <summary>
