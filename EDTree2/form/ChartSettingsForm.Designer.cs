@@ -315,6 +315,50 @@ namespace EDTree2
             this.checkBoxCustomScale.UseVisualStyleBackColor = true;
             this.checkBoxCustomScale.CheckedChanged += new System.EventHandler(this.checkBoxCustomScale_CheckedChanged);
             // 
+            // label6
+            // 
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.label6.Location = new System.Drawing.Point(9, 82);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(35, 17);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Min";
+            // 
+            // label5
+            // 
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.label5.Location = new System.Drawing.Point(192, 80);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(35, 17);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Max";
+            // 
+            // textMaxY
+            // 
+            this.textMaxY.Location = new System.Drawing.Point(244, 78);
+            this.textMaxY.Name = "textMaxY";
+            this.textMaxY.Size = new System.Drawing.Size(89, 21);
+            this.textMaxY.TabIndex = 10;
+            this.textMaxY.TextChanged += new System.EventHandler(this.textMaxY_TextChanged);
+            // 
+            // textMinY
+            // 
+            this.textMinY.Location = new System.Drawing.Point(59, 78);
+            this.textMinY.Name = "textMinY";
+            this.textMinY.Size = new System.Drawing.Size(89, 21);
+            this.textMinY.TabIndex = 6;
+            this.textMinY.TextChanged += new System.EventHandler(this.textMinY_TextChanged);
+            // 
+            // checkBoxCustomScale
+            // 
+            this.checkBoxCustomScale.Location = new System.Drawing.Point(115, 48);
+            this.checkBoxCustomScale.Name = "checkBoxCustomScale";
+            this.checkBoxCustomScale.Size = new System.Drawing.Size(112, 24);
+            this.checkBoxCustomScale.TabIndex = 9;
+            this.checkBoxCustomScale.Text = "Custom Scale";
+            this.checkBoxCustomScale.UseVisualStyleBackColor = true;
+            this.checkBoxCustomScale.CheckedChanged += new System.EventHandler(this.checkBoxCustomScale_CheckedChanged);
+            // 
             // radioLog
             // 
             this.radioLog.Anchor = System.Windows.Forms.AnchorStyles.Left;
