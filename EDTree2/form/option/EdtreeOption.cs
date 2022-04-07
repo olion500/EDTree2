@@ -52,6 +52,21 @@ namespace EDTree2.form.option
         /// </summary>
         public bool IsLogY { get; set; }
 
+        /// <summary>
+        /// Whether the Y-axis sets custom scale.
+        /// </summary>
+        public bool IsCustomScaleY { get; set; }
+        
+        /// <summary>
+        /// Minimum value of Y axis when `IsCustomScaleY` is set.
+        /// </summary>
+        public double ScaleMinY { get; set; }
+        
+        /// <summary>
+        /// Maximum value of Y axis when `IsCustomScaleY` is set.
+        /// </summary>
+        public double ScaleMaxY { get; set; }
+
         public EdtreeOption()
         {
             ResetValues();
@@ -69,6 +84,9 @@ namespace EDTree2.form.option
             ZstepMax = 10;
             IsShowEquation = false;
             IsLogY = false;
+            IsCustomScaleY = false;
+            ScaleMinY = 0.2;
+            ScaleMaxY = 0.3;
         }
 
         /// <summary>

@@ -52,7 +52,7 @@ namespace EDTree2
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.textMaxY = new System.Windows.Forms.TextBox();
-            this.texMinY = new System.Windows.Forms.TextBox();
+            this.textMinY = new System.Windows.Forms.TextBox();
             this.checkBoxCustomScale = new System.Windows.Forms.CheckBox();
             this.radioLog = new System.Windows.Forms.RadioButton();
             this.radioIntensity = new System.Windows.Forms.RadioButton();
@@ -260,7 +260,7 @@ namespace EDTree2
             this.groupValueType.Controls.Add(this.label6);
             this.groupValueType.Controls.Add(this.label5);
             this.groupValueType.Controls.Add(this.textMaxY);
-            this.groupValueType.Controls.Add(this.texMinY);
+            this.groupValueType.Controls.Add(this.textMinY);
             this.groupValueType.Controls.Add(this.checkBoxCustomScale);
             this.groupValueType.Controls.Add(this.radioLog);
             this.groupValueType.Controls.Add(this.radioIntensity);
@@ -297,13 +297,13 @@ namespace EDTree2
             this.textMaxY.TabIndex = 10;
             this.textMaxY.TextChanged += new System.EventHandler(this.textMaxY_TextChanged);
             // 
-            // texMinY
+            // textMinY
             // 
-            this.texMinY.Location = new System.Drawing.Point(59, 78);
-            this.texMinY.Name = "texMinY";
-            this.texMinY.Size = new System.Drawing.Size(89, 21);
-            this.texMinY.TabIndex = 6;
-            this.texMinY.TextChanged += new System.EventHandler(this.texMinY_TextChanged);
+            this.textMinY.Location = new System.Drawing.Point(59, 78);
+            this.textMinY.Name = "textMinY";
+            this.textMinY.Size = new System.Drawing.Size(89, 21);
+            this.textMinY.TabIndex = 6;
+            this.textMinY.TextChanged += new System.EventHandler(this.textMinY_TextChanged);
             // 
             // checkBoxCustomScale
             // 
@@ -496,7 +496,7 @@ namespace EDTree2
         }
 
         private System.Windows.Forms.CheckBox checkBoxCustomScale;
-        private System.Windows.Forms.TextBox texMinY;
+        private System.Windows.Forms.TextBox textMinY;
         private System.Windows.Forms.TextBox textMaxY;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
