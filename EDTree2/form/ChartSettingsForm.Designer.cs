@@ -49,6 +49,11 @@ namespace EDTree2
             this.radioFunCubic = new System.Windows.Forms.RadioButton();
             this.radioFunQuadratic = new System.Windows.Forms.RadioButton();
             this.groupValueType = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textMaxY = new System.Windows.Forms.TextBox();
+            this.textMinY = new System.Windows.Forms.TextBox();
+            this.checkBoxCustomScale = new System.Windows.Forms.CheckBox();
             this.radioLog = new System.Windows.Forms.RadioButton();
             this.radioIntensity = new System.Windows.Forms.RadioButton();
             this.groupRectStyle = new System.Windows.Forms.GroupBox();
@@ -83,7 +88,7 @@ namespace EDTree2
             this.groupBox1.Controls.Add(this.groupRectStyle);
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(385, 365);
+            this.groupBox1.Size = new System.Drawing.Size(385, 420);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             // 
@@ -252,19 +257,68 @@ namespace EDTree2
             // 
             // groupValueType
             // 
+            this.groupValueType.Controls.Add(this.label6);
+            this.groupValueType.Controls.Add(this.label5);
+            this.groupValueType.Controls.Add(this.textMaxY);
+            this.groupValueType.Controls.Add(this.textMinY);
+            this.groupValueType.Controls.Add(this.checkBoxCustomScale);
             this.groupValueType.Controls.Add(this.radioLog);
             this.groupValueType.Controls.Add(this.radioIntensity);
             this.groupValueType.Location = new System.Drawing.Point(6, 306);
             this.groupValueType.Name = "groupValueType";
-            this.groupValueType.Size = new System.Drawing.Size(371, 50);
+            this.groupValueType.Size = new System.Drawing.Size(371, 111);
             this.groupValueType.TabIndex = 1;
             this.groupValueType.TabStop = false;
             this.groupValueType.Text = "Y Value Type";
             // 
+            // label6
+            // 
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.label6.Location = new System.Drawing.Point(9, 82);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(35, 17);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Min";
+            // 
+            // label5
+            // 
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.label5.Location = new System.Drawing.Point(192, 80);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(35, 17);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Max";
+            // 
+            // textMaxY
+            // 
+            this.textMaxY.Location = new System.Drawing.Point(244, 78);
+            this.textMaxY.Name = "textMaxY";
+            this.textMaxY.Size = new System.Drawing.Size(89, 21);
+            this.textMaxY.TabIndex = 10;
+            this.textMaxY.TextChanged += new System.EventHandler(this.textMaxY_TextChanged);
+            // 
+            // textMinY
+            // 
+            this.textMinY.Location = new System.Drawing.Point(59, 78);
+            this.textMinY.Name = "textMinY";
+            this.textMinY.Size = new System.Drawing.Size(89, 21);
+            this.textMinY.TabIndex = 6;
+            this.textMinY.TextChanged += new System.EventHandler(this.textMinY_TextChanged);
+            // 
+            // checkBoxCustomScale
+            // 
+            this.checkBoxCustomScale.Location = new System.Drawing.Point(115, 48);
+            this.checkBoxCustomScale.Name = "checkBoxCustomScale";
+            this.checkBoxCustomScale.Size = new System.Drawing.Size(112, 24);
+            this.checkBoxCustomScale.TabIndex = 9;
+            this.checkBoxCustomScale.Text = "Custom Scale";
+            this.checkBoxCustomScale.UseVisualStyleBackColor = true;
+            this.checkBoxCustomScale.CheckedChanged += new System.EventHandler(this.checkBoxCustomScale_CheckedChanged);
+            // 
             // radioLog
             // 
             this.radioLog.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioLog.Location = new System.Drawing.Point(227, 18);
+            this.radioLog.Location = new System.Drawing.Point(228, 20);
             this.radioLog.Name = "radioLog";
             this.radioLog.Size = new System.Drawing.Size(121, 22);
             this.radioLog.TabIndex = 4;
@@ -276,7 +330,7 @@ namespace EDTree2
             // radioIntensity
             // 
             this.radioIntensity.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioIntensity.Location = new System.Drawing.Point(7, 18);
+            this.radioIntensity.Location = new System.Drawing.Point(6, 20);
             this.radioIntensity.Name = "radioIntensity";
             this.radioIntensity.Size = new System.Drawing.Size(121, 22);
             this.radioIntensity.TabIndex = 3;
@@ -361,7 +415,7 @@ namespace EDTree2
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(495, 371);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(495, 428);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // panel1
@@ -373,12 +427,12 @@ namespace EDTree2
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(395, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(97, 365);
+            this.panel1.Size = new System.Drawing.Size(97, 422);
             this.panel1.TabIndex = 3;
             // 
             // buttonReset
             // 
-            this.buttonReset.Location = new System.Drawing.Point(3, 306);
+            this.buttonReset.Location = new System.Drawing.Point(3, 367);
             this.buttonReset.Name = "buttonReset";
             this.buttonReset.Size = new System.Drawing.Size(87, 23);
             this.buttonReset.TabIndex = 3;
@@ -388,7 +442,7 @@ namespace EDTree2
             // 
             // buttonApply
             // 
-            this.buttonApply.Location = new System.Drawing.Point(3, 341);
+            this.buttonApply.Location = new System.Drawing.Point(3, 396);
             this.buttonApply.Name = "buttonApply";
             this.buttonApply.Size = new System.Drawing.Size(87, 21);
             this.buttonApply.TabIndex = 2;
@@ -420,7 +474,7 @@ namespace EDTree2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(495, 371);
+            this.ClientSize = new System.Drawing.Size(495, 428);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -434,11 +488,18 @@ namespace EDTree2
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupValueType.ResumeLayout(false);
+            this.groupValueType.PerformLayout();
             this.groupRectStyle.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.CheckBox checkBoxCustomScale;
+        private System.Windows.Forms.TextBox textMinY;
+        private System.Windows.Forms.TextBox textMaxY;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
 
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label label4;

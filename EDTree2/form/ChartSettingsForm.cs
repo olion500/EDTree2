@@ -33,7 +33,7 @@ namespace EDTree2
             ChooseFunctionRank(_option.Order);
             ChooseRadioCircleStyle(_option.EllipseStyle);
             ChooseCheckEquation(_option.IsShowEquation);
-            ChooseRadioLog(_option.IsLogY);
+            ChooseScaleY(_option.IsLogY, _option.IsCustomScaleY, _option.ScaleMinY, _option.ScaleMaxY);
         }
 
         private void buttonOk_Click(object sender, EventArgs e)
@@ -87,8 +87,8 @@ namespace EDTree2
         /// </summary>
         private bool CheckMinMaxTextBoxes(TextBox tbMin, TextBox tbMax)
         {
-            var isDoubleMin = double.TryParse(tbMin.Text, out var zstepMinValue);
-            var isDoubleMax = double.TryParse(tbMax.Text, out var zstepMaxValue);
+            var isDoubleMin = double.TryParse(tbMin.Text, out var minValue);
+            var isDoubleMax = double.TryParse(tbMax.Text, out var maxValue);
             // empty : pass
             // - (minus) : pass
             // number : pass
@@ -106,7 +106,9 @@ namespace EDTree2
                 return false;
             }
             
-            if (zstepMinValue > zstepMaxValue)
+            if (!string.IsNullOrEmpty(tbMin.Text) 
+                && !string.IsNullOrEmpty(tbMax.Text) 
+                && minValue > maxValue)
             {
                 MessageBox.Show("최소값이 최대값보다 작아야합니다.");
                 return false;
@@ -339,14 +341,26 @@ namespace EDTree2
             _option.IsShowEquation = checkBoxEquation.Checked;
         }
 
-        private void ChooseRadioLog(bool isLog)
+        private void ChooseScaleY(bool isLog, bool isCustomScaleY, double minY, double maxY)
         {
+            // log-scale radio box.
             if (isLog)
                 radioLog.Checked = true;
             else
             {
                 radioIntensity.Checked = true;
             }
+            
+            // IsCustomScale checkbox.
+            checkBoxCustomScale.Checked = isCustomScaleY;
+            
+            // custom scale min, max values.
+            textMinY.Text = minY.ToString();
+            textMaxY.Text = maxY.ToString();
+            
+            // disable textboxes when IsCustomScale is unchecked.
+            textMinY.Enabled = isCustomScaleY;
+            textMaxY.Enabled = isCustomScaleY;
         }
         private void radioIntensity_CheckedChanged(object sender, EventArgs e)
         {
@@ -358,6 +372,34 @@ namespace EDTree2
         {
             if (radioLog.Checked)
                 _option.IsLogY = true;
+        }
+
+        private void checkBoxCustomScale_CheckedChanged(object sender, EventArgs e)
+        {
+            _option.IsCustomScaleY = checkBoxCustomScale.Checked;
+
+            textMinY.Enabled = checkBoxCustomScale.Checked;
+            textMaxY.Enabled = checkBoxCustomScale.Checked;
+        }
+
+        private void textMinY_TextChanged(object sender, EventArgs e)
+        {
+            DisableApply();
+            if (!CheckMinMaxTextBoxes(textMinY, textMaxY)) return;
+            
+            double.TryParse(textMinY.Text, out var minVal);
+            _option.ScaleMinY = minVal;
+            EnableApply();
+        }
+
+        private void textMaxY_TextChanged(object sender, EventArgs e)
+        {
+            DisableApply();
+            if (!CheckMinMaxTextBoxes(textMinY, textMaxY)) return;
+            
+            double.TryParse(textMaxY.Text, out var maxVal);
+            _option.ScaleMaxY = maxVal;
+            EnableApply();
         }
     }
 }
