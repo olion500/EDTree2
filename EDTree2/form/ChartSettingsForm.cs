@@ -359,5 +359,20 @@ namespace EDTree2
             if (radioLog.Checked)
                 _option.IsLogY = true;
         }
+
+        private void checkBoxCustomScale_CheckedChanged(object sender, EventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void texMinY_TextChanged(object sender, EventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void textMaxY_TextChanged(object sender, EventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
