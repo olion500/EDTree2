@@ -14,28 +14,11 @@ namespace EDTree2
         private void CreateChart()
         {
             mainChart.Series.Clear();
-            
-            // chart setting.
-            mainChart.ChartAreas[0].AxisX.Interval = (CurrentScreen == ChartScreen.Threshold) ? 0.01 : 1;
-            mainChart.ChartAreas[0].AxisX.LabelAutoFitStyle = LabelAutoFitStyles.DecreaseFont;
-            mainChart.ChartAreas[0].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
-            mainChart.ChartAreas[0].AxisY.IsStartedFromZero = false;
-            mainChart.ChartAreas[0].AxisY.IntervalAutoMode = IntervalAutoMode.VariableCount;
-            mainChart.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
-            mainChart.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
-
-            mainChart.ChartAreas[0].AxisY.LogarithmBase = 2.0;
-            mainChart.ChartAreas[0].AxisY.IsLogarithmic = false;
+            SettingChartAxis();
 
             if (CurrentScreen == ChartScreen.Intensity)
             {
                 if (edt == null) return;
-                
-                // chart setting
-                mainChart.ChartAreas[0].AxisY.IsLogarithmic = edtreeOption.IsLogY;           
-                mainChart.ChartAreas[0].AxisX.Title = edt.LabelX;
-                mainChart.ChartAreas[0].AxisX.Minimum = edt.X.Min();
-                mainChart.ChartAreas[0].AxisY.Title = edt.LabelY;
                 
                 DrawIntensityLineChart(edt, Palette.colorUpper, Palette.colorBase, Palette.colorLower, true);
                 DrawIntensityLineChart(edtCmp, Palette.colorUpperTrans, Palette.colorBaseTrans, Palette.colorLowerTrans, false);
@@ -45,10 +28,6 @@ namespace EDTree2
                 var acd = (CurrentScreen == ChartScreen.Defocus) ? acdDefocus : acdThreshold;
                 if (acd == null) return;
                 
-                mainChart.ChartAreas[0].AxisX.Title = acd.LabelX;
-                mainChart.ChartAreas[0].AxisX.Minimum = acd.X.Min();
-                mainChart.ChartAreas[0].AxisY.Title = acd.LabelY;
-
                 var xPoints = acd.GetXPoints();
                 for (int i = 0; i < acd.Lines.Count; i++)
                 {
@@ -61,6 +40,61 @@ namespace EDTree2
                         sr.Points.AddXY(x, line.Evaluate(x));
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Calibrate the axis according to the current screen.
+        /// </summary>
+        private void SettingChartAxis()
+        {
+            mainChart.AntiAliasing = AntiAliasingStyles.All;
+            
+            var axisX = mainChart.ChartAreas[0].AxisX;
+            axisX.Interval = (CurrentScreen == ChartScreen.Threshold) ? 0.01 : 1;
+            axisX.LabelAutoFitStyle = LabelAutoFitStyles.DecreaseFont;
+            axisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
+            axisX.MajorGrid.Enabled = false;
+            
+            var axisY = mainChart.ChartAreas[0].AxisY;
+            axisY.IsStartedFromZero = false;
+            axisY.IntervalAutoMode = IntervalAutoMode.VariableCount;
+            axisY.MajorGrid.Enabled = false;
+            
+            // Y-axis log scale.
+            axisY.LogarithmBase = 2.0;
+            axisY.IsLogarithmic = edtreeOption.IsLogY;
+
+            // setup min, max value of y axis.
+            if (edtreeOption.IsCustomScaleY)
+            {
+                axisY.Minimum = edtreeOption.ScaleMinY;
+                axisY.Maximum = edtreeOption.ScaleMaxY;
+            }
+            else
+            {
+                axisY.Minimum = double.NaN;
+                axisY.Maximum = double.NaN;
+                mainChart.ChartAreas[0].RecalculateAxesScale();
+            }
+            
+            
+            if (CurrentScreen == ChartScreen.Intensity)
+            {
+                if (edt == null) return;
+                
+                axisX.Title = edt.LabelX;
+                axisX.Minimum = edt.X.Min(); // to show 0 value on x axis.
+                axisY.Title = edt.LabelY;
+            }
+            else if (CurrentScreen == ChartScreen.Defocus || CurrentScreen == ChartScreen.Threshold)
+            {
+                var acd = (CurrentScreen == ChartScreen.Defocus) ? acdDefocus : acdThreshold;
+                if (acd == null) return;
+                
+                axisX.Title = acd.LabelX;
+                axisX.Minimum = acd.X.Min(); // to show 0 value on x axis.
+                axisY.Title = acd.LabelY;
             }
         }
 
