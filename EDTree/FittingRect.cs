@@ -47,6 +47,11 @@ namespace EDTree
         /// </summary>
         private const double ToleranceY = 0.0001;
 
+        /// <summary>
+        /// The value to add when the maximum rect is calculated with the iteration.
+        /// </summary>
+        private const double StepX = 0.01;
+
         public FittingRect(double min, double max, FittingLine upperLine, FittingLine lowerLine)
         {
             MinX = min;
@@ -102,7 +107,7 @@ namespace EDTree
 
             RectMax = null;
             b = LowerLine.MaxY().Y;
-            for (double x = MinX; x <= MaxX; x++)
+            for (double x = MinX; x <= MaxX; x+=StepX)
             {
                 l = x;
                 t = UpperLine.Evaluate(x);
