@@ -45,7 +45,7 @@ namespace EDTree2.Properties
                 if ((resourceMan == null))
                 {
                     global::System.Resources.ResourceManager temp =
-                        new global::System.Resources.ResourceManager("EDTree2.Properties.Resources",
+                        new global::System.Resources.ResourceManager("EDTreeWinform.Properties.Resources",
                             typeof(Resources).Assembly);
                     resourceMan = temp;
                 }

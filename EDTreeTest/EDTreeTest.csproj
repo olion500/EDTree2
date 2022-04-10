@@ -56,9 +56,9 @@
       <None Include="packages.config" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\EDTree2\EDTree2.csproj">
+      <ProjectReference Include="..\EDTreeWinform\EDTreeWinform.csproj">
         <Project>{4f382736-81a2-483a-bad6-355f1c70ccc2}</Project>
-        <Name>EDTree2</Name>
+        <Name>EDTreeWinform</Name>
       </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

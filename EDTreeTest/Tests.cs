@@ -1,6 +1,4 @@
-﻿using System;
-using NUnit.Framework;
-using EDTree2;
+﻿using NUnit.Framework;
 
 namespace EDTreeTest
 {

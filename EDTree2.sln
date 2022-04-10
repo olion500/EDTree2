@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EDTree2", "EDTree2\EDTree2.csproj", "{4F382736-81A2-483A-BAD6-355F1C70CCC2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EDTreeWinform", "EDTreeWinform\EDTreeWinform.csproj", "{4F382736-81A2-483A-BAD6-355F1C70CCC2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EDTreeTest", "EDTreeTest\EDTreeTest.csproj", "{220D6C7E-4015-4ED8-A276-E66A9AFD66C3}"
 EndProject
