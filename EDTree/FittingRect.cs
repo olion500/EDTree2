@@ -129,7 +129,8 @@ namespace EDTree
         {
             if (!IsNormalRectangle(l, t, r, b)) return RectMax;
             
-            var newRect = new RectPoint(l, t, r, b);
+            var newRect = new RectPoint(
+                Math.Min(l, r), t, Math.Max(l, r), b);
             if (RectMax == null || newRect.Size > RectMax.Size)
             {
                 return newRect;
