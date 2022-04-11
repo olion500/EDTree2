@@ -153,7 +153,7 @@ namespace EDTree2
         private void ApplyChange(EdtreeOption changed)
         {
             edtreeOption = changed;
-            edt
+            edt?
                 .SetOption(edtreeOption)
                 .Calculate();
             
