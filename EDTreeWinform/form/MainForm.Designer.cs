@@ -211,7 +211,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Location = new System.Drawing.Point(15, 15);
             this.Name = "MainForm";
-            this.Text = "EDTree prerelease 0.3";
+            this.Text = "EDTree 1.0";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize) (this.mainChart)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
